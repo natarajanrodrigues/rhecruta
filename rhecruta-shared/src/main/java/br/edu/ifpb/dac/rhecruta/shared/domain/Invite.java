@@ -12,11 +12,11 @@ package br.edu.ifpb.dac.rhecruta.shared.domain;
 public class Invite {
     
     private Offer offer;
-    private CandidateUser invited;
-    private AdministrativeUser inviter;
+    private Candidate invited;
+    private Administrator inviter;
     private boolean accepted;
 
-    public Invite(Offer offer, CandidateUser invited, AdministrativeUser inviter, boolean accepted) {
+    public Invite(Offer offer, Candidate invited, Administrator inviter, boolean accepted) {
         this.offer = offer;
         this.invited = invited;
         this.inviter = inviter;
@@ -34,19 +34,19 @@ public class Invite {
         this.offer = offer;
     }
 
-    public CandidateUser getInvited() {
+    public Candidate getInvited() {
         return invited;
     }
 
-    public void setInvited(CandidateUser invited) {
+    public void setInvited(Candidate invited) {
         this.invited = invited;
     }
 
-    public AdministrativeUser getInviter() {
+    public Administrator getInviter() {
         return inviter;
     }
 
-    public void setInviter(AdministrativeUser inviter) {
+    public void setInviter(Administrator inviter) {
         this.inviter = inviter;
     }
 

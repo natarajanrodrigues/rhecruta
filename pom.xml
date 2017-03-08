@@ -12,5 +12,6 @@
     
     <modules>
         <module>rhecruta-shared</module>
+        <module>rhecruta-core</module>
     </modules>
 </project>

@@ -23,9 +23,9 @@ public class Offer {
     private String description;
     private Integer vacancies;
     private OfferStatus status;
-    private final List<CandidateUser> candidates;
+    private final List<Candidate> candidates;
 
-    public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<CandidateUser> candidates) {
+    public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates) {
         this.id = id;
         this.type = type;
         this.skills = skills;
@@ -96,15 +96,15 @@ public class Offer {
         this.status = status;
     }
 
-    public List<CandidateUser> getCandidates() {
+    public List<Candidate> getCandidates() {
         return Collections.unmodifiableList(candidates);
     }
     
-    public void subscribe(CandidateUser candidate) {
+    public void subscribe(Candidate candidate) {
         this.candidates.add(candidate);
     }
     
-    public void unsubscribe(CandidateUser candidate) {
+    public void unsubscribe(Candidate candidate) {
         this.candidates.remove(candidate);
     }
 

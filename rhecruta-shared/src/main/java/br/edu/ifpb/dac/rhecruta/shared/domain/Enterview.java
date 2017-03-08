@@ -15,14 +15,14 @@ public class Enterview {
     
     private Long id;
     private Offer offer;
-    private CandidateUser candidate;
+    private Candidate candidate;
     private LocalDateTime start;
     private LocalDateTime end;
     private Address address;
-    private AdministrativeUser applier;
+    private Administrator applier;
     private Double score;
 
-    public Enterview(Long id, Offer offer, CandidateUser candidate, LocalDateTime start, LocalDateTime end, Address address, AdministrativeUser applier, Double score) {
+    public Enterview(Long id, Offer offer, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Administrator applier, Double score) {
         this.id = id;
         this.offer = offer;
         this.candidate = candidate;
@@ -53,11 +53,11 @@ public class Enterview {
         this.offer = offer;
     }
 
-    public CandidateUser getCandidate() {
+    public Candidate getCandidate() {
         return candidate;
     }
 
-    public void setCandidate(CandidateUser candidate) {
+    public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
     }
 
@@ -85,11 +85,11 @@ public class Enterview {
         this.address = address;
     }
 
-    public AdministrativeUser getApplier() {
+    public Administrator getApplier() {
         return applier;
     }
 
-    public void setApplier(AdministrativeUser applier) {
+    public void setApplier(Administrator applier) {
         this.applier = applier;
     }
     

@@ -11,7 +11,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum Role {
     
-    MANAGER(1), APPRAISER(2);
+    CANDIDATE(1), MANAGER(2), APPRAISER(3);
     
     int type;
     

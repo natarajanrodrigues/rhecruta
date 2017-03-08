@@ -12,10 +12,10 @@ package br.edu.ifpb.dac.rhecruta.shared.domain;
 public class SystemEvaluation {
     
     private Double score;
-    private CandidateUser candidate;
+    private Candidate candidate;
     private Offer offer;
 
-    public SystemEvaluation(Double score, CandidateUser candidate, Offer offer) {
+    public SystemEvaluation(Double score, Candidate candidate, Offer offer) {
         this.score = score;
         this.candidate = candidate;
         this.offer = offer;
@@ -33,11 +33,11 @@ public class SystemEvaluation {
         this.score = score;
     }
 
-    public CandidateUser getCandidate() {
+    public Candidate getCandidate() {
         return candidate;
     }
 
-    public void setCandidate(CandidateUser candidate) {
+    public void setCandidate(Candidate candidate) {
         this.candidate = candidate;
     }
 

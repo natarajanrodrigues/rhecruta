@@ -5,6 +5,8 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.domain;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
+
 /**
  * 
  * @author Pedro Arthur
@@ -16,6 +18,7 @@ public class User {
     private String lastname;
     private Address address;
     private Credentials credentials;
+    private Role role;
 
     public User(String cpf, String firstname, String lastname, Address address, Credentials credentials) {
         this.cpf = cpf;
