@@ -7,11 +7,14 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Pedro Arthur
  */
+
+@Embeddable
 public class InvitePK implements Serializable {
     
     private Long offerId;

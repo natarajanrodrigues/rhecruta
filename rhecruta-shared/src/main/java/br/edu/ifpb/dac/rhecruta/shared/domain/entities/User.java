@@ -16,12 +16,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 
  * @author Pedro Arthur
  */
 @Entity
+@Table(name = "system_user")
 public class User implements Serializable {
     
     @Id

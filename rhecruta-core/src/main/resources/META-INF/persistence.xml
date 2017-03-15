@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="rhecruta-pu" transaction-type="RESOURCE_LOCAL">
- 
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    
-    <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.User</class>
+  <persistence-unit name="rhecruta-pu" transaction-type="JTA">
+    <jta-data-source>java:app/rhecruta-data-source</jta-data-source>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator</class>
+    <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Invite</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.SystemEvaluation</class>
-    
+    <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-    
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/rhecruta"/>
-      <property name="javax.persistence.jdbc.user" value="postgres"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="123456"/>
-    </properties>
-    
+    <properties/>
   </persistence-unit>
-  
 </persistence>

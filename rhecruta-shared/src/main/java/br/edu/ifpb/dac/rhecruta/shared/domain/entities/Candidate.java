@@ -6,9 +6,11 @@
 package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +22,8 @@ import javax.persistence.OneToOne;
  *
  * @author Pedro Arthur
  */
-public class Candidate {
+@Entity
+public class Candidate implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +41,7 @@ public class Candidate {
     private Address address;
     
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "system_user_id", nullable = false)
     private User user;
     
     @Column(name = "linkedin_url")

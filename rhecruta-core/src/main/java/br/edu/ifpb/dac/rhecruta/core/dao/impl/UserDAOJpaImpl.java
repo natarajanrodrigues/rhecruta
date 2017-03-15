@@ -19,8 +19,8 @@ import javax.persistence.PersistenceContext;
 
 @Local(UserDAO.class)
 public class UserDAOJpaImpl implements UserDAO {
-    
-    @PersistenceContext
+     
+    @PersistenceContext(unitName = "rhecruta-pu")
     private EntityManager manager;
 
     @Override

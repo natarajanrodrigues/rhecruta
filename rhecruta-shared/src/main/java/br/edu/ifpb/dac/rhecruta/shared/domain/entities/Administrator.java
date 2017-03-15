@@ -39,7 +39,7 @@ public class Administrator implements Serializable {
     private Address address;
     
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "system_user_id", nullable = false)
     private User user;
 
     public Administrator(Long id, User user) {
