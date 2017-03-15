@@ -3,17 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
+
+import java.io.Serializable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 /**
  *
  * @author Pedro Arthur
+ * 
  */
-public class Invite {
+@Entity
+public class Invite implements Serializable {
     
+    @EmbeddedId
+    private InvitePK invitePK;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("offerId")
+    @JoinColumn(name = "offer_id")
     private Offer offer;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("invitedId")
+    @JoinColumn(name = "invited_id")
     private Candidate invited;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("inviterId")
+    @JoinColumn(name = "inviter_id")
     private Administrator inviter;
+    
     private boolean accepted;
 
     public Invite(Offer offer, Candidate invited, Administrator inviter, boolean accepted) {
@@ -24,6 +49,7 @@ public class Invite {
     }
 
     public Invite() {
+        
     }
 
     public Offer getOffer() {

@@ -11,11 +11,31 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum OfferStatus {
     
-    OPEN(1), CLOSED(2);
+    OPEN(1, "Aberta"), CLOSED(2, "Fechada");
     
-    int type;
+    private final int id;
+    private final String description;
     
-    OfferStatus(int type) {
-        this.type = type;
+    OfferStatus(int id, String description) {
+        this.id = id;
+        this.description = description;
     }
+    
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public int getId() {
+        return this.id;
+    }
+    
+    public static OfferStatus parse(int id) {    
+        for(OfferStatus offerStatus : OfferStatus.values()) {
+            if(offerStatus.getId() == id) {
+                return offerStatus;
+            }
+        } return null;
+    }
+    
+    
 }

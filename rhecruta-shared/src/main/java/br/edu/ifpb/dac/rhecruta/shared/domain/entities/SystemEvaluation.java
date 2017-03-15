@@ -3,16 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
+
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class SystemEvaluation {
+
+@Entity
+@Table(name = "system_evaluation")
+public class SystemEvaluation implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     private Double score;
+    
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
     private Offer offer;
 
     public SystemEvaluation(Double score, Candidate candidate, Offer offer) {

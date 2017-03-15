@@ -5,10 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
-import br.edu.ifpb.dac.rhecruta.core.dao.CandidateDAO;
-import br.edu.ifpb.dac.rhecruta.core.dao.UserDAO;
-import br.edu.ifpb.dac.rhecruta.shared.domain.Candidate;
-import br.edu.ifpb.dac.rhecruta.shared.domain.User;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -23,8 +22,6 @@ public class CandidateServiceImpl implements CandidateService {
     
     @EJB
     private CandidateDAO candidateDAO;
-    @EJB
-    private UserDAO userDAO;
 
     @Override
     public Candidate getByUser(User user) {
@@ -33,13 +30,11 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void save(Candidate candidate) {
-        userDAO.save(candidate.getUser());
         candidateDAO.save(candidate);
     }
 
     @Override
     public void update(Candidate candidate) {
-        userDAO.update(candidate.getUser());
         candidateDAO.update(candidate);
     }
 

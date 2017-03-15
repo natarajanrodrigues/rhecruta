@@ -3,35 +3,56 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferStatus;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class Offer {
+@Entity
+public class Offer implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private OfferType type;
+    
+    @Column(name = "offer_type_id")
+    private int typeId;
+    
+    @ElementCollection(fetch = FetchType.EAGER)
     private final List<String> skills;
+    
     private String description;
     private Integer vacancies;
-    private OfferStatus status;
+    
+    @Column(name = "status_id")
+    private int statusId;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
     private final List<Candidate> candidates;
 
     public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates) {
         this.id = id;
-        this.type = type;
+        this.typeId = type.getId();
         this.skills = skills;
         this.description = description;
         this.vacancies = vacancies;
-        this.status = status;
+        this.statusId = status.getId();
         this.candidates = candidates;
     }
     
@@ -49,11 +70,11 @@ public class Offer {
     }
 
     public OfferType getType() {
-        return type;
+        return OfferType.parse(this.typeId);
     }
 
     public void setType(OfferType type) {
-        this.type = type;
+        this.typeId = type.getId();
     }
 
     public List<String> getSkills() {
@@ -89,11 +110,11 @@ public class Offer {
     }
 
     public OfferStatus getStatus() {
-        return status;
+        return OfferStatus.parse(this.statusId);
     }
 
     public void setStatus(OfferStatus status) {
-        this.status = status;
+        this.statusId = status.getId();
     }
 
     public List<Candidate> getCandidates() {
@@ -110,6 +131,6 @@ public class Offer {
 
     @Override
     public String toString() {
-        return "Offer{" + "id=" + id + ", type=" + type + ", skills=" + skills + ", description=" + description + ", vacancies=" + vacancies + ", status=" + status + '}';
+        return "Offer{" + "id=" + id + ", type=" + getStatus() + ", skills=" + skills + ", description=" + description + ", vacancies=" + vacancies + ", status=" + getStatus() + '}';
     } 
 }

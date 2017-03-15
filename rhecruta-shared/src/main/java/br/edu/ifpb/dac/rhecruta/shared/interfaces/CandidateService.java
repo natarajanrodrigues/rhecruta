@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
-import br.edu.ifpb.dac.rhecruta.shared.domain.Candidate;
-import br.edu.ifpb.dac.rhecruta.shared.domain.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 
 /**
  *

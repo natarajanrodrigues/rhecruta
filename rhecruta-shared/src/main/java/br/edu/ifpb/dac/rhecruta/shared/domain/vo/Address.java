@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.vo;
+
+import java.io.Serializable;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class Address {
+@Embeddable
+public class Address implements Serializable {
     
     private String country;
     private String state;

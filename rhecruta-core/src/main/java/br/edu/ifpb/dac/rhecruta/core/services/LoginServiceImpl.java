@@ -5,9 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
-import br.edu.ifpb.dac.rhecruta.core.dao.LoginDAO;
-import br.edu.ifpb.dac.rhecruta.shared.domain.Credentials;
-import br.edu.ifpb.dac.rhecruta.shared.domain.User;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.LoginDAO;
+import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.LoginService;
 import javax.ejb.EJB;
 import javax.ejb.Remote;

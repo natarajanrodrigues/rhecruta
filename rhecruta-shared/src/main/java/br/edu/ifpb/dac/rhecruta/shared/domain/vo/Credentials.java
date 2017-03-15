@@ -3,15 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.vo;
+
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class Credentials {
+@Embeddable
+public class Credentials implements Serializable {
     
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false, unique = false)
     private String password;
 
     public Credentials(String email, String password) {

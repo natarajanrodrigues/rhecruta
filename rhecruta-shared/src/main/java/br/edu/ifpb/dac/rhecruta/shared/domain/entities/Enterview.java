@@ -3,23 +3,51 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.domain;
+package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class Enterview {
+@Entity
+public class Enterview implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
     private Offer offer;
+    
+    @ManyToOne
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+    
+    @Column(name = "start_time")
     private LocalDateTime start;
+    @Column(name = "end_time")
     private LocalDateTime end;
+    
+    @Embedded
     private Address address;
+    
+    @ManyToOne
+    @JoinColumn(name = "applier_id")
     private Administrator applier;
+    
     private Double score;
 
     public Enterview(Long id, Offer offer, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Administrator applier, Double score) {

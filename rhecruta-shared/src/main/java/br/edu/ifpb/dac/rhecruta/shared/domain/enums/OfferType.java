@@ -11,15 +11,29 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum OfferType {
     
-    OPEN(1), INVITE(2);
+    OPEN(1, "Pública"), INVITE(2, "Por convite");
     
-    int type;
+    private final int id;
+    private final String description;
     
-    OfferType(int type) {
-        this.type = type;
+    OfferType(int id, String description) {
+        this.id = id;
+        this.description = description;
     }
 
-    public int getType() {
-        return type;
+    public int getId() {
+        return id;
+    }
+    
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public static OfferType parse(int id) {    
+        for(OfferType offerType : OfferType.values()) {
+            if(offerType.getId() == id) {
+                return offerType;
+            }
+        } return null;
     }
 }

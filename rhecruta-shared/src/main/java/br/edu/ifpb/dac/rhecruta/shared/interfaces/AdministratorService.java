@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
-import br.edu.ifpb.dac.rhecruta.shared.domain.Administrator;
-import br.edu.ifpb.dac.rhecruta.shared.domain.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 
 /**

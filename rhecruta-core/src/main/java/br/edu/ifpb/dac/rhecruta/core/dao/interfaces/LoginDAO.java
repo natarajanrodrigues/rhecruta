@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.shared.interfaces;
+package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
@@ -12,7 +12,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
  *
  * @author Pedro Arthur
  */
-public interface LoginService {
+public interface LoginDAO {
     
     User signIn(Credentials credentials);
 }

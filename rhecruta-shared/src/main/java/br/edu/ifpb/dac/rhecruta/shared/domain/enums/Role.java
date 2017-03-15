@@ -11,15 +11,29 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum Role {
     
-    CANDIDATE(1), MANAGER(2), APPRAISER(3);
+    CANDIDATE(1, "Candidato"), MANAGER(2, "Gerente"), APPRAISER(3, "Avaliador");
     
-    int type;
+    private final int id;
+    private final String description;
     
-    Role(int type) {
-        this.type = type;
+    Role(int type, String description) {
+        this.id = type;
+        this.description = description;
     }
     
-    public int getType() {
-        return type;
+    public int getId() {
+        return id;
+    }
+    
+    public String getDescription() {
+        return this.description;
+    }
+    
+    public static Role parse(int id) {   
+        for(Role role : Role.values()) {
+            if(role.getId() == id) {
+                return role;
+            }
+        } return null;
     }
 }

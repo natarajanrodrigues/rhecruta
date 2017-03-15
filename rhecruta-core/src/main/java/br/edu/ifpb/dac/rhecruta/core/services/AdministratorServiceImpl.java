@@ -5,10 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
-import br.edu.ifpb.dac.rhecruta.core.dao.AdministratorDAO;
-import br.edu.ifpb.dac.rhecruta.core.dao.UserDAO;
-import br.edu.ifpb.dac.rhecruta.shared.domain.Administrator;
-import br.edu.ifpb.dac.rhecruta.shared.domain.User;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import javax.ejb.EJB;
@@ -23,8 +22,6 @@ public class AdministratorServiceImpl implements AdministratorService {
     
     @EJB
     private AdministratorDAO administratorDAO;
-    @EJB
-    private UserDAO userDAO;
 
     @Override
     public Administrator getByUser(User user) {
@@ -33,13 +30,11 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void save(Administrator administrator) {
-        userDAO.save(administrator.getUser());
         administratorDAO.save(administrator);
     }
 
     @Override
     public void update(Administrator administrator) {
-        userDAO.update(administrator.getUser());
         administratorDAO.update(administrator);
     }
 
@@ -50,7 +45,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void changeRole(Administrator administrator, Role newRole) {
-        administratorDAO.changeRole(administrator, newRole);
+        administrator.getUser().setRole(newRole);
+        administratorDAO.update(administrator);
     }
     
 }

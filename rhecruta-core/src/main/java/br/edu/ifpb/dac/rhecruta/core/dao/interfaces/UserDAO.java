@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.core.dao;
+package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
+
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 
 /**
  *
  * @author Pedro Arthur
- * @param <T>
  */
-public interface DAO<T> {
+public interface UserDAO {
     
-    void save(T obj);
-    void update(T obj);
-    
+    void evaluateSignUpRequest(User user, Boolean approved);
 }
