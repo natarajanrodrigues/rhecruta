@@ -11,13 +11,14 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.LoginService;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Pedro Arthur
  */
 
-
+@Stateless
 @Remote(LoginService.class)
 public class LoginServiceImpl implements LoginService {
     

@@ -2,6 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="rhecruta-pu" transaction-type="JTA">
     <jta-data-source>java:app/rhecruta-data-source</jta-data-source>
+    
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview</class>
@@ -9,6 +10,8 @@
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.SystemEvaluation</class>
     <class>br.edu.ifpb.dac.rhecruta.shared.domain.entities.User</class>
+    <class>br.edu.ifpb.dac.rhecruta.core.dao.converters.LocalDateTimeConverter</class>
+    
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

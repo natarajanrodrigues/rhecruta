@@ -11,12 +11,13 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Pedro Arthur
  */
-
+@Stateless
 @Remote(CandidateService.class)
 public class CandidateServiceImpl implements CandidateService {
     

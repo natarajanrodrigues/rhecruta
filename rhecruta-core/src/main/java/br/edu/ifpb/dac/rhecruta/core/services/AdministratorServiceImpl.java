@@ -12,11 +12,13 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Pedro Arthur
  */
+@Stateless
 @Remote(AdministratorService.class)
 public class AdministratorServiceImpl implements AdministratorService {
     
