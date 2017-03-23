@@ -49,15 +49,17 @@ public class Candidate implements Serializable {
     @Column(name = "github_url")
     private String githubUrl;
 
-    public Candidate(Long id, User user, String linkedInUrl, String githubUrl) {
+    public Candidate(Long id, User user, String linkedInUrl, String githubUrl, Address address) {
         this.id = id;
         this.user = user;
         this.linkedInUrl = linkedInUrl;
         this.githubUrl = githubUrl;
+        this.address = address;
     }
     
     public Candidate() {
-        
+        this.address = new Address();
+        this.user = new User();
     }
     
     public Long getId() {

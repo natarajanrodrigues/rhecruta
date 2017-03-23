@@ -42,13 +42,18 @@ public class Administrator implements Serializable {
     @JoinColumn(name = "system_user_id", nullable = false)
     private User user;
 
-    public Administrator(Long id, User user) {
+    public Administrator(Long id, String cpf, String firstname, String lastname, Address address, User user) {
         this.id = id;
+        this.cpf = cpf;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
         this.user = user;
     }
     
     public Administrator() {
-        
+        this.address = new Address();
+        this.user = new User();
     }
 
     public Long getId() {
