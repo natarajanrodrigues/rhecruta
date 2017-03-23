@@ -1,7 +1,7 @@
 CREATE TABLE system_user (
 	--User data
 	id SERIAL,
-	username VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	role_id INT NOT NULL,
 	approved BOOLEAN NOT NULL,
@@ -18,6 +18,7 @@ CREATE TABLE candidate (
 	--Embedded Address
 	country VARCHAR(255) NOT NULL,
 	state VARCHAR(255) NOT NULL,
+        city VARCHAR(255) NOT NULL,
 	neighborhood VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NOT NULL,
 	complement VARCHAR(255) NOT NULL,
@@ -42,6 +43,7 @@ CREATE TABLE administrator (
 	--Embedded Address
 	country VARCHAR(255) NOT NULL,
 	state VARCHAR(255) NOT NULL,
+        city VARCHAR(255) NOT NULL,
 	neighborhood VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NOT NULL,
 	complement VARCHAR(255) NOT NULL,
@@ -90,6 +92,7 @@ CREATE TABLE enterview (
 	--Embedded Address
 	country VARCHAR(255) NOT NULL,
 	state VARCHAR(255) NOT NULL,
+        city VARCHAR(255) NOT NULL,
 	neighborhood VARCHAR(255) NOT NULL,
 	street VARCHAR(255) NOT NULL,
 	complement VARCHAR(255) NOT NULL,
@@ -116,7 +119,7 @@ CREATE TABLE system_evaluation (
 );
 
 --DEFAULT ADMIN TO BE INSERTED IN THE DB
-INSERT INTO system_user(username,password,role_id,approved) VALUES ('admin@admin.com','admin',2,true);
+INSERT INTO system_user(email,password,role_id,approved) VALUES ('admin@admin.com','admin',2,true);
 INSERT INTO administrator(cpf,firstname,lastname,country,state,neighborhood,
     street,complement,number,system_user_id) 
 VALUES('11111111111', 'admin', 'admin', 'admin', 'admin', 'admin',

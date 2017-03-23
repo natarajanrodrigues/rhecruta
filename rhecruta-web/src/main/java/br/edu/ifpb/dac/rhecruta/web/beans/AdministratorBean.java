@@ -11,6 +11,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -22,11 +23,15 @@ import javax.inject.Named;
 @RequestScoped
 public class AdministratorBean {
     
+    @Inject
     private AdministratorService administratorService;
     
     private Administrator administrator = new Administrator();
     private User user = new User();
     private Credentials credentials = new Credentials();
+    
+    @Inject
+    private LoginBean loginBean;
     
     public Role[] getRoles() {
         return new Role[] {Role.MANAGER, Role.APPRAISER};
@@ -35,6 +40,16 @@ public class AdministratorBean {
     public String saveAdministrator() {
         this.administratorService.save(administrator);
         return "index.xhtml?faces-redirect=true";
+    }
+    
+    public Administrator getLoggedAdministrator() {
+        User user = loginBean.getLoggedUser();
+        System.out.println("User: "+user);
+        if(user != null) {
+            Administrator logged = this.administratorService.getByUser(user);
+            System.out.println("Administrator: "+logged);
+            return logged;
+        } return null;
     }
 
     public Administrator getAdministrator() {

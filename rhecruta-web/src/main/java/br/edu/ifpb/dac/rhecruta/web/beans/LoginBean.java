@@ -7,8 +7,10 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.LoginService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -19,21 +21,24 @@ import javax.inject.Named;
 @SessionScoped
 public class LoginBean implements Serializable {
     
+    @Inject
+    private LoginService loginService;
+    
     private User loggedUser = new User();
     private Credentials credentials = new Credentials();
     
     public String signIn() {
-        //this.loggedUser = loginService.signIn(credentials);
-        switch(loggedUser.getRole()) {
-            case CANDIDATE:
-                //redirect to candidate/home.xhtml
-                break;
-            case APPRAISER:
-                //redirect to appraiser/home.xhtml
-                break;
-            case MANAGER:
-                //redirect to manager/home.xhtml
-                break;
+        System.out.println("Credentials: "+credentials);
+        this.loggedUser = loginService.signIn(this.credentials);
+        if(this.loggedUser != null) {
+            switch(loggedUser.getRole()) {
+                case CANDIDATE:
+                    return "candidate/home.xhtml";
+                case APPRAISER:
+                    return "appraiser/home.xhtml";
+                case MANAGER:
+                    return "manager/home.xhtml";
+            }
         }
         //FacesContext.addMessage("wrong email/password");
         return "index.xhtml?faces-redirect=true";

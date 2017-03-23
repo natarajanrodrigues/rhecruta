@@ -27,6 +27,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User signIn(Credentials credentials) {
+        System.out.println("[LoginService] requested credentials: "+credentials);
         return loginDAO.signIn(credentials);
     }
     

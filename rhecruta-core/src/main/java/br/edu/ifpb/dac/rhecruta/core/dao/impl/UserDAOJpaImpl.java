@@ -25,10 +25,8 @@ public class UserDAOJpaImpl implements UserDAO {
 
     @Override
     public void evaluateSignUpRequest(User user, Boolean approved) {
-        manager.getTransaction().begin();
         User found = manager.find(User.class, user.getId());
         found.setApproved(approved);
-        manager.getTransaction().commit();
     }
     
 }

@@ -19,7 +19,7 @@ import javax.enterprise.inject.Produces;
 @ApplicationScoped
 public class CandidateServiceProducer {
     
-    private static final String RESOURCE = "";
+    private static final String RESOURCE = "java:global/rhecruta-core/CandidateServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService";
     
     @Dependent
     @Produces

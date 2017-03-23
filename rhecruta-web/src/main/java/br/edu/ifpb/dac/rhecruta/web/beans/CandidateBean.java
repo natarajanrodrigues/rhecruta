@@ -24,11 +24,15 @@ import javax.inject.Named;
 @RequestScoped
 public class CandidateBean {
     
+    @Inject
     private CandidateService candidateService;
     
     private Candidate candidate = new Candidate();
     private User user = new User();
     private Credentials credentials = new Credentials();
+    
+    @Inject
+    private LoginBean loginBean;
     
     public String saveCandidact() {
         this.user.setCredentials(credentials);
@@ -40,6 +44,14 @@ public class CandidateBean {
         this.candidate = new Candidate();
         
         return "index.xhtml?faces-redirect=true";
+    }
+    
+    public Candidate getLoggedCandidate() {
+        User loggedUser = this.loginBean.getLoggedUser();
+        if(loggedUser != null) {
+            Candidate loggedCandidate = candidateService.getByUser(loggedUser);
+            return loggedCandidate;
+        } return null;
     }
     
     public Candidate getCandidact(User user) {

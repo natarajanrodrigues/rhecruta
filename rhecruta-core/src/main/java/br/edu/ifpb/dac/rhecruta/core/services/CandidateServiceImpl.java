@@ -41,7 +41,8 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void delete(Candidate candidate) {
-        candidateDAO.delete(candidate);
+        Candidate found = candidateDAO.get(candidate.getId());
+        candidateDAO.delete(found);
     }
     
 }

@@ -42,7 +42,8 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void delete(Administrator administrator) {
-        administratorDAO.delete(administrator);
+        Administrator found = administratorDAO.get(administrator.getId());
+        administratorDAO.delete(found);
     }
 
     @Override

@@ -8,16 +8,18 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author Pedro Arthur
  */
 
+@Stateless
 @Local(AdministratorDAO.class)
 public class AdministratorDAOJpaImpl implements AdministratorDAO {
     
@@ -26,42 +28,36 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
 
     @Override
     public Administrator getAdministratorByUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Administrator> query = manager
+                .createQuery("SELECT a FROM Administrator a"
+                + " WHERE a.user.id = :userId", Administrator.class)
+                .setParameter("userId", user.getId());
+        return query.getSingleResult();
     }
-
-    /*@Override
-    public void changeRole(Administrator administrator, Role newRole) {
-        manager.getTransaction().begin();
-        Administrator found = manager.find(Administrator.class, administrator.getId());
-        User user = found.getUser();
-        user.setRole(newRole);
-        manager.getTransaction().commit();  
-    }*/
 
     @Override
     public void delete(Administrator administrator) {
-        manager.getTransaction().begin();
         Administrator found = manager.find(Administrator.class, administrator.getId());
         manager.remove(found);
-        manager.getTransaction().commit();
     }
 
     @Override
     public void save(Administrator obj) {
-        manager.getTransaction().begin();
         manager.persist(obj);
-        manager.getTransaction().commit();
     }
 
     @Override
     public void update(Administrator updatedAdmin) {
-        
-        manager.getTransaction().begin();
-        
         manager.merge(updatedAdmin);
-        //what about the role? :x
-        
-        manager.getTransaction().commit();
+    }
+
+    @Override
+    public Administrator get(Long id) {
+        TypedQuery<Administrator> query = manager
+                .createQuery("SELECT a FROM Administrator a"
+                + " WHERE a.id = :id", Administrator.class)
+                .setParameter("userId", id);
+        return query.getSingleResult();
     }
     
 }
