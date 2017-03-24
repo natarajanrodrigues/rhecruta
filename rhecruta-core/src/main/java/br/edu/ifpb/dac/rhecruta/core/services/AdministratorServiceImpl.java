@@ -32,6 +32,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void save(Administrator administrator) {
+        System.out.println("[AdministratorServiceImpl: "+administrator+"]");
         administratorDAO.save(administrator);
     }
 

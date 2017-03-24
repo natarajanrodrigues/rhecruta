@@ -10,7 +10,11 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -37,8 +41,26 @@ public class AdministratorBean {
         return new Role[] {Role.MANAGER, Role.APPRAISER};
     }
     
+    @PostConstruct
+    private void postConstruct() {
+        System.out.println("Construi o AdministratorBean!");
+    }
+    
+    @PreDestroy
+    private void preDestroy() {
+        System.out.println("Destrui o AdministratorBean!");
+    }
+    
     public String saveAdministrator() {
+        System.out.println("OIIIIIIIIII!!!! ENTRA NESSA PORRA!");
+        //
+        this.user.setCredentials(credentials);
+        this.administrator.setUser(user);
+        //
         this.administratorService.save(administrator);
+        
+        System.out.println("[AdministratorBean: "+administrator+"]");
+        
         return "index.xhtml?faces-redirect=true";
     }
     

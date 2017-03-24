@@ -10,8 +10,10 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.LoginService;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.security.auth.login.LoginException;
 
 /**
  *
@@ -27,8 +29,17 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public User signIn(Credentials credentials) {
-        System.out.println("[LoginService] requested credentials: "+credentials);
-        return loginDAO.signIn(credentials);
+        try {
+            return getByCredentials(credentials);
+        } catch(LoginException ex) {
+            throw new EJBException(ex);
+        }
+    }
+    
+    private User getByCredentials(Credentials credentials) throws LoginException {
+        User user = loginDAO.signIn(credentials);
+        if(user == null) throw new LoginException("Invalid E-mail/Password.");
+        return user;
     }
     
 }

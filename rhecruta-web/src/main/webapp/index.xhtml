@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <meta charset="utf-8" />
         <title>Rhecruta</title>
@@ -28,13 +28,13 @@
                     <div class="navbar-header">
                         <!-- Toggle Menu Button -->
                         <button class="navbar-toggle collapsed" 
-                            data-toggle="collapse" 
-                            data-target="#rhecruta-navbar"
-                            aria-expanded="false">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                                data-toggle="collapse" 
+                                data-target="#rhecruta-navbar"
+                                aria-expanded="false">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                         </button>
                         <!-- Nav Brand -->
                         <a class="navbar-brand" href="#home"><strong class="underline">Rh</strong>ecruta</a>
@@ -49,20 +49,20 @@
                 </div>
             </nav>
         </header>
-        
+
         <!-- INTRO SECTION -->
         <section id="home" class="full-screen valign-wrapper">
             <div class="col-sm-8 col-sm-offset-2 valign text-halign smooth-scrolling">
                 <h1 class="title">
                     <strong>
-                    <span class="underline">Rh</span>ecruta
+                        <span class="underline">Rh</span>ecruta
                     </strong> 
                     Is the fastest way to get a job
                 </h1>
                 <a class="btn btn-blank" href="#signup">GET STARTED</a>
             </div>
         </section>
-        
+
         <!-- SIGN UP SECTION -->
         <section id="signup" class="section">
             <div class="container">
@@ -73,11 +73,11 @@
                                 <h1 class="title">
                                     Join
                                     <strong>
-                                    <span class="underline">Rh</span>ecruta
+                                        <span class="underline">Rh</span>ecruta
                                     </strong> 
                                     <br />
                                     <small class="thin">
-                                    The fastest way to get a job
+                                        The fastest way to get a job
                                     </small>
                                 </h1>
                                 <div class="form-group">
@@ -86,15 +86,13 @@
                                         <h:selectOneMenu class="form-control" id="register-as" value = "#{registerBean.registerAs}">
                                             <f:selectItem itemValue = "candidate" itemLabel = "Candidate" />
                                             <f:selectItem itemValue = "employee" itemLabel = "Employee" />
-                                            <f:ajax event="change" render="register-forms" execute="@this"/>
+                                            <f:ajax event="change" render="user-form" execute="@this"/>
                                         </h:selectOneMenu>
                                     </h:form>
                                 </div>
-                                
-                                <h:panelGroup id="register-forms">
-                                    
-                                    <!-- CANDIDATE FORM -->
-                                    <h:form id="candidate-form" rendered="#{registerBean.candidateSelected}">
+                                <!-- CANDIDATE FORM -->
+                                <h:form id="user-form">
+                                    <h:panelGroup rendered="#{registerBean.candidateSelected}">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -102,7 +100,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.firstname}"/>
                                                         <span class="input-group-addon" id="firstname-addon">
-                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                            <i class="fa fa-user" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -111,7 +109,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.lastname}"/>
                                                         <span class="input-group-addon" id="lastname-addon">
-                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                            <i class="fa fa-user" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -120,7 +118,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.cpf}"/>
                                                         <span class="input-group-addon" id="cpf-addon">
-                                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -129,7 +127,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.credentials.email}"/>
                                                         <span class="input-group-addon" id="email-addon">
-                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -138,7 +136,7 @@
                                                     <div class="input-group">
                                                         <h:inputSecret class="form-control" value="#{candidateBean.credentials.password}"/>
                                                         <span class="input-group-addon" id="password-addon">
-                                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                                            <i class="fa fa-key" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -149,7 +147,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.githubUrl}"/>
                                                         <span class="input-group-addon" id="github-addon">
-                                                        <i class="fa fa-github" aria-hidden="true"></i>
+                                                            <i class="fa fa-github" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -158,7 +156,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.linkedInUrl}"/>
                                                         <span class="input-group-addon" id="linkedIn-addon">
-                                                        <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                                            <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -167,16 +165,16 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.address.country}"/>
                                                         <span class="input-group-addon" id="country-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>State</label>
                                                     <div class="input-group">
-                                                        <input class="form-control" type="text" name="state" aria-describedby="state-addon" />
+                                                        <h:inputText class="form-control" value="#{candidateBean.candidate.address.state}"/>
                                                         <span class="input-group-addon" id="state-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -185,17 +183,16 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{candidateBean.candidate.address.city}"/>
                                                         <span class="input-group-addon" id="city-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <h:commandButton class="btn btn-primary" value="REQUEST REGISTER" action="#{candidateBean.saveCandidact()}" />
-                                    </h:form>
-                                    
+                                    </h:panelGroup>
                                     <!-- ADMINISTRATOR FORM -->
-                                    <h:form id="administrator-form" rendered="#{registerBean.employeeSelected}">
+                                    <h:panelGroup rendered="#{registerBean.employeeSelected}">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -203,7 +200,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.firstname}"/>
                                                         <span class="input-group-addon" id="firstname-addon">
-                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                            <i class="fa fa-user" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -212,7 +209,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.lastname}"/>
                                                         <span class="input-group-addon" id="lastname-addon">
-                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                            <i class="fa fa-user" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -221,7 +218,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.cpf}"/>
                                                         <span class="input-group-addon" id="cpf-addon">
-                                                        <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -230,7 +227,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.credentials.email}"/>
                                                         <span class="input-group-addon" id="email-addon">
-                                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -239,7 +236,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.credentials.password}"/>
                                                         <span class="input-group-addon" id="password-addon">
-                                                        <i class="fa fa-key" aria-hidden="true"></i>
+                                                            <i class="fa fa-key" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -248,11 +245,11 @@
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label>Role</label>
-                                                        <select class="form-control" id="employee-role">
-                                                            <ui:repeat var="role" value="#{administratorBean.roles}">
-                                                                <option value="#{role.id}">#{role.description}</option>
-                                                            </ui:repeat>
-                                                        </select>
+                                                        <h:selectOneMenu class="form-control" id="administrator-roles" 
+                                                                         value="#{administratorBean.user.role}" converter="RoleConverter">
+                                                            <f:selectItems value="#{administratorBean.roles}" var="role" 
+                                                                           itemValue="#{role.id}" itemLabel="#{role.description}"/>
+                                                        </h:selectOneMenu>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -260,7 +257,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.address.country}"/>
                                                         <span class="input-group-addon" id="country-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -269,7 +266,7 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.address.state}"/>
                                                         <span class="input-group-addon" id="state-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -278,22 +275,22 @@
                                                     <div class="input-group">
                                                         <h:inputText class="form-control" value="#{administratorBean.administrator.address.city}"/>
                                                         <span class="input-group-addon" id="city-addon">
-                                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <h:commandButton class="btn btn-primary" value="REQUEST REGISTER" action="#{administratorBean.saveAdministrator()}" />
-                                    </h:form>
-                                </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- LOGIN MODAL -->
         <div class="modal fade login-modal" tabindex="-1" role="dialog" 
              aria-labelledby="myLoginModal">
@@ -330,5 +327,6 @@
                 </div>
             </div>
         </div>
+
     </body>
 </html>

@@ -43,6 +43,7 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
 
     @Override
     public void save(Administrator obj) {
+        System.out.println("[AdministratorDAOJpaImpl: "+obj+"]");
         manager.persist(obj);
     }
 

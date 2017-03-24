@@ -5,8 +5,11 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -16,12 +19,13 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class RegisterBean {
+public class RegisterBean implements Serializable {
 
     private String registerAs;
     
     @PostConstruct
     private void init() {
+        System.out.println("Register as Candidate!");
         this.registerAs = "candidate";
     }
 
@@ -30,6 +34,7 @@ public class RegisterBean {
     }
 
     public void setRegisterAs(String registerAs) {
+        System.out.println("Setting selected as "+registerAs);
         this.registerAs = registerAs;
     }
 
