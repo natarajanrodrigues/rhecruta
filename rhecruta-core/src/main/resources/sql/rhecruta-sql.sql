@@ -120,7 +120,7 @@ CREATE TABLE system_evaluation (
 
 --DEFAULT ADMIN TO BE INSERTED IN THE DB
 INSERT INTO system_user(email,password,role_id,approved) VALUES ('admin@admin.com','admin',2,true);
-INSERT INTO administrator(cpf,firstname,lastname,country,state,neighborhood,
+INSERT INTO administrator(cpf,firstname,lastname,country,city,state,neighborhood,
     street,complement,number,system_user_id) 
-VALUES('11111111111', 'admin', 'admin', 'admin', 'admin', 'admin',
+VALUES('11111111111', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 
     'admin', 'admin', 1001, 1);
