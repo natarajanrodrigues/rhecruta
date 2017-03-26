@@ -11,6 +11,8 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Pedro Arthur && Natarajan
  */
 
 @Named
@@ -37,7 +39,18 @@ public class CandidateBean {
     @Inject
     private LoginBean loginBean;
     
+    @PostConstruct
+    private void postConstruct() {
+        System.out.println("Construi o CandidateBean!");
+    }
+    
+    @PreDestroy
+    private void preDestroy() {
+        System.out.println("Destrui o CandidateBean!");
+    }
+    
     public String saveCandidact() {
+        System.out.println("Salvando candidato...");
         this.user.setCredentials(credentials);
         this.user.setRole(Role.CANDIDATE);
         this.candidate.setUser(user);

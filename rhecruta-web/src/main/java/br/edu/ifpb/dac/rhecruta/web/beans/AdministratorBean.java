@@ -20,7 +20,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Pedro Arthur && Natarajan
  */
 
 @Named
@@ -37,9 +37,9 @@ public class AdministratorBean {
     @Inject
     private LoginBean loginBean;
     
-    public Role[] getRoles() {
-        return new Role[] {Role.MANAGER, Role.APPRAISER};
-    }
+//    public Role[] getRoles() {
+//        return new Role[] {Role.MANAGER, Role.APPRAISER};
+//    }
     
     @PostConstruct
     private void postConstruct() {

@@ -23,7 +23,9 @@ public class RoleConverter implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         System.out.println("String to convert: "+value);
         Integer id = Integer.valueOf(value);
-        return Role.parse(id);
+        Role role = Role.parse(id);
+        System.out.println(role);
+        return role;
     }
 
     @Override
