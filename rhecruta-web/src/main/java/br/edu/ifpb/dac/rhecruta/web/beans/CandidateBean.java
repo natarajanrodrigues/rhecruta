@@ -59,7 +59,7 @@ public class CandidateBean {
         this.candidateService.save(candidate);
         this.candidate = new Candidate();
         
-        return "index.xhtml?faces-redirect=true";
+        return "result_request_register.xhtml?faces-redirect=true";
     }
     
     public Candidate getLoggedCandidate() {

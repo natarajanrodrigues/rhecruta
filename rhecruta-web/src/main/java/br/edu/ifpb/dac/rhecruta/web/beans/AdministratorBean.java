@@ -61,7 +61,7 @@ public class AdministratorBean {
         
         System.out.println("[AdministratorBean: "+administrator+"]");
         
-        return "index.xhtml?faces-redirect=true";
+        return "result_request_register.xhtml?faces-redirect=true";
     }
     
     public Administrator getLoggedAdministrator() {
