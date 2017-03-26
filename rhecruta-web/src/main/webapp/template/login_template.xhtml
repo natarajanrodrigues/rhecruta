@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:body>
+
+        <ui:composition>
+            <div class="modal fade login-modal" tabindex="-1" role="dialog" 
+                 aria-labelledby="myLoginModal">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">SignIn</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Fill the fields below to sign in!</p>
+                            <h:form id="login-form">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <div class="input-group">
+                                        <h:inputText class="form-control" value="#{loginBean.credentials.email}"/>
+                                        <span class="input-group-addon" id="email-addon">
+                                            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="input-group">
+                                        <h:inputSecret class="form-control" value="#{loginBean.credentials.password}"/>
+                                        <span class="input-group-addon" id="password-addon">
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <h:commandButton class="btn btn-primary btn-block" value="SignIn" action="#{loginBean.signIn()}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:composition>
+
+    </h:body>
+</html>
