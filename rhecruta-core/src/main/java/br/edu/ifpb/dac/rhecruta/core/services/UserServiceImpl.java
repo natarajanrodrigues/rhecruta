@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.core.services;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.UserDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -32,6 +33,11 @@ public class UserServiceImpl implements UserService {
     public void evaluateSignUpRequest(User user, Boolean approved) {
         userDAO.evaluateSignUpRequest(user, approved);
         //Send Email
+    }
+    
+    @Override
+    public List<User> usersToApprove() {
+        return userDAO.usersToApprove();
     }
     
 }

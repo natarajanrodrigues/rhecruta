@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 public interface UserDAO {
     
     void evaluateSignUpRequest(User user, Boolean approved);
+    
+    List<User> usersToApprove();
+    
 }

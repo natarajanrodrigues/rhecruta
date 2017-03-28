@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,6 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 public interface UserService {
     
     void evaluateSignUpRequest(User user, Boolean approved);
+    
+    List<User> usersToApprove();
 }

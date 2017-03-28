@@ -37,7 +37,7 @@ public class LoginBean implements Serializable {
                 case APPRAISER:
                     return "appraiser/home.xhtml";
                 case MANAGER:
-                    return "manager/home.xhtml";
+                    return "manager/home.xhtml?faces-redirect=true";
             }
         }
         //FacesContext.addMessage("wrong email/password");
@@ -45,8 +45,9 @@ public class LoginBean implements Serializable {
     }
     
     public String signOut() {
+        System.out.println("fez Logout");
         this.loggedUser = new User();
-        return "index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 
     public User getLoggedUser() {

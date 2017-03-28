@@ -7,16 +7,23 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.UserDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Pedro Arthur && Natarajan Rodrigues
  * 
  */
-
+@Stateless
 @Local(UserDAO.class)
 public class UserDAOJpaImpl implements UserDAO {
      
@@ -28,5 +35,25 @@ public class UserDAOJpaImpl implements UserDAO {
         User found = manager.find(User.class, user.getId());
         found.setApproved(approved);
     }
+    
+    
+    @Override
+    public List<User> usersToApprove() {
+        
+        System.out.println("Getting users do Approve ");
+        //
+        
+        Query query = manager
+                .createQuery("SELECT u FROM User u"
+                + " WHERE u.approved = false");
+        
+        List<User> list = query.getResultList();
+        
+        if (list == null || list.isEmpty() )
+            return Collections.EMPTY_LIST;
+        else return list;
+        
+    }
+    
     
 }
