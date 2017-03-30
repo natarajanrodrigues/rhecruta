@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     <label>E-mail</label>
                                     <div class="input-group">
-                                        <h:inputText class="form-control" value="#{loginBean.credentials.email}"/>
+                                        <h:inputText id="emailInput" class="form-control" value="#{loginBean.credentials.email}"/>
                                         <span class="input-group-addon" id="email-addon">
                                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                         </span>
@@ -31,13 +31,18 @@
                                 <div class="form-group">
                                     <label>Password</label>
                                     <div class="input-group">
-                                        <h:inputSecret class="form-control" value="#{loginBean.credentials.password}"/>
+                                        <h:inputSecret id="passInput" class="form-control" value="#{loginBean.credentials.password}"/>
                                         <span class="input-group-addon" id="password-addon">
                                             <i class="fa fa-key" aria-hidden="true"></i>
                                         </span>
                                     </div>
                                 </div>
-                                <h:commandButton class="btn btn-primary btn-block" value="SignIn" action="#{loginBean.signIn()}"/>
+                                <h:panelGrid id="login-area">
+                                    <h:messages globalOnly="true" for="login-area" styleClass="alert alert-danger"></h:messages>
+                                </h:panelGrid>
+                                <h:commandButton  class="btn btn-primary btn-block" value="SignIn" action="#{loginBean.signIn()}">
+                                    <f:ajax render="login-form" execute="emailInput passInput"/>
+                                </h:commandButton>
                             </h:form>
                         </div>
                     </div>

@@ -37,7 +37,7 @@ public class CandidateBean {
     private Credentials credentials = new Credentials();
     
     @Inject
-    private LoginBean loginBean;
+    private User loggedUser;
     
     @PostConstruct
     private void postConstruct() {
@@ -63,10 +63,7 @@ public class CandidateBean {
     }
     
     public Candidate getLoggedCandidate() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
         
-        User loggedUser = this.loginBean.getLoggedUser();
         if(loggedUser != null) {
             Candidate loggedCandidate = candidateService.getByUser(loggedUser);
             return loggedCandidate;

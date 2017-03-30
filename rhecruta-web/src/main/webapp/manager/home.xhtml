@@ -30,8 +30,8 @@ and open the template in the editor.
                                 <li> 
                                     <a href="#">
                                         <span>Solicitações</span>
-                                        <c:if test="${administratorBean.usersToApprove > 0}">
-                                            <span>(#{administratorBean.usersToApprove})</span>
+                                        <c:if test="${userBean.usersToApproveCount > 0}">
+                                            <span>(#{userBean.usersToApproveCount})</span>
                                         </c:if>
                                     </a>
                                 </li>
@@ -42,27 +42,35 @@ and open the template in the editor.
                         </div>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
 
-                            <c:if test="${administratorBean.usersToApprove > 0}">
-                                <a href="#{index}" >Você tem novas solicitações para aprovar: #{administratorBean.usersToApprove}</a>
+                            <c:if test="${userBean.usersToApproveCount == 0}">
+                                <h4>There's no user request.</h4>
                             </c:if>
-
-                            <div class="content" >
-                                <p>CPF: #{administratorBean.loggedAdministrator.cpf}</p>
-                                <p>Firstname: #{administratorBean.loggedAdministrator.firstname}</p>
-                                <p>Lastname: #{administratorBean.loggedAdministrator.lastname}</p>
-                                <p>Role: #{administratorBean.loggedAdministrator.user.role.description}</p>
-                            </div>
+                            
+                            <h:form>
+                                <div class="content" >
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>ID</th>
+                                            <th>E-mail</th>
+                                            <th>Approve</th>
+                                            <th>Deny</th>
+                                        </thead>
+                                        <tbody>
+                                            <ui:repeat var="user" value="#{userBean.usersToApprove}">
+                                                <tr>
+                                                    <td>#{user.id}</td>
+                                                    <td>#{user.credentials.email}</td>
+                                                    <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(user)}"/></td>
+                                                    <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{userBean.denyRequest(user)}"/></td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </h:form>
                             
                         </div>
                     </div>
-
-                    
-
-                <!--</div>-->
-
-                
-                
-                
 
             </ui:define>
 

@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
 import javax.security.auth.login.LoginException;
 
 /**
@@ -37,9 +38,14 @@ public class LoginServiceImpl implements LoginService {
     }
     
     private User getByCredentials(Credentials credentials) throws LoginException {
-        User user = loginDAO.signIn(credentials);
-        if(user == null) throw new LoginException("Invalid E-mail/Password.");
-        return user;
+        try {
+            //
+            User user = loginDAO.signIn(credentials);
+            if(!user.isApproved()) throw new LoginException("User not approved yet.");
+                return user;
+        } catch (Exception ex) {
+            throw new LoginException("Invalid E-mail/Password.");
+        }
     }
     
 }

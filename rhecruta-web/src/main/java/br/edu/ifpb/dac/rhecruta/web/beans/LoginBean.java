@@ -8,29 +8,42 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.LoginService;
+import br.edu.ifpb.dac.rhecruta.web.utils.SessionUtils;
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.EJBException;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Pedro Arthur
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
     
     @Inject
     private LoginService loginService;
     
-    private User loggedUser = new User();
+    @Inject
+    private User loggedUser;
+    
     private Credentials credentials = new Credentials();
     
     public String signIn() {
         System.out.println("Credentials: "+credentials);
-        this.loggedUser = loginService.signIn(this.credentials);
-        if(this.loggedUser != null) {
+        
+        HttpSession session = SessionUtils.getSession(true);
+        
+        try {
+            User loggedUser = loginService.signIn(this.credentials);
+            
+            session.setAttribute("loggedUser", loggedUser);
+            System.out.println("achou usuario");
             switch(loggedUser.getRole()) {
                 case CANDIDATE:
                     return "candidate/home.xhtml";
@@ -38,24 +51,26 @@ public class LoginBean implements Serializable {
                     return "appraiser/home.xhtml";
                 case MANAGER:
                     return "manager/home.xhtml?faces-redirect=true";
+                default:
+                    System.out.println("Sem Role!");
+                    return "index.xhtml?faces-redirect=true";
             }
-        }
-        //FacesContext.addMessage("wrong email/password");
-        return "index.xhtml?faces-redirect=true";
+            
+        } catch (Exception ex) {
+            System.out.println("Entrou na exceção: "+ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage("loginError", new FacesMessage("Login deu errado"));
+            return null;
+        }  
     }
     
     public String signOut() {
-        System.out.println("fez Logout");
-        this.loggedUser = new User();
+        HttpSession session = SessionUtils.getSession(false);
+        session.setAttribute("loggedUser", null);
         return "/index.xhtml?faces-redirect=true";
     }
 
     public User getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
+        return this.loggedUser;
     }
 
     public Credentials getCredentials() {

@@ -33,7 +33,10 @@ public class UserDAOJpaImpl implements UserDAO {
     @Override
     public void evaluateSignUpRequest(User user, Boolean approved) {
         User found = manager.find(User.class, user.getId());
-        found.setApproved(approved);
+        if(approved)
+            found.setApproved(approved);
+        else
+            manager.remove(found);
     }
     
     

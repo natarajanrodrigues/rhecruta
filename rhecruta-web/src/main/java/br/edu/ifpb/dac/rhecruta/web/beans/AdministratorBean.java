@@ -34,12 +34,12 @@ public class AdministratorBean {
     @Inject
     private UserService userService;
     
+    @Inject
+    private User loggedUser;
+    
     private Administrator administrator = new Administrator();
     private User user = new User();
     private Credentials credentials = new Credentials();
-    
-    @Inject
-    private LoginBean loginBean;
 
         
     @PostConstruct
@@ -66,10 +66,9 @@ public class AdministratorBean {
     }
     
     public Administrator getLoggedAdministrator() {
-        User user = loginBean.getLoggedUser();
-        System.out.println("User: "+user);
-        if(user != null) {
-            Administrator logged = this.administratorService.getByUser(user);
+        System.out.println("User: "+loggedUser);
+        if(loggedUser != null) {
+            Administrator logged = this.administratorService.getByUser(loggedUser);
             System.out.println("Administrator: "+logged);
             return logged;
         } return null;
@@ -99,9 +98,7 @@ public class AdministratorBean {
         this.credentials = credentials;
     }
 
-    public int getUsersToApprove() {
-        return userService.usersToApprove().size();
-    }
+    
     
     
 }
