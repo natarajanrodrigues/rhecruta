@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.List;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface CandidateService {
     void save(Candidate candidate);
     void update(Candidate candidate);
     void delete(Candidate candidate);
+    List<Candidate> listCandidatesToApprove();
+    void denyRequest(Candidate candidate);
 }

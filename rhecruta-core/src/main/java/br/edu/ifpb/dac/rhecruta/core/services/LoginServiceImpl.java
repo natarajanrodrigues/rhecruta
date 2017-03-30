@@ -41,9 +41,11 @@ public class LoginServiceImpl implements LoginService {
         try {
             //
             User user = loginDAO.signIn(credentials);
-            if(!user.isApproved()) throw new LoginException("User not approved yet.");
-                return user;
-        } catch (Exception ex) {
+            if(!user.isApproved()) 
+                throw new LoginException("User not approved yet.");
+            System.out.println("retrieving user: "+user);
+            return user;
+        } catch (NoResultException ex) {
             throw new LoginException("Invalid E-mail/Password.");
         }
     }

@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.List;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface CandidateDAO extends DAO<Candidate> {
     Candidate getCandidateByUser(User user);
     void delete(Candidate candidate);
     Candidate get(Long id);
+    List<Candidate> listCandidatesToApprove();
 }

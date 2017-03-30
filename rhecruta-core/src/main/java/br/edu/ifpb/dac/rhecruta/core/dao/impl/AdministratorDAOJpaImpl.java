@@ -8,10 +8,13 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -57,8 +60,20 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
         TypedQuery<Administrator> query = manager
                 .createQuery("SELECT a FROM Administrator a"
                 + " WHERE a.id = :id", Administrator.class)
-                .setParameter("userId", id);
+                .setParameter("id", id);
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<Administrator> listAdministratorsToApprove() {
+        Query query = manager
+                .createQuery("SELECT a FROM Administrator a WHERE a.user.approved = FALSE");
+        
+        List<Administrator> list = query.getResultList();
+        
+        if (list == null || list.isEmpty() )
+            return Collections.EMPTY_LIST;
+        else return list;
     }
     
 }

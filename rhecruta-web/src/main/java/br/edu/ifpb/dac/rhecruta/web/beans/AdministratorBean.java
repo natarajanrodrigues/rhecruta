@@ -11,6 +11,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -53,7 +54,6 @@ public class AdministratorBean {
     }
     
     public String saveAdministrator() {
-        System.out.println("OIIIIIIIIII!!!! ENTRA NESSA PORRA!");
         //
         this.user.setCredentials(credentials);
         this.administrator.setUser(user);
@@ -72,6 +72,15 @@ public class AdministratorBean {
             System.out.println("Administrator: "+logged);
             return logged;
         } return null;
+    }
+    
+    public List<Administrator> getAdministratorsToApprove() {
+        return administratorService.listAdministratorsToApprove();
+    }
+    
+    public String denyRequest(Administrator administrator) {
+        administratorService.denyRequest(administrator);
+        return null;
     }
 
     public Administrator getAdministrator() {

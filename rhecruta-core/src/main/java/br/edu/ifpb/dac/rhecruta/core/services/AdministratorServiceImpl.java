@@ -10,6 +10,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -51,6 +52,17 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void changeRole(Administrator administrator, Role newRole) {
         administrator.getUser().setRole(newRole);
         administratorDAO.update(administrator);
+    }
+
+    @Override
+    public List<Administrator> listAdministratorsToApprove() {
+        return administratorDAO.listAdministratorsToApprove();
+    }
+
+    @Override
+    public void denyRequest(Administrator administrator) {
+        //Notificate admin
+        delete(administrator);
     }
     
 }

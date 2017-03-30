@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -28,6 +29,10 @@ public class CandidateServiceImpl implements CandidateService {
     public Candidate getByUser(User user) {
         return candidateDAO.getCandidateByUser(user);
     }
+    
+    public void denyCandidate(Candidate candidate) {
+        //deleta candidato
+    }
 
     @Override
     public void save(Candidate candidate) {
@@ -43,6 +48,17 @@ public class CandidateServiceImpl implements CandidateService {
     public void delete(Candidate candidate) {
         Candidate found = candidateDAO.get(candidate.getId());
         candidateDAO.delete(found);
+    }
+
+    @Override
+    public List<Candidate> listCandidatesToApprove() {
+        return candidateDAO.listCandidatesToApprove();
+    }
+
+    @Override
+    public void denyRequest(Candidate candidate) {
+        //Notificate Candidate
+        delete(candidate);
     }
     
 }

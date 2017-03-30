@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
+import java.util.List;
 
 /**
  *
@@ -20,5 +21,7 @@ public interface AdministratorService {
     void update(Administrator administrator);
     void delete(Administrator administrator);
     void changeRole(Administrator administrator, Role newRole);
+    List<Administrator> listAdministratorsToApprove();
+    void denyRequest(Administrator administrator);
     
 }

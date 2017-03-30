@@ -8,10 +8,13 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -57,6 +60,18 @@ public class CandidateDAOJpaImpl implements CandidateDAO {
                 + " WHERE c.id = :id", Candidate.class)
                 .setParameter("id", id);
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<Candidate> listCandidatesToApprove() {
+        Query query = manager
+                .createQuery("SELECT c FROM Candidate c WHERE c.user.approved = FALSE");
+        
+        List<Candidate> list = query.getResultList();
+        
+        if (list == null || list.isEmpty() )
+            return Collections.EMPTY_LIST;
+        else return list;
     }
     
 }

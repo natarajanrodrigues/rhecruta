@@ -11,6 +11,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -68,6 +69,15 @@ public class CandidateBean {
             Candidate loggedCandidate = candidateService.getByUser(loggedUser);
             return loggedCandidate;
         } return null;
+    }
+    
+    public List<Candidate> getCandidatesToApprove() {
+        return candidateService.listCandidatesToApprove();
+    }
+    
+    public String denyRequest(Candidate candidate) {
+        this.candidateService.denyRequest(candidate);
+        return null;
     }
     
     public Candidate getCandidact(User user) {
