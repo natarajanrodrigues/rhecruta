@@ -31,7 +31,7 @@ and open the template in the editor.
                                     <a href="#">
                                         <span>Solicitações</span>
                                         <c:if test="${userBean.usersToApproveCount > 0}">
-                                            <span>(#{userBean.usersToApproveCount})</span>
+                                            <span class="badge">#{userBean.usersToApproveCount}</span>
                                         </c:if>
                                     </a>
                                 </li>
@@ -47,7 +47,8 @@ and open the template in the editor.
                             </c:if>
                             
                             <h:form>
-                                <div class="content" >
+                                <c:if test="#{administratorBean.administratorsToApprove.size() > 0}">
+                                    <div class="content" id="admins" >
                                     
                                     <h4>Administrator requests</h4>
                                     <table class="table table-striped">
@@ -65,10 +66,10 @@ and open the template in the editor.
                                             <ui:repeat var="admin" value="#{administratorBean.administratorsToApprove}">
                                                 <tr>
                                                     <td>#{admin.id}</td>
-                                                    <th>#{admin.firstname}</th>
-                                                    <th>#{admin.lastname}</th>
-                                                    <th>#{admin.cpf}</th>
-                                                    <th>#{admin.user.role.description}</th>
+                                                    <td>#{admin.firstname}</td>
+                                                    <td>#{admin.lastname}</td>
+                                                    <td>#{admin.cpf}</td>
+                                                    <td>#{admin.user.role.description}</td>
                                                     <td>#{admin.user.credentials.email}</td>
                                                     <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(admin.user)}"/></td>
                                                     <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{administratorBean.denyRequest(admin)}"/></td>
@@ -77,6 +78,13 @@ and open the template in the editor.
                                         </tbody>
                                     </table>
                                     
+                                </div>
+                                
+                                </c:if>
+                                
+                                <c:if test="#{candidateBean.candidatesToApprove.size() > 0}">
+                                
+                                <div class="content" id="candidates" >
                                     <h4>Candidates requests</h4>
                                     <table class="table table-striped">
                                         <thead>
@@ -94,12 +102,12 @@ and open the template in the editor.
                                             <ui:repeat var="candidate" value="#{candidateBean.candidatesToApprove}">
                                                 <tr>
                                                     <td>#{candidate.id}</td>
-                                                    <th>#{candidate.firstname}</th>
-                                                    <th>#{candidate.lastname}</th>
-                                                    <th>#{candidate.cpf}</th>
+                                                    <td>#{candidate.firstname}</td>
+                                                    <td>#{candidate.lastname}</td>
+                                                    <td>#{candidate.cpf}</td>
                                                     <td>#{candidate.user.credentials.email}</td>
-                                                    <th><a href="#{candidate.githubUrl}">Github profile</a></th>
-                                                    <th><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></th>
+                                                    <td><a href="#{candidate.githubUrl}">Github profile</a></td>
+                                                    <td><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></td>
                                                     <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(candidate.user)}"/></td>
                                                     <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.denyRequest(candidate)}"/></td>
                                                 </tr>
@@ -107,6 +115,8 @@ and open the template in the editor.
                                         </tbody>
                                     </table>
                                 </div>
+                                    
+                                </c:if>
                             </h:form>
                             
                         </div>
