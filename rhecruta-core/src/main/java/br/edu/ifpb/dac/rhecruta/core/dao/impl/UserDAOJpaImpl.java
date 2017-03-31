@@ -57,6 +57,14 @@ public class UserDAOJpaImpl implements UserDAO {
         else return list;
         
     }
+
+    @Override
+    public void updatePassword(User user, String password) {
+        User found = manager.find(User.class, user.getId());
+        Credentials credentials = found.getCredentials();
+        credentials.setPassword(password);
+        found.setCredentials(credentials);
+    }
     
     
 }

@@ -25,7 +25,7 @@
                         <a class="navbar-brand" href="home.xhtml"><strong class="underline">Rh</strong>ecruta</a>
                     </div>
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right" id="navbar-nav-custom">
                             <!--<li class="active"><a href="#home">Home</a></li>-->
                             <!--                                <li><a href="#signup">Create account</a></li>-->
                             
@@ -36,7 +36,12 @@
                                     #{administratorBean.loggedAdministrator.firstname}
                                     <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li class="dropdown-header">Logado como #{loginBean.loggedUser.role.description}</li>
+                                        <li class="dropdown-header">Logged as #{loginBean.loggedUser.role.description}</li>
+                                        <li>
+                                            <a href="profile.xhtml">Settings</a>
+                                            <a href="password.xhtml">Change Password</a>
+                                            <!--<h:link target="/tst">teste</h:link>-->
+                                        </li>
                                         <li role="separator" class="divider"></li>
                                         <li>
                                             <h:form class="container-fluid">

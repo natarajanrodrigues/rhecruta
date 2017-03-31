@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import java.util.List;
 
 /**
@@ -17,4 +18,6 @@ public interface UserService {
     void evaluateSignUpRequest(User user, Boolean approved);
     
     List<User> usersToApprove();
+    
+    void changePassword(User user, String password, String confirmPassword);
 }

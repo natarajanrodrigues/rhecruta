@@ -18,4 +18,6 @@ public interface UserDAO {
     
     List<User> usersToApprove();
     
+    void updatePassword(User user, String password);
+    
 }

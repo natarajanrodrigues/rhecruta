@@ -14,7 +14,7 @@ body {
 	background-color: #e7e7e7;
 }
 
-.navbar-custom .navbar-nav li a {
+#rhecruta-navbar > .navbar-nav > li > a {
 	padding-top:  20px;
 	padding-bottom: 20px;
 	line-height: 24px;
@@ -22,7 +22,7 @@ body {
 	transition: 0.2s;
 }
 
-.navbar-custom .navbar-nav li a:hover {
+#rhecruta-navbar > .navbar-nav > li > a:hover {
 	transition: 0.2s;
 }
 
