@@ -18,6 +18,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 /**
@@ -44,6 +46,9 @@ public class Offer implements Serializable {
     private int statusId;
     
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "offer_candidates",
+            joinColumns = @JoinColumn(name = "offer_id"),
+            inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private final List<Candidate> candidates;
 
     public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates) {
