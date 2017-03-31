@@ -41,10 +41,13 @@ public class AdministratorBean {
     private Administrator administrator = new Administrator();
     private User user = new User();
     private Credentials credentials = new Credentials();
+    
+    private Administrator administratorUpdateble;
 
         
     @PostConstruct
     private void postConstruct() {
+        administratorUpdateble = administratorService.getByUser(getLoggedAdministrator().getUser());
         System.out.println("Construi o AdministratorBean!");
     }
     
@@ -63,6 +66,17 @@ public class AdministratorBean {
         System.out.println("[AdministratorBean: "+administrator+"]");
         
         return "result_request_register.xhtml?faces-redirect=true";
+    }
+    
+    public String updateAdministrator() {
+        
+        System.out.println("[aaaaaaaaaa Updatable: "+administratorUpdateble+"]");
+        
+        administratorService.update(administratorUpdateble);
+        
+        FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage("Successfull updated"));
+        
+        return null;
     }
     
     public Administrator getLoggedAdministrator() {
@@ -107,7 +121,12 @@ public class AdministratorBean {
         this.credentials = credentials;
     }
 
-    
-    
+    public Administrator getAdministratorUpdateble() {
+        return this.administratorUpdateble;
+    }
+
+    public void setAdministratorUpdateble(Administrator administratorUpdateble) {
+        this.administratorUpdateble = administratorUpdateble;
+    }
     
 }
