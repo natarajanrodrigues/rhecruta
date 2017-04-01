@@ -3,21 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.core.services.exceptions;
-
-import javax.ejb.EJBException;
+package br.edu.ifpb.dac.rhecruta.shared.exceptions;
 
 /**
  *
  * @author Pedro Arthur
  */
-public class UniqueFieldException extends EJBException {
+public class EntityNotFoundException extends Exception {
     
-    public UniqueFieldException() {
-        
-    }
-    
-    public UniqueFieldException(String msg) {
+    public EntityNotFoundException(String msg) {
         super(msg);
     }
 }

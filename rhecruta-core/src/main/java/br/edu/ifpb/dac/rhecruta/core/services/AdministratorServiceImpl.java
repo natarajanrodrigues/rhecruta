@@ -6,13 +6,16 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
-import br.edu.ifpb.dac.rhecruta.core.services.exceptions.EntityNotFoundException;
+import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -47,12 +50,23 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void delete(Administrator administrator) {
         try {
-            Administrator found = administratorDAO.get(administrator.getId());
+            Administrator found = find(administrator.getId());
             administratorDAO.delete(found);
+        } catch (EntityNotFoundException ex) {
+            throw new EJBException(ex);
+        }
+    }
+    
+    private Administrator find(Long id) throws EntityNotFoundException {
+        try {
+            Administrator found = administratorDAO.get(id);
+            return found;
         } catch (NoResultException ex) {
             throw new EntityNotFoundException("You're trying to remove a non existent administrator.");
         }
     }
+    
+    
 
     @Override
     public void changeRole(Administrator administrator, Role newRole) {

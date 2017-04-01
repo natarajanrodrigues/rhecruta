@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
+import br.edu.ifpb.dac.rhecruta.shared.exceptions.PasswordContentException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.util.List;
@@ -48,10 +49,9 @@ public class ChangePasswordBean {
             
             userService.changePassword(loggedUser, password, confirmPassword);
             
-        } catch (Exception e){
-
-            System.out.println(e.getMessage());
-            FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage(e.getMessage()));
+        } catch (EJBException ex){
+            System.out.println(ex.getCausedByException().getMessage());
+            FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage(ex.getCausedByException().getMessage()));
             
         }
         

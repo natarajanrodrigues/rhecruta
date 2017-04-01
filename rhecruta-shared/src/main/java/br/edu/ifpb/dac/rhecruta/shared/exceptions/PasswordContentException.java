@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.dac.rhecruta.core.services.exceptions;
+package br.edu.ifpb.dac.rhecruta.shared.exceptions;
 
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
-import javax.ejb.EJBException;
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 
 /**
  *
  * @author natarajan
  */
 
-public class PasswordContentException extends EJBException  {
+public class PasswordContentException extends Exception {
 
     public PasswordContentException() {
     }

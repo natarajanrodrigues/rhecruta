@@ -6,11 +6,14 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
-import br.edu.ifpb.dac.rhecruta.core.services.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
+import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
@@ -35,8 +38,17 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void remove(Offer offer) {
         try {
-            Offer found = offerDAO.get(offer.getId());
-            offerDAO.remove(found);
+            Offer found = find(offer.getId());
+            offerDAO.remove(offer);
+        } catch (EntityNotFoundException ex) {
+            throw new EJBException(ex);
+        }
+    }
+    
+    private Offer find(Long id) throws EntityNotFoundException {
+        try {
+            Offer found = offerDAO.get(id);
+            return found;
         } catch (NoResultException ex) {
             throw new EntityNotFoundException("You're trying to remove a non existent offer!");
         }

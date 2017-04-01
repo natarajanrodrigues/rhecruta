@@ -56,8 +56,8 @@ public class LoginBean implements Serializable {
                     return "index.xhtml?faces-redirect=true";
             }
             
-        } catch (Exception ex) {
-            System.out.println("Entrou na exceção: "+ex.getMessage());
+        } catch (EJBException ex) {
+            System.out.println("Entrou na exceção: "+ex.getCausedByException().getMessage());
             FacesContext.getCurrentInstance().addMessage("loginError", new FacesMessage("Login deu errado"));
             return null;
         }  
