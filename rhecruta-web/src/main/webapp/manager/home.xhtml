@@ -22,11 +22,12 @@ and open the template in the editor.
             <ui:define name="content">
 
                 <!--<div class="container-fluid">-->
-                    
+
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-3 col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-<!--                                <li class="active">-->
+                                <!--                                <li class="active">-->
                                 <li> 
                                     <a href="#">
                                         <span>Solicitações</span>
@@ -41,87 +42,88 @@ and open the template in the editor.
                             </ul>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
+                            <div class="section">
+                                <c:if test="${userBean.usersToApproveCount == 0}">
+                                    <h4>There's no user request.</h4>
+                                </c:if>
 
-                            <c:if test="${userBean.usersToApproveCount == 0}">
-                                <h4>There's no user request.</h4>
-                            </c:if>
-                            
-                            <h:form>
-                                <c:if test="#{administratorBean.administratorsToApprove.size() > 0}">
-                                    <div class="content" id="admins" >
-                                    
-                                    <h4>Administrator requests</h4>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>ID</th>
-                                            <th>Firstname</th>
-                                            <th>Lastname</th>
-                                            <th>CPF</th>
-                                            <th>Role</th>
-                                            <th>E-mail</th>
-                                            <th>Approve</th>
-                                            <th>Deny</th>
-                                        </thead>
-                                        <tbody>
-                                            <ui:repeat var="admin" value="#{administratorBean.administratorsToApprove}">
-                                                <tr>
-                                                    <td>#{admin.id}</td>
-                                                    <td>#{admin.firstname}</td>
-                                                    <td>#{admin.lastname}</td>
-                                                    <td>#{admin.cpf}</td>
-                                                    <td>#{admin.user.role.description}</td>
-                                                    <td>#{admin.user.credentials.email}</td>
-                                                    <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(admin.user)}"/></td>
-                                                    <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{administratorBean.denyRequest(admin)}"/></td>
-                                                </tr>
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>
-                                    
-                                </div>
-                                
-                                </c:if>
-                                
-                                <c:if test="#{candidateBean.candidatesToApprove.size() > 0}">
-                                
-                                <div class="content" id="candidates" >
-                                    <h4>Candidates requests</h4>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>ID</th>
-                                            <th>Firstname</th>
-                                            <th>Lastname</th>
-                                            <th>CPF</th>
-                                            <th>E-mail</th>
-                                            <th>Github</th>
-                                            <th>LinkedIn</th>
-                                            <th>Approve</th>
-                                            <th>Deny</th>
-                                        </thead>
-                                        <tbody>
-                                            <ui:repeat var="candidate" value="#{candidateBean.candidatesToApprove}">
-                                                <tr>
-                                                    <td>#{candidate.id}</td>
-                                                    <td>#{candidate.firstname}</td>
-                                                    <td>#{candidate.lastname}</td>
-                                                    <td>#{candidate.cpf}</td>
-                                                    <td>#{candidate.user.credentials.email}</td>
-                                                    <td><a href="#{candidate.githubUrl}">Github profile</a></td>
-                                                    <td><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></td>
-                                                    <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(candidate.user)}"/></td>
-                                                    <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.denyRequest(candidate)}"/></td>
-                                                </tr>
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                    
-                                </c:if>
-                            </h:form>
-                            
+                                <h:form>
+                                    <c:if test="#{administratorBean.administratorsToApprove.size() > 0}">
+                                        <div class="content" id="admins" >
+
+                                            <h4>Administrator requests</h4>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <th>ID</th>
+                                                    <th>Firstname</th>
+                                                    <th>Lastname</th>
+                                                    <th>CPF</th>
+                                                    <th>Role</th>
+                                                    <th>E-mail</th>
+                                                    <th>Approve</th>
+                                                    <th>Deny</th>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat var="admin" value="#{administratorBean.administratorsToApprove}">
+                                                        <tr>
+                                                            <td>#{admin.id}</td>
+                                                            <td>#{admin.firstname}</td>
+                                                            <td>#{admin.lastname}</td>
+                                                            <td>#{admin.cpf}</td>
+                                                            <td>#{admin.user.role.description}</td>
+                                                            <td>#{admin.user.credentials.email}</td>
+                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(admin.user)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{administratorBean.denyRequest(admin)}"/></td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </c:if>
+
+                                    <c:if test="#{candidateBean.candidatesToApprove.size() > 0}">
+
+                                        <div class="content" id="candidates" >
+                                            <h4>Candidates requests</h4>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <th>ID</th>
+                                                    <th>Firstname</th>
+                                                    <th>Lastname</th>
+                                                    <th>CPF</th>
+                                                    <th>E-mail</th>
+                                                    <th>Github</th>
+                                                    <th>LinkedIn</th>
+                                                    <th>Approve</th>
+                                                    <th>Deny</th>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat var="candidate" value="#{candidateBean.candidatesToApprove}">
+                                                        <tr>
+                                                            <td>#{candidate.id}</td>
+                                                            <td>#{candidate.firstname}</td>
+                                                            <td>#{candidate.lastname}</td>
+                                                            <td>#{candidate.cpf}</td>
+                                                            <td>#{candidate.user.credentials.email}</td>
+                                                            <td><a href="#{candidate.githubUrl}">Github profile</a></td>
+                                                            <td><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(candidate.user)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.denyRequest(candidate)}"/></td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </c:if>
+                                </h:form>
+
+                            </div>
                         </div>
                     </div>
-
+                </div>
             </ui:define>
 
         </ui:composition>
