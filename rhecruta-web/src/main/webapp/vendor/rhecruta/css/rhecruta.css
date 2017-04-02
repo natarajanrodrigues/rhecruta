@@ -51,6 +51,13 @@ body {
 	background-color: #000;
 }
 
+/* UTILS */
+
+.no-list-style {
+    list-style: none;
+    padding: 0px;
+}
+
 /* FULL SCREEN */
 
 .full-screen {

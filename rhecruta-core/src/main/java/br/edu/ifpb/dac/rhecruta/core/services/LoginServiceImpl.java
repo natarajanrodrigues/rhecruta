@@ -20,34 +20,33 @@ import javax.security.auth.login.LoginException;
  *
  * @author Pedro Arthur
  */
-
 @Stateless
 @Remote(LoginService.class)
 public class LoginServiceImpl implements LoginService {
-    
+
     @EJB
     private LoginDAO loginDAO;
 
     @Override
     public User signIn(Credentials credentials) {
         try {
-            return getByCredentials(credentials);
-        } catch(LoginException ex) {
+            User found = getByCredentials(credentials);
+            return found;
+        } catch (LoginException ex) {
+            System.out.println("Catched LoginException, throwing EJBException with the LoginException wrapped!");
             throw new EJBException(ex);
         }
     }
-    
+
     private User getByCredentials(Credentials credentials) throws LoginException {
-        try {
-            //
-            User user = loginDAO.signIn(credentials);
-            if(!user.isApproved()) 
-                throw new LoginException("User not approved yet.");
-            System.out.println("retrieving user: "+user);
-            return user;
-        } catch (NoResultException ex) {
+        User user = loginDAO.signIn(credentials);
+        if (user == null) {
             throw new LoginException("Invalid E-mail/Password.");
         }
+        if (!user.isApproved()) {
+            throw new LoginException("User wasn't approved yet.");
+        }
+        return user;
     }
-    
+
 }

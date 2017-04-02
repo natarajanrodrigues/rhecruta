@@ -37,18 +37,23 @@
                                         </span>
                                     </div>
                                 </div>
-                                <h:panelGrid id="login-area">
-                                    <h:messages globalOnly="true" for="login-area" styleClass="alert alert-danger"></h:messages>
-                                </h:panelGrid>
-                                <h:commandButton  class="btn btn-primary btn-block" value="SignIn" action="#{loginBean.signIn()}">
-                                    <f:ajax render="login-form" execute="emailInput passInput"/>
-                                </h:commandButton>
+                                <h:commandButton  class="btn btn-primary btn-block" value="SignIn" action="#{loginBean.signIn()}" />
                             </h:form>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Success Messages -->
+        <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('loginError')}">
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                <div class="modal-dialog modal-sm" role="document">
+                    <h:messages class="no-list-style" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                </div>	 
+            </div>
+        </h:panelGroup> 
         </ui:composition>
+        
+        
 
     </h:body>
 </html>

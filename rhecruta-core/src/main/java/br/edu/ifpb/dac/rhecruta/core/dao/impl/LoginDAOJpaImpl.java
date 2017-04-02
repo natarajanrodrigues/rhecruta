@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.LoginDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
+import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -40,7 +41,9 @@ public class LoginDAOJpaImpl implements LoginDAO {
                 .setParameter("email", email)
                 .setParameter("password", password);
         
-        return query.getSingleResult();
+        List<User> resultList = query.getResultList();
+        if(resultList.isEmpty()) return null;
+        return resultList.get(0);
     }
     
 }

@@ -22,6 +22,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.print.attribute.standard.Severity;
 
 /**
  *
@@ -48,15 +49,18 @@ public class ChangePasswordBean {
         try {
             
             userService.changePassword(loggedUser, password, confirmPassword);
-            
-        } catch (EJBException ex){
+            //
+            FacesMessage message = new FacesMessage("Alteração realizada com sucesso");
+            message.setSeverity(FacesMessage.SEVERITY_INFO);
+            FacesContext.getCurrentInstance().addMessage("password-form", message);
+        } 
+        catch (EJBException ex){
             System.out.println(ex.getCausedByException().getMessage());
-            FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage(ex.getCausedByException().getMessage()));
-            
+            //
+            FacesMessage message = new FacesMessage(ex.getCausedByException().getMessage());
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage("password-form", message);
         }
-        
-        FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage("Alteração realizada com sucesso"));
-        
         return null;
     }
 

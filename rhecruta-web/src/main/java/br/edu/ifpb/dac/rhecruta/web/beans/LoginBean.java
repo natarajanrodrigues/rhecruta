@@ -58,7 +58,9 @@ public class LoginBean implements Serializable {
             
         } catch (EJBException ex) {
             System.out.println("Entrou na exceção: "+ex.getCausedByException().getMessage());
-            FacesContext.getCurrentInstance().addMessage("loginError", new FacesMessage("Login deu errado"));
+            FacesMessage message = new FacesMessage(ex.getCausedByException().getMessage());
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage("loginError", message);
             return null;
         }  
     }
