@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.vo;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -17,6 +18,7 @@ import javax.persistence.Embeddable;
 public class Credentials implements Serializable {
     
     @Column(nullable = false, unique = true)
+    @Email(message = "Please, enter a valid email")
     private String email;
     @Column(nullable = false, unique = false)
     private String password;

@@ -37,7 +37,7 @@ CREATE TABLE candidate (
 CREATE TABLE administrator (
 	--Administrator Data
 	id SERIAL,
-	cpf VARCHAR(11) UNIQUE,
+	cpf VARCHAR(14) UNIQUE,
 	firstname VARCHAR(255) NOT NULL,
 	lastname VARCHAR(255) NOT NULL,
 	--Embedded Address
@@ -122,5 +122,5 @@ CREATE TABLE system_evaluation (
 INSERT INTO system_user(email,password,role_id,approved) VALUES ('admin@admin.com','admin',2,true);
 INSERT INTO administrator(cpf,firstname,lastname,country,city,state,neighborhood,
     street,complement,number,system_user_id) 
-VALUES('11111111111', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 
+VALUES('007.980.214-11', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 
     'admin', 'admin', 1001, 1);

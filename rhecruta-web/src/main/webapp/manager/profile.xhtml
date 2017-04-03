@@ -41,7 +41,7 @@ and open the template in the editor.
 
                                 <h:form id="user-form" >
 
-                                    <h:messages class="container-fluid alert alert-info" />
+                                    <h:messages class="container-fluid list-unstyled" errorClass="alert alert-danger" infoClass="alert alert-info"/>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -86,7 +86,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>CPF</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.cpf}"/>
+                                                <h:inputText class="form-control" id="cpf" value="#{administratorBean.administratorUpdateble.cpf}" onkeypress="MascaraCPF(this);" maxlength="14"/>
                                                 <span class="input-group-addon" id="cpf-addon">
                                                     <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                 </span>
@@ -133,7 +133,7 @@ and open the template in the editor.
                     </div>
 
                 </div>
-
+                <script type="text/javascript" src="../vendor/rhecruta/js/cpfValidator.js"></script>    
             </ui:define>
 
         </ui:composition>

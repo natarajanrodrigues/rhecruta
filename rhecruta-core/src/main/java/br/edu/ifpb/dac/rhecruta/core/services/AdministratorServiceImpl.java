@@ -46,7 +46,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void update(Administrator administrator) {
         administratorDAO.update(administrator);
     }
-
+    
     @Override
     public void delete(Administrator administrator) {
         try {

@@ -33,7 +33,9 @@
                             <!-- ADMIN FORM -->
                             <h:panelGroup id="panel1" class="container">
 
-                                <h:form id="user-form" >
+                                <h:form id="user-form">
+                                    <h:messages class="container-fluid list-unstyled" errorClass="alert alert-danger" infoClass="alert alert-info"/>
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Firstname</label>
@@ -89,7 +91,7 @@
                                         <div class="form-group">
                                             <label>CPF</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{administratorBean.administrator.cpf}"/>
+                                                <h:inputText id="cpf"  class="form-control" value="#{administratorBean.administrator.cpf}" onkeypress="MascaraCPF(this);" maxlength="14"/>
                                                 <span class="input-group-addon" id="cpf-addon">
                                                     <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                 </span>
@@ -136,10 +138,12 @@
 
                     </div>
                 </section>
-
+                <script type="text/javascript" src="vendor/rhecruta/js/cpfValidator.js"></script>    
             </ui:define>
 
         </ui:composition>
 
     </h:body>
+    
+    
 </html>
