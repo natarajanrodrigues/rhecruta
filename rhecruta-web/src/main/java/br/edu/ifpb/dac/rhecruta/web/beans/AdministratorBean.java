@@ -42,12 +42,14 @@ public class AdministratorBean {
     private User user = new User();
     private Credentials credentials = new Credentials();
     
-    private Administrator administratorUpdateble;
+    private Administrator administratorUpdateble = new Administrator();
 
         
     @PostConstruct
     private void postConstruct() {
-        administratorUpdateble = administratorService.getByUser(getLoggedAdministrator().getUser());
+        
+        if (loggedUser != null) 
+            administratorUpdateble = administratorService.getByUser(getLoggedAdministrator().getUser());
         System.out.println("Construi o AdministratorBean!");
     }
     
