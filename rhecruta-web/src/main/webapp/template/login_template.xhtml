@@ -9,7 +9,7 @@
 
         <ui:composition>
             <div class="modal fade login-modal" tabindex="-1" role="dialog" 
-                 aria-labelledby="myLoginModal">
+                 aria-labelledby="myLoginModal" id="modalLogin">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -22,7 +22,7 @@
                                 <div class="form-group">
                                     <label>E-mail</label>
                                     <div class="input-group">
-                                        <h:inputText id="emailInput" class="form-control" value="#{loginBean.credentials.email}"/>
+                                        <h:inputText id="emailInput" class="autofocus form-control" value="#{loginBean.credentials.email}" />
                                         <span class="input-group-addon" id="email-addon">
                                             <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                         </span>
@@ -44,16 +44,21 @@
                 </div>
             </div>
             <!-- Success Messages -->
-        <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('loginError')}">
-            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
-                <div class="modal-dialog modal-sm" role="document">
-                    <h:messages class="no-list-style" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
-                </div>	 
-            </div>
-        </h:panelGroup> 
+            <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('loginError')}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                    </div>	 
+                </div>
+            </h:panelGroup> 
+            <script type="text/javascript" >
+                $('#modalLogin').on('shown.bs.modal', function() {
+                    $(this).find('.autofocus').focus();
+                });
+            </script>    
         </ui:composition>
-        
-        
+
+
 
     </h:body>
 </html>
