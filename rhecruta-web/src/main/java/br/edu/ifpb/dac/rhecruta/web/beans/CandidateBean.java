@@ -8,18 +8,14 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
-import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -75,8 +71,8 @@ public class CandidateBean {
         return candidateService.listCandidatesToApprove();
     }
     
-    public String denyRequest(Candidate candidate) {
-        this.candidateService.denyRequest(candidate);
+    public String respondRequest(Candidate candidate, boolean approve) {
+        this.candidateService.respondRequest(candidate, approve);
         return null;
     }
     

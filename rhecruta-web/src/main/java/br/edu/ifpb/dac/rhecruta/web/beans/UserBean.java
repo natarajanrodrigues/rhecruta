@@ -24,16 +24,6 @@ public class UserBean {
     @Inject
     private UserService userService;
     
-    public String approveRequest(User user) {
-        userService.evaluateSignUpRequest(user, true);
-        return null;
-    }
-    
-    public String denyRequest(User user) {
-        userService.evaluateSignUpRequest(user, false);
-        return null;
-    }
-    
     public List<User> getUsersToApprove() {
         return userService.usersToApprove();
     }

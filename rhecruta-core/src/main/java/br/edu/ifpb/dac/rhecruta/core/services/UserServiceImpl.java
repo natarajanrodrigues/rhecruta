@@ -25,22 +25,7 @@ public class UserServiceImpl implements UserService {
     
     @EJB
     private UserDAO userDAO;
-    
-    /**
-     * Approves a register solicitation and notifies the user about the register approval or denial
-     * @param user 
-     * @param approved 
-     */
-    @Override
-    public void evaluateSignUpRequest(User user, Boolean approved) {
-        userDAO.evaluateSignUpRequest(user, approved);
-        //Send Email
-    }
-    
-    @Override
-    public List<User> usersToApprove() {
-        return userDAO.usersToApprove();
-    }
+
 
     @Override
     public void changePassword(User user, String password, String confirmPassword) {
@@ -59,6 +44,11 @@ public class UserServiceImpl implements UserService {
         } else if (!password.equals(confirmPassword)) {
             throw new PasswordContentException("Error: Different values to password e confirmation password");
         }
+    }
+
+    @Override
+    public List<User> usersToApprove() {
+        return userDAO.usersToApprove();
     }
     
     

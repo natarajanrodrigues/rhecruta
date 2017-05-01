@@ -22,6 +22,6 @@ public interface AdministratorService {
     void delete(Administrator administrator);
     void changeRole(Administrator administrator, Role newRole);
     List<Administrator> listAdministratorsToApprove();
-    void denyRequest(Administrator administrator);
+    void respondRequest(Administrator administrator, boolean approve);
     
 }

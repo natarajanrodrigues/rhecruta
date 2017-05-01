@@ -12,7 +12,7 @@ CREATE TABLE system_user (
 CREATE TABLE candidate (
 	--Candidate data
 	id SERIAL,
-	cpf VARCHAR(11) UNIQUE,
+	cpf VARCHAR(14) UNIQUE,
 	firstname VARCHAR(255) NOT NULL,
 	lastname VARCHAR(255) NOT NULL,
 	--Embedded Address

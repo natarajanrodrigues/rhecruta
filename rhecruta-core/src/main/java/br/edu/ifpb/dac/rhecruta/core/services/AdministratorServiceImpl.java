@@ -6,11 +6,14 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
+import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
+import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +33,8 @@ public class AdministratorServiceImpl implements AdministratorService {
     
     @EJB
     private AdministratorDAO administratorDAO;
+    @EJB
+    private EmailRequester emailRequester;
 
     @Override
     public Administrator getByUser(User user) {
@@ -65,8 +70,6 @@ public class AdministratorServiceImpl implements AdministratorService {
             throw new EntityNotFoundException("You're trying to remove a non existent administrator.");
         }
     }
-    
-    
 
     @Override
     public void changeRole(Administrator administrator, Role newRole) {
@@ -80,9 +83,31 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void denyRequest(Administrator administrator) {
-        //Notificate admin
-        delete(administrator);
+    public void respondRequest(Administrator administrator, boolean approved) {
+        Email createdEmail = createEmail(administrator, approved);
+        if(!approved)
+            delete(administrator);
+        else 
+            update(administrator);
+        emailRequester.send(createdEmail);
+    }
+    
+    private Email createEmail(Administrator administrator, boolean approved) {
+        String message;
+        if(approved) {
+            message = "Olá "+administrator.getFirstname()+", estamos felizes em afirmar"
+                + " que sua solicitação de cadastro no site Rhecruta foi aprovada.";
+        } else {
+            message = "Olá "+administrator.getFirstname()+", sentimos informar"
+                + " que sua solicitação de cadastro no site Rhecruta foi negada.";
+        }
+        Email email = new Email();
+        email.setFrom("rhecrutapp@gmail.com");
+        email.setTo(administrator.getUser().getCredentials().getEmail());
+        email.setRequestedDate(LocalDateTime.now());
+        email.setSubject("Sobre sua solicitação de cadastro - Rhecruta");
+        email.setText(message);
+        return email;
     }
     
 }

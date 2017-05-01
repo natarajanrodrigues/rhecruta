@@ -10,8 +10,6 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;

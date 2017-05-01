@@ -7,7 +7,6 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
@@ -94,8 +93,8 @@ public class AdministratorBean {
         return administratorService.listAdministratorsToApprove();
     }
     
-    public String denyRequest(Administrator administrator) {
-        administratorService.denyRequest(administrator);
+    public String respondRequest(Administrator administrator, boolean approve) {
+        administratorService.respondRequest(administrator, approve);
         return null;
     }
 

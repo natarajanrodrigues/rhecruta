@@ -10,24 +10,15 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <!--    <head>
-            <title>TODO supply a title</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        </head>-->
-
     <h:body>
 
         <ui:composition template="/manager/home_layout.xhtml">
 
             <ui:define name="content">
-
-                <!--<div class="container-fluid">-->
-
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-3 col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-                                <!--                                <li class="active">-->
                                 <li> 
                                     <a href="#">
                                         <span>Solicitações</span>
@@ -72,8 +63,8 @@ and open the template in the editor.
                                                             <td>#{admin.cpf}</td>
                                                             <td>#{admin.user.role.description}</td>
                                                             <td>#{admin.user.credentials.email}</td>
-                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(admin.user)}"/></td>
-                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{administratorBean.denyRequest(admin)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{administratorBean.respondRequest(admin, true)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{administratorBean.respondRequest(admin, false)}"/></td>
                                                         </tr>
                                                     </ui:repeat>
                                                 </tbody>
@@ -109,8 +100,8 @@ and open the template in the editor.
                                                             <td>#{candidate.user.credentials.email}</td>
                                                             <td><a href="#{candidate.githubUrl}">Github profile</a></td>
                                                             <td><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></td>
-                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{userBean.approveRequest(candidate.user)}"/></td>
-                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.denyRequest(candidate)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{candidateBean.respondRequest(candidate, true)}"/></td>
+                                                            <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.respondRequest(candidate, false)}"/></td>
                                                         </tr>
                                                     </ui:repeat>
                                                 </tbody>
