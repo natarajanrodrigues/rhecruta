@@ -83,5 +83,25 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
         }
            
     }
+
+    @Override
+    public List<Administrator> getAll() {
+        try {
+            Query query = manager
+                    .createQuery("SELECT a FROM Administrator a WHERE a.user.approved = TRUE");
+
+            List<Administrator> list = query.getResultList();
+
+            if (list == null || list.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return list;
+            }
+
+        } catch (Exception e) {
+            return Collections.EMPTY_LIST;
+        }
+         
+    }
     
 }

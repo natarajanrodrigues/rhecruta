@@ -19,4 +19,5 @@ public interface AdministratorDAO extends DAO<Administrator> {
     void delete(Administrator administrator);
     Administrator get(Long id);
     List<Administrator> listAdministratorsToApprove();
+    List<Administrator> getAll();
 }
