@@ -38,80 +38,88 @@ and open the template in the editor.
                     </table>
                 </div>
                 <hr/>
-                <div class="col-md-6 row">
-                    <h4>Offer skills required</h4>
-                    
-                    <h:form>
-                        <c:if test="#{offerDetailsBean.offer.skills.size() > 0}">
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Skills</div>
-                                <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h4>Subscribers</h4>
 
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>Name skill</th>
-                                            <th class="text-center">Action</th>
-                                        </thead>
-                                        <tbody>
-                                            <ui:repeat var="sk" value="#{offerDetailsBean.offer.skills}">
-                                                <tr>
-                                                    <td>#{sk}</td>
-                                                    <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeSkill(sk)}" /></td>
-                                                </tr>
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>
+                        <h:form>
+                            <c:if test="#{offerDetailsBean.offer.skills.size() > 0}">
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Candidate</div>
+                                    <div class="panel-body">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <th>Name </th>
+                                                <th>Email</th>
+                                                <th class="text-center">Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="cand" items="#{offerDetailsBean.allCandidates}">
+                                                    <tr>
+                                                        <td>#{cand.firstname} #{cand.lastname}</td>
+                                                        <td>#{cand.user.credentials.email}</td>
+                                                        <td class="text-center"><h:commandButton class="btn btn-xs btn-default" value="Schedule interview" action="#{offerDetailsBean.scheduleInterview(cand)}" /></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </c:if>
-                    </h:form>
-                    
-                    <h:form class="form-inline" style="padding:5px">
+                            </c:if>
+                        </h:form>
+                    </div>
 
-                        <label>New Skill</label>
-                        <div class="form-group" style="padding-right: 5px">    
-                            <h:inputText class="form-control " value="#{offerDetailsBean.skill}"/>
-                        </div>
-                        <h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addSkill()}" />
-                    </h:form>
-                </div>
-                <div class="col-md-6 ">
-                    <h4>Subscribers</h4>
-                    
-                    <h:form>
-                        <c:if test="#{offerDetailsBean.offer.skills.size() > 0}">
+                    <div class="col-md-5  ">
+                        <h4>Offer skills required</h4>
 
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Candidate</div>
-                                <div class="panel-body">
+                        <h:form>
+                            <c:if test="#{offerDetailsBean.offer.skills.size() > 0}">
 
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <th>Name </th>
-                                            <th>Email</th>
-                                            <th class="text-center">Action</th>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="cand" items="#{offerDetailsBean.allCandidates}">
-                                            <tr>
-                                                <td>#{cand.firstname} #{cand.lastname}</td>
-                                                <td>#{cand.user.credentials.email}</td>
-                                                <td class="text-center"><h:commandButton class="btn btn-xs btn-default" value="Schedule interview" action="#{offerDetailsBean.scheduleInterview(cand)}" /></td>
-                                            </tr>
-                                        </c:forEach>
-                                        </tbody>
-                                    </table>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Skills</div>
+                                    <div class="panel-body">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <th>Name skill</th>
+                                                <th class="text-center">Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <ui:repeat var="sk" value="#{offerDetailsBean.offer.skills}">
+                                                    <tr>
+                                                        <td>#{sk}</td>
+                                                        <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeSkill(sk)}" /></td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
 
-                        </c:if>
-                    </h:form>
+                            </c:if>
+                        </h:form>
+
+                        <h:form class="form-inline" style="padding:5px">
+
+                            <label>New Skill</label>
+                            <div class="form-group" style="padding-right: 5px">    
+                                <h:inputText class="form-control " value="#{offerDetailsBean.skill}"/>
+                            </div>
+                            <h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addSkill()}" />
+                        </h:form>
+                    </div>
+
                 </div>
+
+
+
 
                 <hr></hr>
-                    
+
                 <div class="col-md-12 row">
                     <h4>Attach Administrators / Appraisers</h4>
 
