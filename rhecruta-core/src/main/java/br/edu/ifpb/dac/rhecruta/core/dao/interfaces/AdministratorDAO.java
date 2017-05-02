@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import java.util.List;
 
 /**
@@ -20,4 +21,5 @@ public interface AdministratorDAO extends DAO<Administrator> {
     Administrator get(Long id);
     List<Administrator> listAdministratorsToApprove();
     List<Administrator> getAll();
+    List<Administrator> getAllByRole(Role role);
 }

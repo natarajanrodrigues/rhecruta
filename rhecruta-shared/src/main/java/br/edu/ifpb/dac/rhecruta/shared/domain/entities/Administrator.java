@@ -111,4 +111,6 @@ public class Administrator implements Serializable {
     public String toString() {
         return "Administrator{" + "id=" + id + ", user=" + user + '}';
     }
+    
+    
 }

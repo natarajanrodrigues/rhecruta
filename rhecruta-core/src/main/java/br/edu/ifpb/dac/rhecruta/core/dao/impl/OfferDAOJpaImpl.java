@@ -126,8 +126,24 @@ public class OfferDAOJpaImpl implements OfferDAO {
         } catch (Exception e) {
             return Collections.EMPTY_LIST;
         }
-        
-        
+    }
+
+    @Override
+    public boolean isAttached(Long offerId, Long administratorId) {
+
+        System.out.println("OFFER: " + offerId);
+        System.out.println("ADM: " + administratorId);
+        TypedQuery<Offer> query = entityManager
+                .createQuery("SELECT o FROM Offer o, IN (o.administrators) admin WHERE admin.id = :idAdmin AND o.id = :idOffer", Offer.class)
+                .setParameter("idCandidate", administratorId)
+                .setParameter("idOffer", offerId);
+
+        List<Offer> resultList = query.getResultList();
+        System.out.println("SIZE: " + resultList.size());
+
+        return resultList.size() > 0;
+
+
     }
     
     
