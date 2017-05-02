@@ -88,6 +88,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         if(!approved)
             delete(administrator);
         else 
+            administrator.getUser().setApproved(true);
             update(administrator);
         emailRequester.send(createdEmail);
     }

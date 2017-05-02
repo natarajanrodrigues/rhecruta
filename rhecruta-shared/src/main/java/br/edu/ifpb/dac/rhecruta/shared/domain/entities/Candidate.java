@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -130,4 +131,31 @@ public class Candidate implements Serializable {
     public String toString() {
         return "Candidate{" + "id=" + id + ", cpf=" + cpf + ", firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", user=" + user + ", linkedInUrl=" + linkedInUrl + ", githubUrl=" + githubUrl + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Candidate other = (Candidate) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

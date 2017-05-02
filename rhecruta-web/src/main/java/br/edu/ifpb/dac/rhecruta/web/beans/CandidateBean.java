@@ -6,10 +6,13 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -29,12 +32,17 @@ public class CandidateBean {
     @Inject
     private CandidateService candidateService;
     
+    @Inject
+    private OfferService offerService;
+    
+    @Inject
+    private User loggedUser;
+    
     private Candidate candidate = new Candidate();
     private User user = new User();
     private Credentials credentials = new Credentials();
     
-    @Inject
-    private User loggedUser;
+    
     
     @PostConstruct
     private void postConstruct() {
@@ -61,7 +69,7 @@ public class CandidateBean {
     
     public Candidate getLoggedCandidate() {
         
-        if(loggedUser != null) {
+        if(loggedUser != null) {//está dando um erro aqui 
             Candidate loggedCandidate = candidateService.getByUser(loggedUser);
             return loggedCandidate;
         } return null;
@@ -103,4 +111,33 @@ public class CandidateBean {
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
     }
+ 
+    public List<Offer> getOpenOffers(){
+        return offerService.getByType(OfferType.OPEN);
+    }
+    
+    public String subscribe(Offer offer) {
+        
+        offer.subscribe(getLoggedCandidate());
+        offerService.update(offer);
+        return null;
+    }
+    
+    public String unsubscribe(Offer offer) {
+        
+        offer.unsubscribe(getLoggedCandidate());
+        offerService.update(offer);
+        return null;
+    }
+
+    public boolean isLoggedCandidateSubscribed(Long id) {
+        
+        System.out.println("Candidate id:" + getLoggedCandidate().getId());
+        return this.offerService.isSubscribed(id, getLoggedCandidate());
+    }
+    
+    public List<Offer> getCandidateOffers(){
+        return this.offerService.getByCandidate(getLoggedCandidate());
+    }
+    
 }

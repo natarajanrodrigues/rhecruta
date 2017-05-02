@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+
+        <ui:composition template="/manager/offer/offer.xhtml">
+            <ui:define name="contentOffer">
+            
+                <div>
+                    <h4>Offer </h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Vacancy</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#{offerDetailsBean.offer.id}</td>
+                                <td>#{offerDetailsBean.offer.description}</td>
+                                <td>#{offerDetailsBean.offer.vacancies}</td>
+                                <td>#{offerDetailsBean.offer.type.description}</td>
+                                <td>#{offerDetailsBean.offer.status.description}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr/>
+                <div class="col-md-6 row">
+                    <h4>Offer skills required</h4>
+                    <h:form class="form-inline" style="padding:5px">
+                        
+                        <label>New Skill</label>
+                        <div class="form-group" style="padding-right: 5px">    
+                            <h:inputText class="form-control " value="#{offerDetailsBean.skill}"/>
+                        </div>
+                        <h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addSkill()}" />
+                    </h:form>
+                    <h:form>
+                        <c:if test="#{offerDetailsBean.offer.skills.size() > 0}">
+                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Skills</div>
+                                <div class="panel-body">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Name skill</th>
+                                            <th class="text-center">Action</th>
+                                        </thead>
+                                        <tbody>
+                                            <ui:repeat var="sk" value="#{offerDetailsBean.offer.skills}">
+                                                <tr>
+                                                    <td>#{sk}</td>
+                                                    <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeSkill(sk)}" /></td>
+                                                </tr>
+                                            </ui:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                                
+                        </c:if>
+                    </h:form>
+                </div>
+                
+                
+                <div class="col-md-6">
+                    <h4>Invite Users</h4>
+                </div>
+
+            
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

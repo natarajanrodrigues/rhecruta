@@ -19,14 +19,15 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-sm-3 col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-                                <li> 
-                                    <a href="#">
-                                        <span>Solicitações</span>
+                                <li class="active"> 
+                                    <a href="#{facesContext.externalContext.requestContextPath}/faces/manager/home.xhtml">
+                                        <span>Requests</span>
                                         <c:if test="${userBean.usersToApproveCount > 0}">
                                             <span class="badge">#{userBean.usersToApproveCount}</span>
                                         </c:if>
                                     </a>
                                 </li>
+                                <li><a href="offer/offer.xhtml">Offers</a></li>
                                 <li><a href="#">Reports</a></li>
                                 <li><a href="#">Analytics</a></li>
                                 <li><a href="#">Export</a></li>

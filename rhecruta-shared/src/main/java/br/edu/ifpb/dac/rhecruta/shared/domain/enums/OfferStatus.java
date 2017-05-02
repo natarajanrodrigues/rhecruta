@@ -11,7 +11,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum OfferStatus {
     
-    OPEN(1, "Aberta"), CLOSED(2, "Fechada");
+    OPEN(1, "Open"), CLOSED(2, "Closed");
     
     private final int id;
     private final String description;

@@ -69,7 +69,7 @@ public class EmailSender {
         return mailMessage;
     }
 
-    @Schedule(second = "*/10", minute = "*", hour = "*")
+    @Schedule(second = "10", minute = "*/1", hour = "*", persistent = false)
     private void trySendWaitingEmails() {
         System.out.println("[EmailSenderBean] trying re-send failed emails...");
         JMSConsumer consumer = jmsContext.createConsumer(waitingEmailsQueue);

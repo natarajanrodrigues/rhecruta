@@ -6,7 +6,10 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
@@ -37,7 +40,7 @@ public class OfferServiceImpl implements OfferService {
     public void remove(Offer offer) {
         try {
             Offer found = find(offer.getId());
-            offerDAO.remove(offer);
+            offerDAO.remove(found);
         } catch (EntityNotFoundException ex) {
             throw new EJBException(ex);
         }
@@ -60,6 +63,31 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<Offer> listAll() {
         return offerDAO.listAll();
+    }
+    
+    @Override
+    public List<Offer> getByAdministrator(Administrator admnistrator) {
+        return offerDAO.getByAdministrator(admnistrator);
+    }
+    
+    @Override
+    public Offer getById(Long offerId) {
+        return offerDAO.getById(offerId);
+    }
+
+    @Override
+    public List<Offer> getByType(OfferType offerType) {
+        return offerDAO.getByType(offerType);
+    }
+
+    @Override
+    public boolean isSubscribed(Long offerId, Candidate candidate) {
+        return offerDAO.isSubscribed(offerId, candidate);
+    }
+
+    @Override
+    public List<Offer> getByCandidate(Candidate candidate) {
+        return offerDAO.getByCandidate(candidate);
     }
     
 }

@@ -5,12 +5,59 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+
+        <ui:composition template="/candidate/home_layout.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-2 sidebar">
+                            <ul class="nav nav-sidebar">
+                                <li class="active"> 
+                                    <a href="#">Offers</a>
+                                </li>
+                                <li><a href="offer/offer.xhtml">My offer registrations</a></li>
+                                
+                            </ul>
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
+                            <div class="section">
+                                <ui:insert name="userArea">
+                                <h:form>
+                                    <c:forEach var="offer" items="#{candidateBean.openOffers}">
+
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                <p><strong>Id: </strong> #{offer.id}</p>
+                                                <p><strong>Description: </strong> #{offer.description}</p>
+                                                <p><strong>Vacancy: </strong> #{offer.vacancies}</p>
+                                                <p><strong>Subscriptions: </strong> #{offer.candidates.size()}</p>
+                                                
+                                                <c:if test="#{!candidateBean.isLoggedCandidateSubscribed(offer.id)}">
+                                                    <h:commandButton class="btn btn-xs btn-success" value="Subscribe" action="#{candidateBean.subscribe(offer)}"/>
+                                                </c:if>
+                                                <c:if test="#{candidateBean.isLoggedCandidateSubscribed(offer.id)}">
+                                                    <h:commandButton class="btn btn-danger" value="Unsubscribe" action="#{candidateBean.unsubscribe(offer)}"/>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </h:form>
+                                </ui:insert>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
 </html>

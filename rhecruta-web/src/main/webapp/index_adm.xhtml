@@ -80,7 +80,7 @@
                                                 <label>Role</label>
                                                 <h:selectOneMenu class="form-control" id="administrator-roles" 
                                                                  value="#{administratorBean.user.role}" >
-                                                    <f:selectItems value="#{rolesBean.adminRoles}" var="role" 
+                                                    <f:selectItems value="#{enumsBeans.adminRoles}" var="role" 
                                                                    itemValue="#{role}" itemLabel="#{role.description}"/>
                                                 </h:selectOneMenu>
                                             </div>

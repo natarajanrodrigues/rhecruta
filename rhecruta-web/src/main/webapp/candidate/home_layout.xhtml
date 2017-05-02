@@ -10,15 +10,8 @@
         <!-- Jquery -->
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/vendor/jquery/jquery-3.2.0.min.js"></script>
         
-        <!-- Bootstrap -->
-        <!--<link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css" />-->
-<!--        <link type="text/css" rel="stylesheet"
-		  href="../vendor/bootstrap/css/bootstrap.min.css" />-->
                   
         <link href="#{facesContext.externalContext.requestContextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        
-        <!--<h:outputStylesheet name="/vendor/bootstrap/css/bootstrap.min.css"  />-->
-        
         
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
         <!-- Font-Awesome -->
@@ -31,13 +24,7 @@
     </h:head>
     
     <body data-spy="scroll" data-target=".navbar" data-offset="50">
-    <!--<h:body>-->
-<!--        <header>
-            <ui:insert name="header">
-                <ui:include src="header_template.xhtml"/>
-            </ui:insert>
-        </header>-->
-
+    
         <ui:include src="header_logged_template.xhtml"/>
         
         <div id="content" >
@@ -46,7 +33,5 @@
             </ui:insert>
         </div>
 
-    <!--</h:body>-->
-    
     </body>
 </html>

@@ -66,14 +66,22 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
 
     @Override
     public List<Administrator> listAdministratorsToApprove() {
-        Query query = manager
-                .createQuery("SELECT a FROM Administrator a WHERE a.user.approved = FALSE");
-        
-        List<Administrator> list = query.getResultList();
-        
-        if (list == null || list.isEmpty() )
+        try {
+            Query query = manager
+                    .createQuery("SELECT a FROM Administrator a WHERE a.user.approved = FALSE");
+
+            List<Administrator> list = query.getResultList();
+
+            if (list == null || list.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return list;
+            }
+
+        } catch (Exception e) {
             return Collections.EMPTY_LIST;
-        else return list;
+        }
+           
     }
     
 }

@@ -46,9 +46,9 @@ public class LoginBean implements Serializable {
             System.out.println("achou usuario");
             switch(loggedUser.getRole()) {
                 case CANDIDATE:
-                    return "candidate/home.xhtml";
+                    return "candidate/home.xhtml?faces-redirect=true";
                 case APPRAISER:
-                    return "appraiser/home.xhtml";
+                    return "appraiser/home.xhtml?faces-redirect=true";
                 case MANAGER:
                     return "manager/home.xhtml?faces-redirect=true";
                 default:

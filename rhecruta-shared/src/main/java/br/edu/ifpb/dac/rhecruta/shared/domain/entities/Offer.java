@@ -45,13 +45,19 @@ public class Offer implements Serializable {
     @Column(name = "status_id")
     private int statusId;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "offer_candidates",
             joinColumns = @JoinColumn(name = "offer_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private final List<Candidate> candidates;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "offer_administrators",
+            joinColumns = @JoinColumn(name = "offer_id"),
+            inverseJoinColumns = @JoinColumn(name = "administrator_id"))
+    private final List<Administrator> administrators;
 
-    public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates) {
+    public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates, List<Administrator> administrators) {
         this.id = id;
         this.typeId = type.getId();
         this.skills = skills;
@@ -59,11 +65,13 @@ public class Offer implements Serializable {
         this.vacancies = vacancies;
         this.statusId = status.getId();
         this.candidates = candidates;
+        this.administrators = administrators;
     }
     
     public Offer() {   
         this.skills = new ArrayList<>();
         this.candidates = new ArrayList<>();
+        this.administrators = new ArrayList<>();
     }
 
     public Long getId() {
@@ -87,7 +95,8 @@ public class Offer implements Serializable {
     }
 
     public void addSkill(String skill) {
-        this.skills.add(skill);
+        if (!this.skills.contains(skill))
+            this.skills.add(skill);
     }
     
     public void addSkills(List<String> skills) {
@@ -132,6 +141,18 @@ public class Offer implements Serializable {
     
     public void unsubscribe(Candidate candidate) {
         this.candidates.remove(candidate);
+    }
+    
+    public List<Administrator> getAdministrators() {
+        return Collections.unmodifiableList(administrators);
+    }
+    
+    public void addAdministrator(Administrator administrator) {
+        this.administrators.add(administrator);
+    }
+    
+    public void removeAdministrator(Administrator administrator) {
+        this.administrators.remove(administrator);
     }
 
     @Override

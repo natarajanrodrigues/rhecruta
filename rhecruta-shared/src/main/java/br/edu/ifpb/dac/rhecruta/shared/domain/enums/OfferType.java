@@ -11,7 +11,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  */
 public enum OfferType {
     
-    OPEN(1, "Pública"), INVITE(2, "Por convite");
+    OPEN(1, "Open to the Public"), INVITE(2, "By Invitation");
     
     private final int id;
     private final String description;

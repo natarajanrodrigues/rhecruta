@@ -64,14 +64,21 @@ public class CandidateDAOJpaImpl implements CandidateDAO {
 
     @Override
     public List<Candidate> listCandidatesToApprove() {
-        Query query = manager
-                .createQuery("SELECT c FROM Candidate c WHERE c.user.approved = FALSE");
-        
-        List<Candidate> list = query.getResultList();
-        
-        if (list == null || list.isEmpty() )
+        try {
+            Query query = manager
+                    .createQuery("SELECT c FROM Candidate c WHERE c.user.approved = FALSE");
+
+            List<Candidate> list = query.getResultList();
+
+            if (list == null || list.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return list;
+            }
+
+        } catch (Exception e) {
             return Collections.EMPTY_LIST;
-        else return list;
+        }
     }
     
 }

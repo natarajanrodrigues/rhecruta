@@ -118,6 +118,36 @@ CREATE TABLE system_evaluation (
 	PRIMARY KEY(id)
 );
 
+
+CREATE TABLE offer_administrators (
+	
+	administrator_id INT NOT NULL,
+	offer_id INT NOT NULL,
+	--FK
+	FOREIGN KEY(administrator_id) REFERENCES administrator(id),
+	FOREIGN KEY(offer_id) REFERENCES offer(id)
+);
+
+CREATE TABLE offer_candidates (
+	
+	candidate_id INT NOT NULL,
+	offer_id INT NOT NULL,
+	--FK
+	FOREIGN KEY(candidate_id) REFERENCES candidate(id),
+	FOREIGN KEY(offer_id) REFERENCES offer(id)
+	
+);
+
+CREATE TABLE offer_skills(
+	
+	offer_id INT NOT NULL,
+        skills character varying(255),
+	--FK
+	FOREIGN KEY(offer_id) REFERENCES offer(id)
+	
+);
+
+
 --DEFAULT ADMIN TO BE INSERTED IN THE DB
 INSERT INTO system_user(email,password,role_id,approved) VALUES ('admin@admin.com','admin',2,true);
 INSERT INTO administrator(cpf,firstname,lastname,country,city,state,neighborhood,

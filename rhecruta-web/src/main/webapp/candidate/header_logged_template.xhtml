@@ -22,7 +22,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <!-- Nav Brand -->
-                        <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}/faces/manager/home.xhtml"><strong class="underline">Rh</strong>ecruta</a>
+                        <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}/faces/candidate/home.xhtml"><strong class="underline">Rh</strong>ecruta</a>
                     </div>
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
                         <ul class="nav navbar-nav navbar-right" id="navbar-nav-custom">
@@ -33,7 +33,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> 
                                     
-                                    #{administratorBean.loggedAdministrator.firstname}
+                                    #{candidateBean.loggedCandidate.firstname}
                                     <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-header">Logged as #{loginBean.loggedUser.role.description}</li>

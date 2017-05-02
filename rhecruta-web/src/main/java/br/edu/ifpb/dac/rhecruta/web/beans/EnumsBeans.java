@@ -5,17 +5,10 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -25,10 +18,14 @@ import javax.inject.Named;
 
 @Named
 @ApplicationScoped
-public class RolesBean implements Serializable {
+public class EnumsBeans implements Serializable {
 
     public Role[] getAdminRoles(){
         return new Role[] {Role.APPRAISER, Role.MANAGER};
+    }
+    
+    public OfferType[] getOfferTypes(){
+        return new OfferType[] {OfferType.OPEN, OfferType.INVITE };
     }
     
 }
