@@ -52,7 +52,7 @@ public class Offer implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private final List<Candidate> candidates;
     
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "offer_administrators",
             joinColumns = @JoinColumn(name = "offer_id"),
             inverseJoinColumns = @JoinColumn(name = "administrator_id"))

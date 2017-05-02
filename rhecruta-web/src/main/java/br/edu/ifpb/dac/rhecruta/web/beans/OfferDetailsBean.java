@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
@@ -142,4 +143,13 @@ public class OfferDetailsBean implements Serializable {
         return this.offerService.isAttached(offer.getId(), adminId);
     }
     
+    
+    public List<Candidate> getAllCandidates() {
+        return offerService.getSubscribers(this.offer);
+    }
+    
+    
+    public String scheduleInterview(Candidate candidate) {
+        return null;
+    }
 }
