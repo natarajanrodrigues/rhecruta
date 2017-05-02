@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -39,5 +40,19 @@ public class AppraiserBean {
     
     private void listAllAppraisers() {
         this.appraiserList = getAllAppraisers();
+    }
+
+    public List<Administrator> getAppraiserList() {
+        return appraiserList;
+    }
+
+    public void setAppraiserList(List<Administrator> appraiserList) {
+        this.appraiserList = appraiserList;
+    }
+    
+    public String changeToManager(Administrator appraiser) {
+        adminService.changeRole(appraiser, Role.MANAGER);
+        listAllAppraisers();
+        return null;
     }
 }
