@@ -114,4 +114,9 @@ public class AdministratorServiceImpl implements AdministratorService {
         return administratorDAO.getAll();
     }
     
+    @Override
+    public List<Administrator> getAllAdministratorsByRole(Role role) {
+        return this.administratorDAO.getAllByRole(role);
+    }
+    
 }

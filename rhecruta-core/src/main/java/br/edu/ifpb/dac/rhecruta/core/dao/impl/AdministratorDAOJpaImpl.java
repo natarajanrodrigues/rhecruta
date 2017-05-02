@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Local;
@@ -102,6 +103,15 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
             return Collections.EMPTY_LIST;
         }
          
+    }
+
+    @Override
+    public List<Administrator> getAllByRole(Role role) {
+        TypedQuery<Administrator> query = this.manager
+                .createQuery("SELECT a FROM Administrator a WHERE a.user.roleId = :roleId", 
+                Administrator.class)
+                .setParameter("roleId", role.getId());
+        return query.getResultList();
     }
     
 }
