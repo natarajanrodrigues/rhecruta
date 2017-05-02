@@ -15,8 +15,6 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
@@ -109,6 +107,11 @@ public class AdministratorServiceImpl implements AdministratorService {
         email.setSubject("Sobre sua solicitação de cadastro - Rhecruta");
         email.setText(message);
         return email;
+    }
+
+    @Override
+    public List<Administrator> getAllAdministrators() {
+        return administratorDAO.getAll();
     }
     
 }

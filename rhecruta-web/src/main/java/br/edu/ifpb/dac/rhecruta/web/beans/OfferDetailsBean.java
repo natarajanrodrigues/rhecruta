@@ -120,7 +120,12 @@ public class OfferDetailsBean implements Serializable {
         return null;
     }
     
-    
-    
+    public List<Administrator> getAllAdministrator() {
+        return administratorService.getAllAdministrators();
+    }
+ 
+    public String addAdminToOffer(Administrator administrator) {
+        return null;
+    }
     
 }

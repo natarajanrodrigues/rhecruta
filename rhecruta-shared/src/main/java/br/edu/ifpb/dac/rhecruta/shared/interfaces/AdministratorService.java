@@ -23,5 +23,6 @@ public interface AdministratorService {
     void changeRole(Administrator administrator, Role newRole);
     List<Administrator> listAdministratorsToApprove();
     void respondRequest(Administrator administrator, boolean approve);
+    List<Administrator> getAllAdministrators();
     
 }
