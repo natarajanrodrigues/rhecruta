@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import java.io.Serializable;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -25,6 +26,7 @@ import org.hibernate.validator.constraints.br.CPF;
  * @author Pedro Arthur
  */
 @Entity
+@Cacheable(false)
 public class Administrator implements Serializable {
     
     @Id
