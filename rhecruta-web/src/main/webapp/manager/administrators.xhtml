@@ -37,32 +37,36 @@ and open the template in the editor.
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
                             <div class="section">
 
-                                <h4>Appraisers</h4>
+                                <h4>Administrators</h4>
                                 <hr></hr>
 
                                 <div class="table-responsive">
                                     <h:form>
-                                        <h:dataTable class="table table-striped" var="appraiser" 
-                                                     value="#{appraiserBean.appraiserList}">
+                                        <h:dataTable class="table table-striped" var="admin" 
+                                                     value="#{adminRoleBean.administratorsList}">
 
                                             <h:column>
                                                 <f:facet name="header">Name</f:facet>
-                                                    #{appraiser.firstname} #{appraiser.lastname}
+                                                    #{admin.firstname} #{admin.lastname}
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">E-mail</f:facet>
-                                                    #{appraiser.user.credentials.email}
+                                                    #{admin.user.credentials.email}
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">Role</f:facet>
-                                                    #{appraiser.user.role.description}
+                                                    #{admin.user.role.description}
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">Change Role</f:facet>
-                                                <h:commandButton class="btn btn-primary btn-xs" 
+                                                <h:commandButton class="btn btn-info btn-xs" 
                                                                  value="Change to Manager"
-                                                                 action="#{appraiserBean.changeToManager(appraiser)}">
-                                                </h:commandButton>
+                                                                 action="#{adminRoleBean.changeToManager(admin)}"
+                                                                 rendered="#{!adminRoleBean.isManager(admin)}" />
+                                                <h:commandButton class="btn btn-primary btn-xs" 
+                                                                 value="Change to Appraiser"
+                                                                 action="#{adminRoleBean.chanteToAppraiser(admin)}"
+                                                                 rendered="#{adminRoleBean.isManager(admin)}" />
                                             </h:column>
                                         </h:dataTable>
                                     </h:form>

@@ -22,37 +22,49 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class AppraiserBean {
+public class AdminRoleBean {
     
     @Inject
     private AdministratorService adminService;
     
-    private List<Administrator> appraiserList;
+    private List<Administrator> administratorList;
     
     @PostConstruct
     private void init() {
-        listAllAppraisers();
+        System.out.println("[AdminRoleBean] CREATED!");
+        listAllAdministrators();
     }
     
-    public List<Administrator> getAllAppraisers() {
-        return adminService.getAllAdministratorsByRole(Role.APPRAISER);
+    public List<Administrator> getAllAdministrators() {
+        return adminService.getAllAdministrators();
     }
     
-    private void listAllAppraisers() {
-        this.appraiserList = getAllAppraisers();
+    private void listAllAdministrators() {
+        this.administratorList = getAllAdministrators();
     }
 
-    public List<Administrator> getAppraiserList() {
-        return appraiserList;
+    public List<Administrator> getAdministratorsList() {
+        return administratorList;
     }
 
-    public void setAppraiserList(List<Administrator> appraiserList) {
-        this.appraiserList = appraiserList;
+    public void setAdministratorsList(List<Administrator> appraiserList) {
+        this.administratorList = appraiserList;
     }
     
     public String changeToManager(Administrator appraiser) {
         adminService.changeRole(appraiser, Role.MANAGER);
-        listAllAppraisers();
+        listAllAdministrators();
         return null;
+    }
+    
+    public String chanteToAppraiser(Administrator manager) {
+        adminService.changeRole(manager, Role.APPRAISER);
+        listAllAdministrators();
+        return null;
+    }
+    
+    public boolean isManager(Administrator admin) {
+        Role role = admin.getUser().getRole();
+        return role.equals(Role.MANAGER);
     }
 }
