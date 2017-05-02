@@ -44,20 +44,15 @@ public class Enterview implements Serializable {
     @Embedded
     private Address address;
     
-    @ManyToOne
-    @JoinColumn(name = "applier_id")
-    private Administrator applier;
-    
     private Double score;
 
-    public Enterview(Long id, Offer offer, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Administrator applier, Double score) {
+    public Enterview(Long id, Offer offer, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Double score) {
         this.id = id;
         this.offer = offer;
         this.candidate = candidate;
         this.start = start;
         this.end = end;
         this.address = address;
-        this.applier = applier;
         this.score = score;
     }
     
@@ -112,14 +107,6 @@ public class Enterview implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-    public Administrator getApplier() {
-        return applier;
-    }
-
-    public void setApplier(Administrator applier) {
-        this.applier = applier;
-    }
     
     public Double getScore() {
         return this.score;
@@ -132,6 +119,6 @@ public class Enterview implements Serializable {
 
     @Override
     public String toString() {
-        return "Enterview{" + "id=" + id + ", offer=" + offer + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", applier=" + applier + '}';
+        return "Enterview{" + "id=" + id + ", offer=" + offer + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", score=" + score + '}';
     }
 }
