@@ -125,6 +125,8 @@ public class OfferDetailsBean implements Serializable {
     }
  
     public String addAdminToOffer(Administrator administrator) {
+        this.offer.addAdministrator(administrator);
+        this.offerService.update(offer);
         return null;
     }
     

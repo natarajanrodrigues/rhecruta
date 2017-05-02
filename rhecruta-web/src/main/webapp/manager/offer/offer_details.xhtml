@@ -77,7 +77,7 @@ and open the template in the editor.
                 </div>
 
 
-                <div class="col-md-6">
+                <div class="col-md-12 row">
                     <h4>Attach Administrators / Appraisers</h4>
 
                     <h:form>
@@ -90,17 +90,19 @@ and open the template in the editor.
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Type</th>
-                                        <th class="text-center">Action</th>
+                                        <!--<th class="text-center">Action</th>-->
                                     </thead>
                                     <tbody>
-                                        <ui:repeat var="admin" value="#{offerDetailsBean.allAdministrator}">
+                                        <c:forEach var="adminstrator" items="#{offerDetailsBean.allAdministrator}">
                                             <tr>
-                                                <td>#{admin.firstname + admin.lastname}</td>
-                                                <td>#{admin.user.credentials.email}</td>
-                                                <td>#{admin.user.credentials.email}</td>
-                                                <!--<td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.addAdminToOffer(admin)}" /></td>-->
+                                                <td>#{adminstrator.firstname} #{adminstrator.lastname}</td>
+                                                <td>#{adminstrator.user.credentials.email}</td>
+                                                <td>#{adminstrator.user.role.description}</td>
+                                                <c:if test="#{offerDetailsBean.offer.administrators.contains(admin) eq false}">
+                                                    <td class="text-center"><h:commandButton class="btn btn-xs btn-success" value="Attach" action="#{offerDetailsBean.addAdminToOffer(admin)}" /></td>
+                                                </c:if>
                                             </tr>
-                                        </ui:repeat>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
