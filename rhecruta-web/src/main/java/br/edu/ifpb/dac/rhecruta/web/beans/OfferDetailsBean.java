@@ -12,6 +12,7 @@ import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
@@ -128,6 +129,12 @@ public class OfferDetailsBean implements Serializable {
         this.offer.addAdministrator(administrator);
         this.offerService.update(offer);
         return null;
+    }
+    
+    public boolean isAdmin(Long adminId) {
+        
+        System.out.println("ADM ID: " + adminId);
+        return this.offerService.isAttached(offer.getId(), adminId);
     }
     
 }

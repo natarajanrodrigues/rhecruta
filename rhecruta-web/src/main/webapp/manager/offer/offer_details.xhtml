@@ -90,7 +90,7 @@ and open the template in the editor.
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Type</th>
-                                        <!--<th class="text-center">Action</th>-->
+                                        <th class="text-center">Action</th>
                                     </thead>
                                     <tbody>
                                         <c:forEach var="adminstrator" items="#{offerDetailsBean.allAdministrator}">
@@ -98,9 +98,12 @@ and open the template in the editor.
                                                 <td>#{adminstrator.firstname} #{adminstrator.lastname}</td>
                                                 <td>#{adminstrator.user.credentials.email}</td>
                                                 <td>#{adminstrator.user.role.description}</td>
-                                                <c:if test="#{offerDetailsBean.offer.administrators.contains(admin) eq false}">
+                                                <c:if test="#{offerDetailsBean.isAdmin(adminstrator.id) eq false}">
                                                     <td class="text-center"><h:commandButton class="btn btn-xs btn-success" value="Attach" action="#{offerDetailsBean.addAdminToOffer(admin)}" /></td>
                                                 </c:if>
+<!--                                                <c:if test="#{offerDetailsBean.isAdmin(administrator.id) eq true}">
+                                                    <td class="text-center"><h:commandButton class="btn btn-xs btn-danger" value="Remove" action="#{offerDetailsBean.removeAdminToOffer(admin)}" /></td>
+                                                </c:if>-->
                                             </tr>
                                         </c:forEach>
                                     </tbody>

@@ -89,5 +89,11 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> getByCandidate(Candidate candidate) {
         return offerDAO.getByCandidate(candidate);
     }
+
+    @Override
+    public boolean isAttached(Long offerId, Long administratorId) {
+        System.out.println(offerId + " " + administratorId);
+        return offerDAO.isAttached(offerId, administratorId);
+    }
     
 }
