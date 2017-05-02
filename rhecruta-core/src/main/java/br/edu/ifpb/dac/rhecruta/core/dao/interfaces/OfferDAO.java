@@ -26,9 +26,8 @@ public interface OfferDAO {
     Offer getById(Long offerId);
     List<Offer> getByType(OfferType offerTeyp);
     boolean isSubscribed(Long offerId, Candidate candidate);
-
-    public List<Offer> getByCandidate(Candidate candidate);
-
-    public boolean isAttached(Long offerId, Long administratorId);
+    boolean isAttached(Long offerId, Long administratorId);
+    List<Offer> getByCandidate(Candidate candidate);
+    List<Candidate> getSubscribers(Offer offer);
     
 }
