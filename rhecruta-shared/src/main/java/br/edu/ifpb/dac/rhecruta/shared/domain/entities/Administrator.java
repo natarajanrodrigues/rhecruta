@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -113,6 +114,33 @@ public class Administrator implements Serializable {
     public String toString() {
         return "Administrator{" + "id=" + id + ", user=" + user + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Administrator other = (Administrator) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
     
 }

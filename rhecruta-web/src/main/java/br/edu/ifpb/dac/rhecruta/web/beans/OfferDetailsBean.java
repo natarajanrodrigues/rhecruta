@@ -131,8 +131,13 @@ public class OfferDetailsBean implements Serializable {
         return null;
     }
     
+    public String removeAdminToOffer(Administrator administrator) {
+        this.offer.removeAdministrator(administrator);
+        this.offerService.update(offer);
+        return null;
+    }
+    
     public boolean isAdmin(Long adminId) {
-        
         System.out.println("ADM ID: " + adminId);
         return this.offerService.isAttached(offer.getId(), adminId);
     }

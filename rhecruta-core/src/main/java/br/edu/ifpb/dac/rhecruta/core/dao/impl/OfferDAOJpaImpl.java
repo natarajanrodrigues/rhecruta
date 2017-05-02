@@ -135,14 +135,13 @@ public class OfferDAOJpaImpl implements OfferDAO {
         System.out.println("ADM: " + administratorId);
         TypedQuery<Offer> query = entityManager
                 .createQuery("SELECT o FROM Offer o, IN (o.administrators) admin WHERE admin.id = :idAdmin AND o.id = :idOffer", Offer.class)
-                .setParameter("idCandidate", administratorId)
+                .setParameter("idAdmin", administratorId)
                 .setParameter("idOffer", offerId);
 
         List<Offer> resultList = query.getResultList();
         System.out.println("SIZE: " + resultList.size());
 
         return resultList.size() > 0;
-
 
     }
     
