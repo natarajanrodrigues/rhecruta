@@ -28,7 +28,7 @@ import javax.persistence.NoResultException;
 @Stateless
 @Remote(AdministratorService.class)
 public class AdministratorServiceImpl implements AdministratorService {
-    
+
     @EJB
     private AdministratorDAO administratorDAO;
     @EJB
@@ -41,7 +41,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void save(Administrator administrator) {
-        System.out.println("[AdministratorServiceImpl: "+administrator+"]");
+        System.out.println("[AdministratorServiceImpl: " + administrator + "]");
         administratorDAO.save(administrator);
     }
 
@@ -49,7 +49,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void update(Administrator administrator) {
         administratorDAO.update(administrator);
     }
-    
+
     @Override
     public void delete(Administrator administrator) {
         try {
@@ -59,7 +59,7 @@ public class AdministratorServiceImpl implements AdministratorService {
             throw new EJBException(ex);
         }
     }
-    
+
     private Administrator find(Long id) throws EntityNotFoundException {
         try {
             Administrator found = administratorDAO.get(id);
@@ -83,22 +83,23 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public void respondRequest(Administrator administrator, boolean approved) {
         Email createdEmail = createEmail(administrator, approved);
-        if(!approved)
+        if (!approved) {
             delete(administrator);
-        else 
+        } else {
             administrator.getUser().setApproved(true);
             update(administrator);
+        }
         emailRequester.send(createdEmail);
     }
-    
+
     private Email createEmail(Administrator administrator, boolean approved) {
         String message;
-        if(approved) {
-            message = "Olá "+administrator.getFirstname()+", estamos felizes em afirmar"
-                + " que sua solicitação de cadastro no site Rhecruta foi aprovada.";
+        if (approved) {
+            message = "Olá " + administrator.getFirstname() + ", estamos felizes em afirmar"
+                    + " que sua solicitação de cadastro no site Rhecruta foi aprovada.";
         } else {
-            message = "Olá "+administrator.getFirstname()+", sentimos informar"
-                + " que sua solicitação de cadastro no site Rhecruta foi negada.";
+            message = "Olá " + administrator.getFirstname() + ", sentimos informar"
+                    + " que sua solicitação de cadastro no site Rhecruta foi negada.";
         }
         Email email = new Email();
         email.setFrom("rhecrutapp@gmail.com");
@@ -113,10 +114,10 @@ public class AdministratorServiceImpl implements AdministratorService {
     public List<Administrator> getAllAdministrators() {
         return administratorDAO.getAll();
     }
-    
+
     @Override
     public List<Administrator> getAllAdministratorsByRole(Role role) {
         return this.administratorDAO.getAllByRole(role);
     }
-    
+
 }

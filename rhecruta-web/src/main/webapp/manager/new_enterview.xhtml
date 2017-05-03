@@ -48,7 +48,7 @@ and open the template in the editor.
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Start DateTime</label>
-                                                <div class="input-group">
+<!--                                                <div class="input-group">
                                                     <h:inputText class="form-control" 
                                                                  a:placeholder="dd/mm/yyyy hh:mm"
                                                                  value="#{enterviewBean.enterview.start}">
@@ -57,11 +57,32 @@ and open the template in the editor.
                                                     <span class="input-group-addon" id="start-datetime-addon">
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                     </span>
+                                                </div>-->
+
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <h:inputText id="date" class="form-control" 
+                                                                 a:placeholder="dd/mm/yyyy hh:mm"
+                                                                 value="#{enterviewBean.enterview.start}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label>End DateTime</label>
-                                                <div class="input-group">
+                                                <div class='input-group date' id='datetimepicker2'>
+                                                    <h:inputText id="date2" class="form-control" 
+                                                                 a:placeholder="dd/mm/yyyy hh:mm"
+                                                                 value="#{enterviewBean.enterview.end}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+<!--                                                <div class="input-group">
                                                     <h:inputText class="form-control" 
                                                                  a:placeholder="dd/mm/yyyy hh:mm"
                                                                  value="#{enterviewBean.enterview.end}">
@@ -70,7 +91,7 @@ and open the template in the editor.
                                                     <span class="input-group-addon" id="end-datetime-addon">
                                                         <i class="fa fa-calendar" aria-hidden="true"></i>
                                                     </span>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -116,10 +137,23 @@ and open the template in the editor.
                         </div>	 
                     </div>
                 </h:panelGroup> 
+                <script type="text/javascript">
+        
+            $( document ).ready(function() {
+                $('#datetimepicker1').datetimepicker({
+                    locale: 'pt-br'
+                });
+                $('#datetimepicker2').datetimepicker({
+                    locale: 'pt-br'
+                });
+            });
+        </script>
+        
             </ui:define>
 
         </ui:composition>
 
+        
     </h:body>
 
 </html>
