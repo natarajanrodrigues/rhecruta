@@ -25,104 +25,129 @@ import javax.inject.Named;
  *
  * @author Pedro Arthur
  */
-
 @Named
 @ConversationScoped
 public class EnterviewBean implements Serializable {
-    
+
     @Inject
     private Conversation conversation;
-    
+
     @Inject
     private EnterviewService enterviewService;
-    
+
     private Offer selectedOffer;
     private Candidate selectedCandidate;
     private Enterview enterview;
-    
+
     private List<Enterview> enterviewsList;
-    
+
     @PostConstruct
     public void init() {
         System.out.println("[EnterviewBean] Constructed!!");
         initAttributes();
         listEnterviews();
     }
-    
+
     private void initAttributes() {
         this.selectedOffer = new Offer();
         this.selectedCandidate = new Candidate();
         this.enterview = new Enterview();
     }
-    
+
     private void listEnterviews() {
         this.enterviewsList = this.enterviewService.listAll();
     }
-    
+
     public String saveEnterview() {
-        
+
         enterview.setCandidate(selectedCandidate);
         enterview.setOffer(selectedOffer);
-        
-        System.out.println("[EnterviewBean] Enterview to be saved: "+enterview);
-        
+
+        System.out.println("[EnterviewBean] Enterview to be saved: " + enterview);
+
         try {
-            
+
             this.enterviewService.save(enterview);
-            
-            addMessage("enterviewMsg", 
-                    createMessage("The enterview was scheduled successfully!", 
+
+            addMessage("enterviewMsg",
+                    createMessage("The enterview was scheduled successfully!",
                             FacesMessage.SEVERITY_INFO));
-            
+
             initAttributes();
             listEnterviews();
             endConversation();
-            
+
             return "enterviews.xhtml?faces-refirect=true";
-            
+
         } catch (EJBException ex) {
-            addMessage("enterviewMsg", 
-                    createMessage(ex.getCausedByException().getMessage(), 
+            addMessage("enterviewMsg",
+                    createMessage(ex.getCausedByException().getMessage(),
                             FacesMessage.SEVERITY_ERROR));
-            
+
             return null;
         }
     }
-    
+
     public String cancelEnterview(Enterview enterview) {
         try {
+            if(enterview == null)
+                addMessage("enterviewMsg",
+                    createMessage("Enterview passed is null",
+                            FacesMessage.SEVERITY_ERROR));
             this.enterviewService.cancel(enterview);
             listEnterviews();
-            addMessage("enterviewMsg", 
-                    createMessage("The interview was successfully canceled", 
-                    FacesMessage.SEVERITY_INFO));
+            addMessage("enterviewMsg",
+                    createMessage("The interview was successfully canceled",
+                            FacesMessage.SEVERITY_INFO));
         } catch (EJBException ex) {
-            addMessage("enterviewMsg", 
-                    createMessage(ex.getCausedByException().getMessage(), 
-                    FacesMessage.SEVERITY_INFO));
+            addMessage("enterviewMsg",
+                    createMessage(ex.getCausedByException().getMessage(),
+                            FacesMessage.SEVERITY_INFO));
         }
-        
+
         return null;
     }
+
+    public boolean hasEnterview(Offer offer, Candidate candidate) {
+        try {
+            enterviewService
+                    .getByOfferAnCandidate(offer, candidate);
+            return true;
+        } catch (EJBException ex) {
+            return false;
+        }
+    }
     
+    public Enterview getByOfferAndCandidate(Offer offer, Candidate candidate) {
+        try {
+            return enterviewService
+                    .getByOfferAnCandidate(offer, candidate);
+        } catch (EJBException ex) {
+            addMessage("enterviewMsg",
+                    createMessage(ex.getCausedByException().getMessage(),
+                            FacesMessage.SEVERITY_ERROR));
+            return null;
+        }
+    }
+
     private FacesMessage createMessage(String text, Severity severity) {
         FacesMessage message = new FacesMessage(text);
         message.setSeverity(severity);
         return message;
     }
-    
+
     private void addMessage(String clientId, FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(clientId, message);
     }
-    
+
     public String newEnterview(Offer offer, Candidate candidate) {
         initConversation();
-        
+
         this.selectedOffer = offer;
-        System.out.println("[EnterviewBean] Selected Offer: "+this.selectedOffer);
+        System.out.println("[EnterviewBean] Selected Offer: " + this.selectedOffer);
         this.selectedCandidate = candidate;
-        System.out.println("[EnterviewBean] Selected Candidate: "+this.selectedCandidate);
-        
+        System.out.println("[EnterviewBean] Selected Candidate: " + this.selectedCandidate);
+
         return "/manager/new_enterview.xhtml?faces-redirect=true";
     }
 
@@ -149,7 +174,7 @@ public class EnterviewBean implements Serializable {
     public void setEnterviewsList(List<Enterview> enterviewsList) {
         this.enterviewsList = enterviewsList;
     }
-    
+
     public void initConversation() {
         if (conversation.isTransient()) {
             System.out.println("[EnterviewBean] initializing conversation... ");
@@ -171,6 +196,5 @@ public class EnterviewBean implements Serializable {
     public void setEnterview(Enterview enterview) {
         this.enterview = enterview;
     }
-    
-    
+
 }

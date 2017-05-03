@@ -7,7 +7,9 @@ package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -60,6 +62,23 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public void delete(Enterview enterview) {
         this.manager.remove(enterview);
+    }
+
+    @Override
+    public Enterview getByOfferAndCandidate(Long offerId, Long candidateId) {
+        TypedQuery<Enterview> query = manager
+                .createQuery("SELECT e"
+                + " FROM Enterview e"
+                + " WHERE e.offer.id = :offerId"
+                + " AND e.candidate.id = :candidateId", Enterview.class)
+                .setParameter("offerId", offerId)
+                .setParameter("candidateId", candidateId);
+        
+        List<Enterview> result = query.getResultList();
+        if(result.isEmpty())
+            return null;
+        else
+            return result.get(0);
     }
     
 }
