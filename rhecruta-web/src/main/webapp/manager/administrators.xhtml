@@ -77,6 +77,14 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('adminRoleMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
             </ui:define>
 
         </ui:composition>
