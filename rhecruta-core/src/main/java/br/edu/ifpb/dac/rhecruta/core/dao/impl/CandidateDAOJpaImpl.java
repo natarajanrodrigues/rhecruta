@@ -13,6 +13,7 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -31,11 +32,17 @@ public class CandidateDAOJpaImpl implements CandidateDAO {
 
     @Override
     public Candidate getCandidateByUser(User user) {
-        TypedQuery<Candidate> query = manager
+        try {
+            TypedQuery<Candidate> query = manager
                 .createQuery("SELECT c FROM Candidate c"
                 + " WHERE c.user.id = :userId", Candidate.class)
                 .setParameter("userId", user.getId());
-        return query.getSingleResult();
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+        
     }
 
     @Override

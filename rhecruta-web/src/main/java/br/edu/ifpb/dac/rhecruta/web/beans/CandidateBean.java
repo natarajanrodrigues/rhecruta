@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
@@ -17,6 +18,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -42,14 +45,17 @@ public class CandidateBean {
     private User user = new User();
     private Credentials credentials = new Credentials();
     
+    private Candidate candidateUpgradable = new Candidate();
     
     
     @PostConstruct
     private void postConstruct() {
+        if (loggedUser != null) 
+            candidateUpgradable = candidateService.getByUser(loggedUser);
         System.out.println("Construi o CandidateBean!");
     }
     
-    @PreDestroy
+    @PreDestroy 
     private void preDestroy() {
         System.out.println("Destrui o CandidateBean!");
     }
@@ -69,7 +75,7 @@ public class CandidateBean {
     
     public Candidate getLoggedCandidate() {
         
-        if(loggedUser != null) {//está dando um erro aqui 
+        if(loggedUser != null) {
             Candidate loggedCandidate = candidateService.getByUser(loggedUser);
             return loggedCandidate;
         } return null;
@@ -139,5 +145,21 @@ public class CandidateBean {
     public List<Offer> getCandidateOffers(){
         return this.offerService.getByCandidate(getLoggedCandidate());
     }
+    
+    
+    public String updateCandidate() {
+        System.out.println("LOGGED Candidate: " + candidateUpgradable);
+        candidateService.update(candidateUpgradable);
+        
+        FacesContext.getCurrentInstance().addMessage("password-form", new FacesMessage("Successfull updated"));
+        
+        return null;
+    }
+
+    public Candidate getCandidateUpgradable() {
+        return candidateUpgradable;
+    }
+    
+    
     
 }
