@@ -56,5 +56,10 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
                 .setParameter("appraiser", appraiser);
         return query.getResultList();
     }
+
+    @Override
+    public void delete(Enterview enterview) {
+        this.manager.remove(enterview);
+    }
     
 }

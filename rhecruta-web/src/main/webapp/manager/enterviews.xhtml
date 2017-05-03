@@ -73,7 +73,9 @@ and open the template in the editor.
                                             <h:column>
                                                 <f:facet name="header">Cancel</f:facet>
                                                 <h:commandButton class="btn btn-danger"
-                                                                 value="Cancel Interview"/>
+                                                                 value="Cancel Interview"
+                                                                 action="#{enterviewBean.cancelEnterview(enterview)}"
+                                                                 />
                                             </h:column>
                                         </h:dataTable>
                                     </h:form>

@@ -18,4 +18,5 @@ public interface EnterviewDAO extends DAO<Enterview> {
     List<Enterview> listAll();
     Enterview findById(Long id);
     List<Enterview> listByAppraiser(Administrator appraiser);
+    void delete(Enterview enterview);
 }

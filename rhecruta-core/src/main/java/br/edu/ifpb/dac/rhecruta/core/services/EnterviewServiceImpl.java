@@ -131,6 +131,17 @@ public class EnterviewServiceImpl implements EnterviewService {
         }
     }
     
+    @Override
+    public void cancel(Enterview enterview) {
+        if(!enterview.isFinished()) {
+            Enterview found = enterviewDAO.findById(enterview.getId());
+            enterviewDAO.delete(found);
+        }
+        else throw new EJBException(
+                new IllegalArgumentException("You can't cancel a finished interview!")
+        );
+    }
+    
     private void validateEvaluation(Enterview enterview, Double score) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         if(enterview == null) 

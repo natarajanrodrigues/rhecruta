@@ -17,5 +17,6 @@ public interface EnterviewService {
     void save(Enterview enterview);
     List<Enterview> listAll();
     void evaluate(Enterview enterview, Double score);
+    void cancel(Enterview enterview);
     
 }

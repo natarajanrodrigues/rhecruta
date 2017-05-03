@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -75,9 +74,6 @@ public class EnterviewBean implements Serializable {
                     createMessage("The enterview was scheduled successfully!", 
                             FacesMessage.SEVERITY_INFO));
             
-            
-            
-            
             initAttributes();
             listEnterviews();
             endConversation();
@@ -91,6 +87,22 @@ public class EnterviewBean implements Serializable {
             
             return null;
         }
+    }
+    
+    public String cancelEnterview(Enterview enterview) {
+        try {
+            this.enterviewService.cancel(enterview);
+            listEnterviews();
+            addMessage("enterviewMsg", 
+                    createMessage("The interview was successfully canceled", 
+                    FacesMessage.SEVERITY_INFO));
+        } catch (EJBException ex) {
+            addMessage("enterviewMsg", 
+                    createMessage(ex.getCausedByException().getMessage(), 
+                    FacesMessage.SEVERITY_INFO));
+        }
+        
+        return null;
     }
     
     private FacesMessage createMessage(String text, Severity severity) {
