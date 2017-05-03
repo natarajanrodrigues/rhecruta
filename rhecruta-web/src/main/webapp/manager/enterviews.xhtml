@@ -28,45 +28,47 @@ and open the template in the editor.
                                     </a>
                                 </li>
                                 <li><a href="#{facesContext.externalContext.requestContextPath}/faces/manager/offer/offer.xhtml">Offers</a></li>
+                                <li class="active"><a href="#">Enterviews</a></li>
                                 <li><a href="#">Reports</a></li>
                                 <li><a href="#">Analytics</a></li>
                                 <li><a href="#">Export</a></li>
-                                <li class="active"><a href="#">Administrators</a></li>
+                                <li><a href="administrators.xhtml">Administrators</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
                             <div class="section">
 
-                                <h4>Administrators</h4>
+                                <h4>Enterviews</h4>
                                 <hr></hr>
 
                                 <div class="table-responsive">
                                     <h:form>
-                                        <h:dataTable class="table table-striped" var="admin" 
-                                                     value="#{adminRoleBean.administratorsList}">
-
+                                        <h:dataTable class="table table-striped" var="enterview" 
+                                                     value="#{enterviewBean.enterviewsList}">
+                                            
                                             <h:column>
-                                                <f:facet name="header">Name</f:facet>
-                                                    #{admin.firstname} #{admin.lastname}
+                                                <f:facet name="header">Offer</f:facet>
+                                                #{enterview.offer.description}
                                             </h:column>
                                             <h:column>
-                                                <f:facet name="header">E-mail</f:facet>
-                                                    #{admin.user.credentials.email}
+                                                <f:facet name="header">Candidate Name</f:facet>
+                                                    #{enterview.candidate.firstname} #{enterview.candidate.lastname} 
                                             </h:column>
                                             <h:column>
-                                                <f:facet name="header">Role</f:facet>
-                                                    #{admin.user.role.description}
+                                                <f:facet name="header">Candidat E-mail</f:facet>
+                                                    #{enterview.candidate.user.credentials.email}
                                             </h:column>
                                             <h:column>
-                                                <f:facet name="header">Change Role</f:facet>
-                                                <h:commandButton class="btn btn-info btn-xs" 
-                                                                 value="Change to Manager"
-                                                                 action="#{adminRoleBean.changeToManager(admin)}"
-                                                                 rendered="#{!adminRoleBean.isManager(admin)}" />
-                                                <h:commandButton class="btn btn-primary btn-xs" 
-                                                                 value="Change to Appraiser"
-                                                                 action="#{adminRoleBean.chanteToAppraiser(admin)}"
-                                                                 rendered="#{adminRoleBean.isManager(admin)}" />
+                                                <f:facet name="header">Start dateTime</f:facet>
+                                                <h:outputText value="#{enterview.start}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Start dateTime</f:facet>
+                                                <h:outputText value="#{enterview.end}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:outputText>
                                             </h:column>
                                         </h:dataTable>
                                     </h:form>

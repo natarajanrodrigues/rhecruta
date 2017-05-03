@@ -144,7 +144,4 @@ public class OfferDAOJpaImpl implements OfferDAO {
         return resultList.size() > 0;
 
     }
-    
-    
-    
 }

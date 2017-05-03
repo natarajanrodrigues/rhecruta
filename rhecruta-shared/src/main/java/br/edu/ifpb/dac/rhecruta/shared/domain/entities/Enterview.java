@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -36,8 +37,11 @@ public class Enterview implements Serializable {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
     
+    @NotEmpty(message = "This field is required")
     @Column(name = "start_time")
     private LocalDateTime start;
+    
+    @NotEmpty(message = "This field is required")
     @Column(name = "end_time")
     private LocalDateTime end;
     
@@ -110,6 +114,10 @@ public class Enterview implements Serializable {
     
     public Double getScore() {
         return this.score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
     }
     
     public boolean isFinished() {
