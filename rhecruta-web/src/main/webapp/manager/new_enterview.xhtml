@@ -42,69 +42,80 @@ and open the template in the editor.
                                 <h4>New Enterview</h4>
                                 <hr></hr>
                                 <h4 class="thin">Fill all the fields below to schedule an enterview!</h4>
-                                    <div class="row">
-                                        <h:form id="enterview-form" rendered="#{registerBean.candidateSelected}" 
-                                                style="margin-top: 20px;">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Start DateTime</label>
-                                                    <div class="input-group">
-                                                        <h:inputText class="form-control" 
-                                                                     a:placeholder="dd/mm/yyyy hh:mm"
-                                                                     value="#{candidateBean.candidate.firstname}"/>
-                                                        <span class="input-group-addon" id="start-datetime-addon">
-                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>End DateTime</label>
-                                                    <div class="input-group">
-                                                        <h:inputText class="form-control" 
-                                                                     a:placeholder="dd/mm/yyyy hh:mm"
-                                                                     value="#{candidateBean.candidate.lastname}"/>
-                                                        <span class="input-group-addon" id="end-datetime-addon">
-                                                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
+                                <div class="row">
+                                    <h:form id="enterview-form" rendered="#{registerBean.candidateSelected}" 
+                                            style="margin-top: 20px;">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Start DateTime</label>
+                                                <div class="input-group">
+                                                    <h:inputText class="form-control" 
+                                                                 a:placeholder="dd/mm/yyyy hh:mm"
+                                                                 value="#{enterviewBean.enterview.start}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon" id="start-datetime-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Candidate</label>
-                                                    <div class="input-group">
-                                                        <h:inputText class="form-control" 
-                                                                     a:placeholder="dd/mm/yyyy hh:mm"
-                                                                     value="#{candidateBean.candidate.lastname}"
-                                                                     disabled="true"/>
-                                                        <span class="input-group-addon" id="end-datetime-addon">
-                                                            <i class="fa fa-user" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Offer</label>
-                                                    <div class="input-group">
-                                                        <h:inputText class="form-control" 
-                                                                     a:placeholder="dd/mm/yyyy hh:mm"
-                                                                     value="#{candidateBean.candidate.lastname}"
-                                                                     disabled="true"/>
-                                                        <span class="input-group-addon" id="end-datetime-addon">
-                                                            <i class="fa fa-font" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label>End DateTime</label>
+                                                <div class="input-group">
+                                                    <h:inputText class="form-control" 
+                                                                 a:placeholder="dd/mm/yyyy hh:mm"
+                                                                 value="#{enterviewBean.enterview.end}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon" id="end-datetime-addon">
+                                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Candidate</label>
+                                                <div class="input-group">
+                                                    <h:inputText class="form-control" 
+                                                                 value="#{enterviewBean.selectedCandidate.firstname}"
+                                                                 disabled="true"/>
+                                                    <span class="input-group-addon" id="end-datetime-addon">
+                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Offer</label>
+                                                <div class="input-group">
+                                                    <h:inputText class="form-control" 
+                                                                 value="#{enterviewBean.selectedOffer.description}"
+                                                                 disabled="true"/>
+                                                    <span class="input-group-addon" id="end-datetime-addon">
+                                                        <i class="fa fa-font" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <div class="col-md-12">
-                                                <h:commandButton class="btn btn-primary" value="SCHEDULE" action="#{candidateBean.saveCandidact()}" />
-                                            </div>
-                                        </h:form>
-                                    </div>
+                                        <div class="col-md-12">
+                                            <h:commandButton class="btn btn-primary" value="SCHEDULE" action="#{enterviewBean.saveEnterview()}" />
+                                        </div>
+                                    </h:form>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('enterviewMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup> 
             </ui:define>
 
         </ui:composition>

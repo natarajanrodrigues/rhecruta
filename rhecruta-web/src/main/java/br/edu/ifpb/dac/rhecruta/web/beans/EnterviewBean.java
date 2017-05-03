@@ -45,6 +45,7 @@ public class EnterviewBean implements Serializable {
     
     @PostConstruct
     public void init() {
+        System.out.println("[EnterviewBean] Constructed!!");
         initAttributes();
         listEnterviews();
     }
@@ -64,6 +65,8 @@ public class EnterviewBean implements Serializable {
         enterview.setCandidate(selectedCandidate);
         enterview.setOffer(selectedOffer);
         
+        System.out.println("[EnterviewBean] Enterview to be saved: "+enterview);
+        
         try {
             
             this.enterviewService.save(enterview);
@@ -72,10 +75,14 @@ public class EnterviewBean implements Serializable {
                     createMessage("The enterview was scheduled successfully!", 
                             FacesMessage.SEVERITY_INFO));
             
+            
+            
+            
             initAttributes();
+            listEnterviews();
             endConversation();
             
-            return "enterviews";
+            return "enterviews.xhtml?faces-refirect=true";
             
         } catch (EJBException ex) {
             addMessage("enterviewMsg", 
@@ -100,9 +107,11 @@ public class EnterviewBean implements Serializable {
         initConversation();
         
         this.selectedOffer = offer;
+        System.out.println("[EnterviewBean] Selected Offer: "+this.selectedOffer);
         this.selectedCandidate = candidate;
+        System.out.println("[EnterviewBean] Selected Candidate: "+this.selectedCandidate);
         
-        return "new_enterview";
+        return "/manager/new_enterview.xhtml?faces-redirect=true";
     }
 
     public Offer getSelectedOffer() {
@@ -131,13 +140,25 @@ public class EnterviewBean implements Serializable {
     
     public void initConversation() {
         if (conversation.isTransient()) {
+            System.out.println("[EnterviewBean] initializing conversation... ");
             this.conversation.begin();
         }
     }
 
     public void endConversation() {
         if (!conversation.isTransient()) {
+            System.out.println("[EnterviewBean] ending conversation... ");
             this.conversation.end();
         }
     }
+
+    public Enterview getEnterview() {
+        return enterview;
+    }
+
+    public void setEnterview(Enterview enterview) {
+        this.enterview = enterview;
+    }
+    
+    
 }

@@ -45,17 +45,17 @@ and open the template in the editor.
                                     <h:form>
                                         <h:dataTable class="table table-striped" var="enterview" 
                                                      value="#{enterviewBean.enterviewsList}">
-                                            
+
                                             <h:column>
                                                 <f:facet name="header">Offer</f:facet>
-                                                #{enterview.offer.description}
+                                                    #{enterview.offer.description}
                                             </h:column>
                                             <h:column>
                                                 <f:facet name="header">Candidate Name</f:facet>
                                                     #{enterview.candidate.firstname} #{enterview.candidate.lastname} 
                                             </h:column>
                                             <h:column>
-                                                <f:facet name="header">Candidat E-mail</f:facet>
+                                                <f:facet name="header">Candidate E-mail</f:facet>
                                                     #{enterview.candidate.user.credentials.email}
                                             </h:column>
                                             <h:column>
@@ -70,6 +70,11 @@ and open the template in the editor.
                                                     <f:converter converterId="localDateTimeConverter" />
                                                 </h:outputText>
                                             </h:column>
+                                            <h:column>
+                                                <f:facet name="header">Cancel</f:facet>
+                                                <h:commandButton class="btn btn-danger"
+                                                                 value="Cancel Interview"/>
+                                            </h:column>
                                         </h:dataTable>
                                     </h:form>
                                 </div>
@@ -78,6 +83,16 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('enterviewMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup>  
+
             </ui:define>
 
         </ui:composition>

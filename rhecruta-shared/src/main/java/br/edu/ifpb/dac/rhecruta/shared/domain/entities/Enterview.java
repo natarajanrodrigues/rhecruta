@@ -37,11 +37,9 @@ public class Enterview implements Serializable {
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
     
-    @NotEmpty(message = "This field is required")
     @Column(name = "start_time")
     private LocalDateTime start;
     
-    @NotEmpty(message = "This field is required")
     @Column(name = "end_time")
     private LocalDateTime end;
     

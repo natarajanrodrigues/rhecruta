@@ -61,7 +61,11 @@ and open the template in the editor.
                                                     <tr>
                                                         <td>#{cand.firstname} #{cand.lastname}</td>
                                                         <td>#{cand.user.credentials.email}</td>
-                                                        <td class="text-center"><h:commandButton class="btn btn-xs btn-default" value="Schedule interview" action="#{offerDetailsBean.scheduleInterview(cand)}" /></td>
+                                                        <td class="text-center">
+                                                            <h:commandButton class="btn btn-xs btn-default" 
+                                                                        value="Schedule interview" 
+                                                                        action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}" />
+                                                        </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

@@ -85,22 +85,20 @@ CREATE TABLE enterview (
 	id SERIAL,
 	offer_id INT NOT NULL,
 	candidate_id INT NOT NULL,
-	applier_id INT NOT NULL,
 	score DOUBLE PRECISION default 0,
 	start_time TIMESTAMP NOT NULL,
 	end_time TIMESTAMP,
 	--Embedded Address
-	country VARCHAR(255) NOT NULL,
-	state VARCHAR(255) NOT NULL,
-        city VARCHAR(255) NOT NULL,
-	neighborhood VARCHAR(255) NOT NULL,
-	street VARCHAR(255) NOT NULL,
-	complement VARCHAR(255) NOT NULL,
-	number VARCHAR(255) NOT NULL,
+	country VARCHAR(255),
+	state VARCHAR(255),
+        city VARCHAR(255),
+	neighborhood VARCHAR(255),
+	street VARCHAR(255),
+	complement VARCHAR(255),
+	number VARCHAR(255),
 	--FK
 	FOREIGN KEY(offer_id) REFERENCES offer(id),
 	FOREIGN KEY(candidate_id) REFERENCES candidate(id),
-	FOREIGN KEY(applier_id) REFERENCES administrator(id),
 	--PK
 	PRIMARY KEY(id)
 );

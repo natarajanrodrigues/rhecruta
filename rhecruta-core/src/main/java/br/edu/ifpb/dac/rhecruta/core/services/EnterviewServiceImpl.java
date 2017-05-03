@@ -16,12 +16,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.transaction.Transactional;
 
 /**
  *
@@ -39,6 +37,7 @@ public class EnterviewServiceImpl implements EnterviewService {
 
     @Override
     public void save(Enterview enterview) {
+        System.out.println("[EnterviewServiceImpl] Enterview to be saved: "+enterview);
         try {
             validate(enterview);
             enterviewDAO.save(enterview);
@@ -101,12 +100,15 @@ public class EnterviewServiceImpl implements EnterviewService {
                         || (appraiserEnterview.getStart().isBefore(enterviewStart)
                         && appraiserEnterview.getEnd().isBefore(enterviewStart))) {
                     
-                } else throw new IllegalArgumentException("The appraiser "
-                        + appraiser.getFirstname() + appraiser.getLastname() 
+                } else {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    throw new IllegalArgumentException("The appraiser "
+                        + appraiser.getFirstname() + ' ' + appraiser.getLastname() 
                         + " will be busy at this time. He has an enterview schedule "
-                                + "to "+enterview.getStart()+" - "+enterview.getEnd()+"."
+                                + "to "+appraiserEnterview.getStart().format(dtf)+" - "+appraiserEnterview.getEnd().format(dtf)+"."
                                         + " Please choose another period or choose another"
                                         + " appraiser to guide this enterview.");
+                }
             }
         }
         
