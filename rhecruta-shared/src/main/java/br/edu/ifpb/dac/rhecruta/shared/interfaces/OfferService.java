@@ -27,5 +27,6 @@ public interface OfferService {
     boolean isSubscribed(Long offerId, Candidate candidate);
     List<Offer> getByCandidate(Candidate candidate);
     boolean isAttached(Long offerId, Long administratorId);
+    List<Candidate> getSubscribers(Offer offer);
     
 }

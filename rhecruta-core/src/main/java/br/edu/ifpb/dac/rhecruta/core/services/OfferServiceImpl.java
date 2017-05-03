@@ -95,5 +95,10 @@ public class OfferServiceImpl implements OfferService {
         System.out.println(offerId + " " + administratorId);
         return offerDAO.isAttached(offerId, administratorId);
     }
+
+    @Override
+    public List<Candidate> getSubscribers(Offer offer) {
+        return offerDAO.getSubscribers(offer);
+    }
     
 }

@@ -144,4 +144,19 @@ public class OfferDAOJpaImpl implements OfferDAO {
         return resultList.size() > 0;
 
     }
+    
+    @Override
+    public List<Candidate> getSubscribers(Offer offer) {
+        try {
+            TypedQuery<Candidate> query = entityManager
+                    .createQuery("SELECT candidate FROM Offer o, IN (o.candidates) candidate WHERE o.id = :idOffer", Candidate.class)
+                    .setParameter("idOffer", offer.getId());
+            List<Candidate> resultList = query.getResultList();
+            
+            return resultList;
+
+        } catch (Exception e) {
+            return Collections.EMPTY_LIST;
+        }
+    }
 }

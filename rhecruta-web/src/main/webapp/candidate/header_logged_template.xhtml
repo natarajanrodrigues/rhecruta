@@ -38,8 +38,8 @@
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-header">Logged as #{loginBean.loggedUser.role.description}</li>
                                         <li>
-                                            <a href="profile.xhtml">Settings</a>
-                                            <a href="password.xhtml">Change Password</a>
+                                            <a href="#{facesContext.externalContext.requestContextPath}/faces/candidate/profile.xhtml">Settings</a>
+                                            <a href="#{facesContext.externalContext.requestContextPath}/faces/candidate/password.xhtml">Change Password</a>
                                             <!--<h:link target="/tst">teste</h:link>-->
                                         </li>
                                         <li role="separator" class="divider"></li>
