@@ -219,5 +219,10 @@ public class EnterviewServiceImpl implements EnterviewService {
         return sb.toString();
                 
     }
+
+    @Override
+    public List<Enterview> listByOffer(Offer offer) {
+        return enterviewDAO.listByOffer(offer);
+    }
     
 }
