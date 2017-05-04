@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import java.util.List;
@@ -22,5 +23,7 @@ public interface EnterviewDAO extends DAO<Enterview> {
     void delete(Enterview enterview);
     public List<Enterview> listByOffer(Offer offer);
     Enterview getByOfferAndCandidate(Long offerId, Long candidateId);
+
+    public List<Enterview> listByCandidate(Candidate candidate);
 
 }
