@@ -6,15 +6,18 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.AdministratorDAO;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
@@ -33,6 +36,8 @@ public class AdministratorServiceImpl implements AdministratorService {
     private AdministratorDAO administratorDAO;
     @EJB
     private EmailRequester emailRequester;
+    @EJB
+    private EnterviewDAO enterviewDAO;
 
     @Override
     public Administrator getByUser(User user) {
@@ -71,8 +76,25 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void changeRole(Administrator administrator, Role newRole) {
-        administrator.getUser().setRole(newRole);
-        administratorDAO.update(administrator);
+        try {
+            verifyChangeRole(administrator, newRole);
+            administrator.getUser().setRole(newRole);
+            administratorDAO.update(administrator);
+        } catch (IllegalArgumentException ex) {
+            throw new EJBException(ex);
+        }
+    }
+    
+    private void verifyChangeRole(Administrator administrator, Role newRole) {
+        if(newRole.equals(Role.MANAGER)) {
+            List<Enterview> enterview = enterviewDAO.listByAppraiser(administrator)
+                    .stream().filter((e) -> !e.isFinished()).collect(Collectors.toList());
+
+            if(!enterview.isEmpty())
+                throw new IllegalArgumentException("You can't change your role to Manager "
+                        + "'cause you have non finished interviews. Wait all your interviews end "
+                        + "and try again.");
+        }
     }
 
     @Override

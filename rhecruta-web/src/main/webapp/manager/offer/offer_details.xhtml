@@ -64,7 +64,13 @@ and open the template in the editor.
                                                         <td class="text-center">
                                                             <h:commandButton class="btn btn-xs btn-default" 
                                                                         value="Schedule interview" 
-                                                                        action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}" />
+                                                                        action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
+                                                                        rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
+                                                            <h:commandButton class="btn btn-xs btn-danger" 
+                                                                        value="Cancel Interview" 
+                                                                        action="#{enterviewBean.cancelEnterview(enterviewBean
+                                                                                  .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
+                                                                        rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

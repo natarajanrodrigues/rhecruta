@@ -11,7 +11,10 @@ import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,26 +22,25 @@ import javax.inject.Named;
  *
  * @author Pedro Arthur
  */
-
 @Named
 @RequestScoped
 public class AdminRoleBean {
-    
+
     @Inject
     private AdministratorService adminService;
-    
+
     private List<Administrator> administratorList;
-    
+
     @PostConstruct
     private void init() {
         System.out.println("[AdminRoleBean] CREATED!");
         listAllAdministrators();
     }
-    
+
     public List<Administrator> getAllAdministrators() {
         return adminService.getAllAdministrators();
     }
-    
+
     private void listAllAdministrators() {
         this.administratorList = getAllAdministrators();
     }
@@ -50,21 +52,41 @@ public class AdminRoleBean {
     public void setAdministratorsList(List<Administrator> appraiserList) {
         this.administratorList = appraiserList;
     }
-    
+
     public String changeToManager(Administrator appraiser) {
-        adminService.changeRole(appraiser, Role.MANAGER);
-        listAllAdministrators();
+        try {
+            adminService.changeRole(appraiser, Role.MANAGER);
+            listAllAdministrators();
+            addMessage("adminRoleMsg",
+                    createMessage("Role successfully changed!",
+                            FacesMessage.SEVERITY_INFO));
+        } catch (EJBException ex) {
+            addMessage("adminRoleMsg",
+                    createMessage(ex.getCausedByException().getMessage(),
+                            FacesMessage.SEVERITY_ERROR));
+        }
         return null;
     }
-    
+
     public String chanteToAppraiser(Administrator manager) {
         adminService.changeRole(manager, Role.APPRAISER);
         listAllAdministrators();
+
         return null;
     }
-    
+
     public boolean isManager(Administrator admin) {
         Role role = admin.getUser().getRole();
         return role.equals(Role.MANAGER);
+    }
+
+    private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(text);
+        message.setSeverity(severity);
+        return message;
+    }
+
+    private void addMessage(String clientId, FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, message);
     }
 }

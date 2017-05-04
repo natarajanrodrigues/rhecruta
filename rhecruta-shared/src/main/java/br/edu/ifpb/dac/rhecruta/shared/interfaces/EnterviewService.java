@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import java.util.List;
@@ -20,5 +21,7 @@ public interface EnterviewService {
     void evaluate(Enterview enterview, Double score);
     void cancel(Enterview enterview);
     List<Enterview> listByOffer(Offer offer);
+    Enterview getByOfferAnCandidate(Offer offer, Candidate candidate);
+
     
 }
