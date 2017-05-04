@@ -31,7 +31,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public List<Enterview> listAll() {
         TypedQuery<Enterview> query = manager
-                .createQuery("SELECT e FROM Enterview e", Enterview.class);
+                .createQuery("SELECT e FROM Enterview e ORDER BY e.start", Enterview.class);
         return query.getResultList();
     }
 
@@ -54,7 +54,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public List<Enterview> listByAppraiser(Administrator appraiser) {
         TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
-                + " WHERE e.offer.appraiser = :appraiser", 
+                + " WHERE e.offer.appraiser = :appraiser  ORDER BY e.start", 
                 Enterview.class)
                 .setParameter("appraiser", appraiser);
         return query.getResultList();
@@ -68,7 +68,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public List<Enterview> listByOffer(Offer offer) {
         TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
-                + " WHERE e.offer = offer", Enterview.class)
+                + " WHERE e.offer = offer  ORDER BY e.start", Enterview.class)
                 .setParameter("offer", offer);
         return query.getResultList();
 
@@ -96,7 +96,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public List<Enterview> listByCandidate(Candidate candidate) {
         TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
-                + " WHERE e.candidate = candidate", Enterview.class)
+                + " WHERE e.candidate = :candidate  ORDER BY e.start", Enterview.class)
                 .setParameter("candidate", candidate);
         return query.getResultList();
     }

@@ -7,12 +7,14 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -37,6 +39,9 @@ public class CandidateBean {
     
     @Inject
     private OfferService offerService;
+    
+    @Inject
+    private EnterviewService interviewService;
     
     @Inject
     private User loggedUser;
@@ -160,6 +165,8 @@ public class CandidateBean {
         return candidateUpgradable;
     }
     
-    
+    public List<Enterview> getInterviews(){
+        return interviewService.listByCandidate(getLoggedCandidate());
+    }
     
 }
