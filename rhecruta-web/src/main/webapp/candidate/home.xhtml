@@ -34,12 +34,13 @@ and open the template in the editor.
                                 <h:form>
                                     
                                         
-                                    
+                                    <h4>All Offers</h4>
+                                    <hr></hr>
                                     <c:forEach var="offer" items="#{candidateBean.openOffers}" varStatus="a">
                                         <c:if test="#{a.index % 2 == 0}">
-                                            <div class="row"></div>
+                                            <div class="row"></div> 
                                         </c:if>
-                                        <div class="panel panel-default col-md-5" style="margin: 5px">
+                                        <div class="well well-sm col-md-5" style="margin: 5px">
                                             <div class="panel-body">
                                                 <p><strong>Id: </strong> #{offer.id}</p>
                                                 <p><strong>Offer Description: </strong> #{offer.description}</p>
@@ -47,11 +48,11 @@ and open the template in the editor.
                                                 <p><strong>Subscriptions: </strong> #{offer.candidates.size()}</p>
                                                 <p><strong>Required Skills </strong></p>
                                                 <div>
-                                                    <h4>
+                                                    <div class="form-group">
                                                         <c:forEach items="#{offer.skills}" var="skill">
                                                             <span class="label label-default">#{skill}</span>
                                                         </c:forEach>
-                                                    </h4>
+                                                    </div>
                                                 </div>
                                                 
                                                 <c:if test="#{!candidateBean.isLoggedCandidateSubscribed(offer.id)}">

@@ -32,12 +32,20 @@ and open the template in the editor.
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
                             <div class="section">
                                 <ui:insert name="userArea">
+                                    <h3>Your invites</h3>
+                                    <hr></hr>
                                     <h:form>
                                         <c:forEach var="invite" items="#{inviteBean.getInvitesByCandidates(candidateBean.loggedCandidate)}">
-
-                                            <div class="thumbnail">
+                                            
+                                            <div class="well well-lg">
                                                 <div class="caption">
-                                                    <h4>#{invite.inviter.firstname} #{invite.inviter.lastname} has invited
+                                                    <h:panelGroup rendered="#{inviteBean.isInviteAnswered(invite)}">
+                                                            <!--<p><strong>Your answer: </strong></p>-->
+                                                            <h:outputText class="label #{inviteBean.isInviteAccepted(invite) ? 
+                                                                                         'label-success' : 'label-danger'}" 
+                                                                          value="#{invite.result.description}"/>
+                                                        </h:panelGroup>
+                                                    <h4 class="underline">##{invite.inviter.firstname} #{invite.inviter.lastname} has invited
                                                     you to join the offer below</h4>
                                                     <p><strong>Invite DateTime: </strong> <h:outputText value="#{invite.dateTime}"><f:converter converterId="localDateTimeConverter" /></h:outputText></p>
                                                     <p><strong>Offer Description: </strong> #{invite.offer.description}</p>
@@ -45,11 +53,9 @@ and open the template in the editor.
                                                     <p><strong>Subscriptions: </strong> #{invite.offer.candidates.size()}</p>
                                                     <p><strong>Skills: </strong> 
                                                     <c:forEach var="skill" items="#{invite.offer.skills}">
-                                                        #{skill},
+                                                        <div class="label label-default">#{skill}</div>
                                                     </c:forEach></p>
                                                     <div class="btn-group-xs">
-                                                        <h:outputText value="#{invite.result.description}"
-                                                                      rendered="#{inviteBean.isInviteAnswered(invite)}"/>
                                                         <h:panelGroup rendered="#{!inviteBean.isInviteAnswered(invite)}">
                                                             <h:commandButton class="btn btn-success" 
                                                                              value="Accept"

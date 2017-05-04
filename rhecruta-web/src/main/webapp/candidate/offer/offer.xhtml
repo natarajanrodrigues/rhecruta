@@ -15,23 +15,23 @@ and open the template in the editor.
         <ui:composition template="/candidate/offer/offer_layout.xhtml">
             <ui:define name="contentArea">
                 <h:form>
+                    <h4>You're enrolled in the following offers</h4>
+                    <hr></hr>
                     <c:forEach var="offer" items="#{candidateBean.candidateOffers}" varStatus="a">
                         <c:if test="#{a.index % 2 == 0}">
                             <div class="row"></div>
                         </c:if>
-                        <div class="panel panel-default col-md-5" style="margin: 5px">
+                        <div class="well well-sm col-md-5" style="margin: 5px">
                             <div class="panel-body">
                                 <p><strong>Id: </strong> #{offer.id}</p>
                                 <p><strong>Description: </strong> #{offer.description}</p>
                                 <p><strong>Vacancy: </strong> #{offer.vacancies}</p>
                                 <p><strong>Subscriptions: </strong> #{offer.candidates.size()}</p>
 
-                                <div>
-                                    <h4>
-                                        <c:forEach items="#{offer.skills}" var="skill">
-                                            <span class="label label-default">#{skill}</span>
-                                        </c:forEach>
-                                    </h4>
+                                <div class="form-group">
+                                    <c:forEach items="#{offer.skills}" var="skill">
+                                        <span class="label label-default label-lg">#{skill}</span>
+                                    </c:forEach>
                                 </div>
                                 <c:if test="#{!candidateBean.isLoggedCandidateSubscribed(offer.id)}" >
                                     <h:commandButton class="btn btn-xs btn-success" value="Subscribe" action="#{candidateBean.subscribe(offer)}"/>
@@ -39,10 +39,6 @@ and open the template in the editor.
                                 <c:if test="#{candidateBean.isLoggedCandidateSubscribed(offer.id)}" >
                                     <h:commandButton class="btn btn-danger" value="Unsubscribe" action="#{candidateBean.unsubscribe(offer)}"/>
                                 </c:if>
-                                
-                                
-
-                                
                             </div>
                         </div>
                     </c:forEach>

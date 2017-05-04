@@ -93,6 +93,10 @@ public class InviteBean {
         return !invite.getResult().equals(InviteResult.NONE);
     }
     
+    public boolean isInviteAccepted(Invite invite) {
+        return invite.getResult().equals(InviteResult.ACCEPTED);
+    }
+    
     
     private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
         FacesMessage message = new FacesMessage(text);

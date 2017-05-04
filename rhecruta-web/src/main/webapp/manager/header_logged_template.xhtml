@@ -23,7 +23,7 @@
                         </button>
                         <!-- Nav Brand -->
                         <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}/faces/manager/home.xhtml">
-                            <strong class="underline">Rh</strong>ecruta-<small>Manager</small></a>
+                            <strong class="underline">Rh</strong>ecruta<small class="role"> - Manager</small></a>
                     </div>
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
                         <ul class="nav navbar-nav navbar-right" id="navbar-nav-custom">
@@ -39,8 +39,8 @@
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-header">Logged as #{loginBean.loggedUser.role.description}</li>
                                         <li>
-                                            <a href="profile.xhtml">Settings</a>
-                                            <a href="password.xhtml">Change Password</a>
+                                            <a href="#{facesContext.externalContext.requestContextPath}/faces/manager/profile.xhtml">Settings</a>
+                                            <a href="#{facesContext.externalContext.requestContextPath}/faces/manager/password.xhtml">Change Password</a>
                                             <!--<h:link target="/tst">teste</h:link>-->
                                         </li>
                                         <li role="separator" class="divider"></li>

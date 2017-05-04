@@ -281,6 +281,9 @@ body {
   border-radius: 50%;
 }
 
+.navbar-brand > .role {
+    font-size: 0.6em;
+}
 /*
  * FIM CSS SIDEBAR
  */

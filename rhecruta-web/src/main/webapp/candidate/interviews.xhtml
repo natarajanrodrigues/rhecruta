@@ -29,31 +29,30 @@ and open the template in the editor.
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
                             <div class="section">
                                 <ui:insert name="userArea">
+                                    <h4>Scheduled Interviews</h4>
+                                    <hr></hr>
                                     <h:form>
-
                                         <c:forEach var="interview" items="#{candidateBean.interviews}" varStatus="a">
-                                            <div class="panel panel-default row col-md-6 col-md-offset-3 " >
+                                            <div class="well well-sm row col-md-6 col-md-offset-3 " >
                                                 <div class="panel-body">
                                                     <p><strong>Offer Description: </strong> #{interview.offer.description}</p>
                                                     <p><strong>Vacancy: </strong> #{interview.offer.vacancies} - <strong>Subscriptions: </strong> #{interview.offer.candidates.size()}</p>
 
 
-                                                    <div>
-                                                        <h4>
-                                                            <c:forEach items="#{interview.offer.skills}" var="skill">
-                                                                <span class="label label-default">#{skill}</span>
-                                                            </c:forEach>
-                                                        </h4>
+                                                    <div class="form-group">
+                                                        <c:forEach items="#{interview.offer.skills}" var="skill">
+                                                            <span class="label label-default">#{skill}</span>
+                                                        </c:forEach>
                                                     </div>
                                                     <p><strong>Interview times: </strong> </p>
                                                     <p> <strong>Date/Time Start: </strong>
-                                                        <h:outputText value="#{interview.start}">
+                                                        <h:outputText class="underline" value="#{interview.start}">
                                                             <f:converter converterId="localDateTimeConverter" />
                                                         </h:outputText>
                                                     </p>
 
                                                     <p> <strong>Date/Time End: </strong>
-                                                        <h:outputText value="#{interview.end}">
+                                                        <h:outputText class="underline" value="#{interview.end}">
                                                             <f:converter converterId="localDateTimeConverter" />
                                                         </h:outputText>
                                                     </p>

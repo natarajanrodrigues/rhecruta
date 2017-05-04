@@ -16,7 +16,7 @@ and open the template in the editor.
             <ui:define name="contentOffer">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <h4>Offer </h4>
                         <table class="table table-striped">
                             <thead>
@@ -38,7 +38,7 @@ and open the template in the editor.
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-md-6  ">
+                    <div class="col-md-5">
                         <h4>Offer skills required</h4>
 
                         <h:form>
@@ -113,7 +113,7 @@ and open the template in the editor.
                                                         </c:if>
                                                         <c:if test="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
                                                             <c:set var="interview" value="#{enterviewBean.getByOfferAndCandidate(offerDetailsBean.offer, cand)}"/>
-                                                            
+
                                                             <td class="text-center">
                                                                 <h:outputText value="#{interview.start}">
                                                                     <f:converter converterId="localDateTimeConverter" />
@@ -127,7 +127,7 @@ and open the template in the editor.
 
 
                                                         </c:if>
-                                                        
+
                                                         <td class="text-center">
                                                             <h:commandButton class="btn btn-xs btn-default" 
                                                                              value="Schedule interview" 
@@ -150,116 +150,117 @@ and open the template in the editor.
                             </c:if>
                         </h:form>
                     </div>
-
-                    
-
                 </div>
+
+
 
 
                 <hr></hr>
 
-                <div class="col-md-12 row" >
+                <div class="row">
+                    <div class="col-md-12" >
 
-                    <h:form rendered="#{offerDetailsBean.offer.appraiser ne null}" >
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Appraiser</div>
-                            <div class="panel-body">
+                        <h:form rendered="#{offerDetailsBean.offer.appraiser ne null}" >
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Appraiser</div>
+                                <div class="panel-body">
 
-                                <table class="table table-striped">
-                                    <thead>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
-                                        <th class="text-center">Action</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#{offerDetailsBean.offer.appraiser.firstname} #{offerDetailsBean.offer.appraiser.lastname}</td>
-                                            <td>#{offerDetailsBean.offer.appraiser.user.credentials.email}</td>
-                                            <td>#{offerDetailsBean.offer.appraiser.user.role.description}</td>
-                                            <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeAppraiserToOffer()}" /></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </h:form>
-
-                    <h:form rendered="#{offerDetailsBean.offer.appraiser eq null}">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Add Appraiser</div>
-                            <div class="panel-body">
-
-                                <table class="table table-striped">
-                                    <thead>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
-                                        <th class="text-center">Action</th>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="appraiser" items="#{offerDetailsBean.allAppraisers}">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Type</th>
+                                            <th class="text-center">Action</th>
+                                        </thead>
+                                        <tbody>
                                             <tr>
-                                                <td>#{appraiser.firstname} #{appraiser.lastname}</td>
-                                                <td>#{appraiser.user.credentials.email}</td>
-                                                <td>#{appraiser.user.role.description}</td>
-                                                <td class="text-center"><h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addAppraiserToOffer(appraiser)}" /></td>
+                                                <td>#{offerDetailsBean.offer.appraiser.firstname} #{offerDetailsBean.offer.appraiser.lastname}</td>
+                                                <td>#{offerDetailsBean.offer.appraiser.user.credentials.email}</td>
+                                                <td>#{offerDetailsBean.offer.appraiser.user.role.description}</td>
+                                                <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeAppraiserToOffer()}" /></td>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
 
-                    </h:form>
+                        </h:form>
 
+                        <h:form rendered="#{offerDetailsBean.offer.appraiser eq null}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Add Appraiser</div>
+                                <div class="panel-body">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Type</th>
+                                            <th class="text-center">Action</th>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="appraiser" items="#{offerDetailsBean.allAppraisers}">
+                                                <tr>
+                                                    <td>#{appraiser.firstname} #{appraiser.lastname}</td>
+                                                    <td>#{appraiser.user.credentials.email}</td>
+                                                    <td>#{appraiser.user.role.description}</td>
+                                                    <td class="text-center"><h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addAppraiserToOffer(appraiser)}" /></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </h:form>
+
+                    </div>
                 </div>
-
                 <hr></hr>
 
-                <div class="col-md-12 row" >
-                    <h:form rendered="#{offerDetailsBean.selectedOfferInvite}">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Candidate</div>
-                            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12" >
+                        <h:form rendered="#{offerDetailsBean.selectedOfferInvite}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Candidate</div>
+                                <div class="panel-body">
 
-                                <table class="table table-striped">
-                                    <thead>
-                                        <th>Name </th>
-                                        <th>Email</th>
-                                        <th>LinkedIn</th>
-                                        <th>Github</th>
-                                        <th class="text-center">Invite</th>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="cand" items="#{candidateBean.approvedCandidates}">
-                                            <tr>
-                                                <td>#{cand.firstname} #{cand.lastname}</td>
-                                                <td>#{cand.user.credentials.email}</td>
-                                                <td><a href="#{cand.linkedInUrl}">LinkedIn Profile</a></td>
-                                                <td><a href="#{cand.githubUrl}">Github Profile</a></td>
-                                                <td>
-                                                    <h:commandButton class="btn btn-default"
-                                                                     value="Invite"
-                                                                     action="#{inviteBean.invite(offerDetailsBean.offer, 
-                                                                               cand, 
-                                                                               administratorBean.loggedAdministrator)}"
-                                                                     rendered="#{!inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
-                                                    <h:outputText value="Invited" 
-                                                                  rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Name </th>
+                                            <th>Email</th>
+                                            <th>LinkedIn</th>
+                                            <th>Github</th>
+                                            <th class="text-center">Invite</th>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="cand" items="#{candidateBean.approvedCandidates}">
+                                                <tr>
+                                                    <td>#{cand.firstname} #{cand.lastname}</td>
+                                                    <td>#{cand.user.credentials.email}</td>
+                                                    <td><a href="#{cand.linkedInUrl}">LinkedIn Profile</a></td>
+                                                    <td><a href="#{cand.githubUrl}">Github Profile</a></td>
+                                                    <td>
+                                                        <h:commandButton class="btn btn-default"
+                                                                         value="Invite"
+                                                                         action="#{inviteBean.invite(offerDetailsBean.offer, 
+                                                                                   cand, 
+                                                                                   administratorBean.loggedAdministrator)}"
+                                                                         rendered="#{!inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
+                                                        <h:outputText value="Invited" 
+                                                                      rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
 
-                        </div>
-
-                    </h:form>
+                        </h:form>
+                    </div>
                 </div>
-                
                 <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('inviteMsg')}">
                     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
                         <div class="modal-dialog modal-sm" role="document">
