@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
+import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -13,10 +14,17 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.JMSProducer;
+import javax.jms.Message;
+import javax.jms.Queue;
 import javax.persistence.NoResultException;
 
 /**
@@ -30,10 +38,33 @@ public class OfferServiceImpl implements OfferService {
     
     @EJB
     private OfferDAO offerDAO;
+    @EJB
+    private EmailRequester emailRequester;
+    
+    @Inject
+    @JMSConnectionFactory(value = "jms/dac/dacConnectionFactory")
+    private JMSContext jmsContext;
 
+    @Resource(lookup = "jms/dac/rhecruta/newOfferQueue")
+    private Queue newOfferQueue;
+
+    
     @Override
     public void save(Offer offer) {
         offerDAO.save(offer);
+        System.out.println("Offer: "+offer);
+        sendToNewOfferQueue(offer);
+    }
+    
+    private void sendToNewOfferQueue(Offer offer) {
+        Message message = createMessage(offer.getId());
+        JMSProducer producer = jmsContext.createProducer();
+        producer.send(newOfferQueue, message);
+    }
+    
+    private Message createMessage(Long offerId) {
+        Message message = jmsContext.createTextMessage(offerId.toString());
+        return message;
     }
 
     @Override
