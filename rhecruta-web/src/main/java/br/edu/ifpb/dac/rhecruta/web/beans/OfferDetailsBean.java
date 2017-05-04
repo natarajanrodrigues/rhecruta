@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
@@ -125,6 +126,11 @@ public class OfferDetailsBean implements Serializable {
         this.offer.setAppraiser(null);
         this.offerService.update(offer);
         return null;
+    }
+    
+    public boolean isSelectedOfferInvite() {
+        OfferType type = offer.getType();
+        return type.equals(OfferType.INVITE);
     }
     
 //    public boolean isAdmin(Long adminId) {

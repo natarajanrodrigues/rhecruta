@@ -5,13 +5,18 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.InviteResult;
 import java.io.Serializable;
-import javax.persistence.EmbeddedId;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 
 /**
  *
@@ -19,33 +24,36 @@ import javax.persistence.MapsId;
  * 
  */
 @Entity
+@IdClass(InvitePK.class)
 public class Invite implements Serializable {
     
-    @EmbeddedId
-    private InvitePK invitePK;
-    
+    @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("offerId")
     @JoinColumn(name = "offer_id")
     private Offer offer;
     
+    @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("invitedId")
     @JoinColumn(name = "invited_id")
     private Candidate invited;
     
+    @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @MapsId("inviterId")
     @JoinColumn(name = "inviter_id")
     private Administrator inviter;
     
-    private boolean accepted;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
+    
+    @Enumerated(EnumType.STRING)
+    private InviteResult result;
 
-    public Invite(Offer offer, Candidate invited, Administrator inviter, boolean accepted) {
+    public Invite(Offer offer, Candidate invited, Administrator inviter, LocalDateTime dateTime, InviteResult result) {
         this.offer = offer;
         this.invited = invited;
         this.inviter = inviter;
-        this.accepted = accepted;
+        this.dateTime = dateTime;
+        this.result = result;
     }
 
     public Invite() {
@@ -76,16 +84,24 @@ public class Invite implements Serializable {
         this.inviter = inviter;
     }
 
-    public boolean isAccepted() {
-        return accepted;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public InviteResult getResult() {
+        return result;
+    }
+
+    public void setResult(InviteResult result) {
+        this.result = result;
     }
 
     @Override
     public String toString() {
-        return "Invite{" + "offer=" + offer + ", invited=" + invited + ", inviter=" + inviter + ", accepted=" + accepted + '}';
+        return "Invite{" + "offer=" + offer + ", invited=" + invited + ", inviter=" + inviter + ", dateTime=" + dateTime + ", result=" + result + '}';
     }
 }

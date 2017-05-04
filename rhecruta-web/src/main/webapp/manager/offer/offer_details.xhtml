@@ -42,7 +42,6 @@ and open the template in the editor.
                 <div class="row">
                     <div class="col-md-7">
                         <h4>Subscribers</h4>
-
                         <h:form>
                             <c:if test="#{offerDetailsBean.offer.candidates.size() > 0}">
 
@@ -63,14 +62,14 @@ and open the template in the editor.
                                                         <td>#{cand.user.credentials.email}</td>
                                                         <td class="text-center">
                                                             <h:commandButton class="btn btn-xs btn-default" 
-                                                                        value="Schedule interview" 
-                                                                        action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
-                                                                        rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
+                                                                             value="Schedule interview" 
+                                                                             action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
+                                                                             rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
                                                             <h:commandButton class="btn btn-xs btn-danger" 
-                                                                        value="Cancel Interview" 
-                                                                        action="#{enterviewBean.cancelEnterview(enterviewBean
-                                                                                  .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
-                                                                        rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
+                                                                             value="Cancel Interview" 
+                                                                             action="#{enterviewBean.cancelEnterview(enterviewBean
+                                                                                       .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
+                                                                             rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -130,7 +129,7 @@ and open the template in the editor.
                 <hr></hr>
 
                 <div class="col-md-12 row" >
-                    
+
                     <h:form rendered="#{offerDetailsBean.offer.appraiser ne null}" >
                         <div class="panel panel-default">
                             <div class="panel-heading">Appraiser</div>
@@ -156,7 +155,7 @@ and open the template in the editor.
                         </div>
 
                     </h:form>
-                    
+
                     <h:form rendered="#{offerDetailsBean.offer.appraiser eq null}">
                         <div class="panel panel-default">
                             <div class="panel-heading">Add Appraiser</div>
@@ -184,7 +183,60 @@ and open the template in the editor.
                         </div>
 
                     </h:form>
+
                 </div>
+
+                <hr></hr>
+
+                <div class="col-md-12 row" >
+                    <h:form rendered="#{offerDetailsBean.selectedOfferInvite}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Candidate</div>
+                            <div class="panel-body">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>Name </th>
+                                        <th>Email</th>
+                                        <th>LinkedIn</th>
+                                        <th>Github</th>
+                                        <th class="text-center">Invite</th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="cand" items="#{candidateBean.approvedCandidates}">
+                                            <tr>
+                                                <td>#{cand.firstname} #{cand.lastname}</td>
+                                                <td>#{cand.user.credentials.email}</td>
+                                                <td><a href="#{cand.linkedInUrl}">LinkedIn Profile</a></td>
+                                                <td><a href="#{cand.githubUrl}">Github Profile</a></td>
+                                                <td>
+                                                    <h:commandButton class="btn btn-default"
+                                                                     value="Invite"
+                                                                     action="#{inviteBean.invite(offerDetailsBean.offer, 
+                                                                               cand, 
+                                                                               administratorBean.loggedAdministrator)}"
+                                                                     rendered="#{!inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
+                                                    <h:outputText value="Invited" 
+                                                                  rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </h:form>
+                </div>
+                
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('inviteMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup>  
 
 
             </ui:define>

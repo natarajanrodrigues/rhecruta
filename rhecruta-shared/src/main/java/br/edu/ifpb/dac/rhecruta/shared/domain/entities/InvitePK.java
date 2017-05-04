@@ -17,9 +17,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class InvitePK implements Serializable {
     
-    private Long offerId;
-    private Long invitedId;
-    private Long inviterId;
+    private Long offer;
+    private Long invited;
+    private Long inviter;
 
     public InvitePK() {
         //
@@ -28,9 +28,9 @@ public class InvitePK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.offerId);
-        hash = 29 * hash + Objects.hashCode(this.invitedId);
-        hash = 29 * hash + Objects.hashCode(this.inviterId);
+        hash = 29 * hash + Objects.hashCode(this.offer);
+        hash = 29 * hash + Objects.hashCode(this.invited);
+        hash = 29 * hash + Objects.hashCode(this.inviter);
         return hash;
     }
 
@@ -46,44 +46,44 @@ public class InvitePK implements Serializable {
             return false;
         }
         final InvitePK other = (InvitePK) obj;
-        if (!Objects.equals(this.offerId, other.offerId)) {
+        if (!Objects.equals(this.offer, other.offer)) {
             return false;
         }
-        if (!Objects.equals(this.invitedId, other.invitedId)) {
+        if (!Objects.equals(this.invited, other.invited)) {
             return false;
         }
-        if (!Objects.equals(this.inviterId, other.inviterId)) {
+        if (!Objects.equals(this.inviter, other.inviter)) {
             return false;
         }
         return true;
     }
 
     public Long getOfferId() {
-        return offerId;
+        return offer;
     }
 
     public void setOfferId(Long offerId) {
-        this.offerId = offerId;
+        this.offer = offerId;
     }
 
     public Long getInvitedId() {
-        return invitedId;
+        return invited;
     }
 
     public void setInvitedId(Long invitedId) {
-        this.invitedId = invitedId;
+        this.invited = invitedId;
     }
 
     public Long getInviterId() {
-        return inviterId;
+        return inviter;
     }
 
     public void setInviterId(Long inviterId) {
-        this.inviterId = inviterId;
+        this.inviter = inviterId;
     }
 
     @Override
     public String toString() {
-        return "InvitePK{" + "offerId=" + offerId + ", invitedId=" + invitedId + ", inviterId=" + inviterId + '}';
+        return "InvitePK{" + "offerId=" + offer + ", invitedId=" + invited + ", inviterId=" + inviter + '}';
     }
 }

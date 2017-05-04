@@ -90,6 +90,10 @@ public class CandidateBean {
         return candidateService.listCandidatesToApprove();
     }
     
+    public List<Candidate> getApprovedCandidates() {
+        return candidateService.listApprovedCandidates();
+    }
+    
     public String respondRequest(Candidate candidate, boolean approve) {
         this.candidateService.respondRequest(candidate, approve);
         return null;
