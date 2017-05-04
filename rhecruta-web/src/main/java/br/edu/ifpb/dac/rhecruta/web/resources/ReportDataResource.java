@@ -28,6 +28,8 @@ public class ReportDataResource {
     @Path("languages")
     public Response getReportLanguagues(){
         List<Offer> mothOffers = offerService.getMothOffers();
+        return null;
+        
         
     }
     
