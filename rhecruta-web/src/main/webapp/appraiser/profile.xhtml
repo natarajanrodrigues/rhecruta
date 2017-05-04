@@ -23,7 +23,7 @@ and open the template in the editor.
 
                 <div class="container">
 
-                    <div class="section">
+<div class="section">
 
                         <div class="col-sm-10 col-sm-offset-1">
 
@@ -47,7 +47,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>Firstname</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.firstname}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.firstname}"/>
                                                 <span class="input-group-addon" id="firstname-addon">
                                                     <i class="fa fa-user" aria-hidden="true"></i>
                                                 </span>
@@ -56,7 +56,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>Lastname</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.lastname}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.lastname}"/>
                                                 <span class="input-group-addon" id="lastname-addon">
                                                     <i class="fa fa-user" aria-hidden="true"></i>
                                                 </span>
@@ -66,7 +66,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>E-mail</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.user.credentials.email}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.user.credentials.email}"/>
                                                 <span class="input-group-addon" id="email-addon">
                                                     <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                 </span>
@@ -77,7 +77,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label>Role</label>
-                                                <h:outputFormat class="form-control" value="#{candidateBean.candidateUpgradable.user.role}"/>
+                                                <h:outputFormat class="form-control" value="#{administratorBean.administratorUpdateble.user.role}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>CPF</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" id="cpf" value="#{candidateBean.candidateUpgradable.cpf}" onkeypress="MascaraCPF(this);" maxlength="14"/>
+                                                <h:inputText class="form-control" id="cpf" value="#{administratorBean.administratorUpdateble.cpf}" onkeypress="MascaraCPF(this);" maxlength="14"/>
                                                 <span class="input-group-addon" id="cpf-addon">
                                                     <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                 </span>
@@ -96,7 +96,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>Country</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.address.country}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.address.country}"/>
                                                 <span class="input-group-addon" id="country-addon">
                                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                 </span>
@@ -105,7 +105,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>State</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.address.state}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.address.state}"/>
                                                 <span class="input-group-addon" id="state-addon">
                                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                 </span>
@@ -114,7 +114,7 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <label>City</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{candidateBean.candidateUpgradable.address.city}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administratorUpdateble.address.city}"/>
                                                 <span class="input-group-addon" id="city-addon">
                                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                 </span>
@@ -122,7 +122,7 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                     <div class="col-md-12 container">
-                                        <h:commandButton class="btn btn-primary" value="Update" action="#{candidateBean.updateCandidate()}" />
+                                        <h:commandButton class="btn btn-primary" value="Update" action="#{administratorBean.updateAdministrator()}" />
                                     </div>
 
                                 </h:form>
