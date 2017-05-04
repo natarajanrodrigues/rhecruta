@@ -11,9 +11,13 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,8 +28,11 @@ import javax.inject.Named;
  */
 
 @Named
-@RequestScoped
-public class OfferBean {
+@ConversationScoped
+public class OfferBean implements Serializable{
+    
+    @Inject
+    private Conversation conversation;
     
     @Inject
     private AdministratorService administratorService;
@@ -41,9 +48,11 @@ public class OfferBean {
     private Offer offer = new Offer();
     private List<Offer> administratorOffers;
 
-        
+    private String skill = "";
+    
     @PostConstruct
     private void init() {
+        initConversation();
         if (loggedUser != null)  {
             loggedAdministrator = administratorService.getByUser(getLoggedAdministrator().getUser());
             this.administratorOffers = offerService.getByManager(loggedAdministrator);
@@ -56,6 +65,7 @@ public class OfferBean {
     
     @PreDestroy
     private void preDestroy() {
+        endConversation();
         System.out.println("Destrui o OfferBean!");
     }
     
@@ -67,6 +77,39 @@ public class OfferBean {
             return logged;
         } return null;
     }
+    
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
+    }
+    
+    public String addSkill() {
+        this.offer.addSkill(this.skill);
+        this.skill = "";
+        return null;
+    }
+    
+    public String removeSkill(String aSkill) {
+        this.offer.removeSkill(aSkill);
+        this.skill = "";
+        return null;
+    }
+    
+    public void initConversation() {
+        if (conversation.isTransient()) {
+            this.conversation.begin();
+        }
+    }
+
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            this.conversation.end();
+        }
+    }
+    
     
     public boolean isCreatingOffer() {
         return creatingOffer;
@@ -86,14 +129,30 @@ public class OfferBean {
     }
     
     public String save(){
-        offer.setManager(loggedAdministrator);
+        offer.setManager(getLoggedAdministrator());
         
         offerService.save(offer);
         
         init();
-        
-        return null;
+//        endConversation();
+//        initConversation();
+//        init();
+//        return null;
+        return "/manager/offer/offer.xhtml?faces-redirect=true";
     }    
+    
+    public String offerDetails(Offer offer) {
+        this.offer = offerService.getById(offer.getId());
+        
+//        System.out.println("OFFER " + offer);
+//        System.out.println("AQUI AS SKILLS");
+//        for (String s : offer.getSkills()) {
+//            System.out.println(s);
+//        }
+        return "/manager/offer/offer_details.xhtml?faces-redirect=true";
+    }
+    
+    
 
     public List<Offer> getAdministratorOffers() {
         return this.administratorOffers;

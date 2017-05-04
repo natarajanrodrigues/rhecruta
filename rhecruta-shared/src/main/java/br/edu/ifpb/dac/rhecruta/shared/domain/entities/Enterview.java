@@ -33,6 +33,7 @@ public class Enterview implements Serializable {
     @JoinColumn(name = "offer_id")
     private Offer offer;
     
+    @Column(name = "status_id")
     private int statusId;
     
     @ManyToOne

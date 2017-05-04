@@ -13,11 +13,11 @@ import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -31,6 +31,7 @@ public class OfferDetailsBean implements Serializable {
     
     @Inject
     private Conversation conversation;
+    
     
     @Inject
     private AdministratorService administratorService;
@@ -50,6 +51,7 @@ public class OfferDetailsBean implements Serializable {
     @PostConstruct
     private void init() {
         this.skill = "";
+//        this.offer = new Offer();
         initConversation();
         System.out.println("Construiu o OfferDetailsBean!");
     }
@@ -85,28 +87,15 @@ public class OfferDetailsBean implements Serializable {
         this.skill = skill;
     }
     
+    
     public String offerDetails(Offer offer) {
         this.offer = offerService.getById(offer.getId());
-        
-        System.out.println("OFFER " + offer);
-        System.out.println("AQUI AS SKILLS");
         for (String s : offer.getSkills()) {
             System.out.println(s);
         }
         return "/manager/offer/offer_details.xhtml?faces-redirect=true";
     }
     
-    public void initConversation() {
-        if (conversation.isTransient()) {
-            this.conversation.begin();
-        }
-    }
-
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            this.conversation.end();
-        }
-    }
     
     public String addSkill() {
         this.offer.addSkill(this.skill);
@@ -143,6 +132,18 @@ public class OfferDetailsBean implements Serializable {
 //        return this.offerService.isAttached(offer.getId(), adminId);
 //    }
     
+    
+    public void initConversation() {
+        if (conversation.isTransient()) {
+            this.conversation.begin();
+        }
+    }
+
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            this.conversation.end();
+        }
+    }
     
     public List<Candidate> getAllCandidates() {
         return offerService.getSubscribers(this.offer);
