@@ -10,6 +10,8 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Local;
@@ -159,6 +161,29 @@ public class OfferDAOJpaImpl implements OfferDAO {
             List<Candidate> resultList = query.getResultList();
             
             return resultList;
+
+        } catch (Exception e) {
+            return Collections.EMPTY_LIST;
+        }
+    }
+
+    @Override
+    public List<Offer> getMonthOffers() {
+        try {
+            
+            LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
+            
+            TypedQuery<Offer> query = entityManager
+                    .createQuery("SELECT o FROM Offer o WHERE o.creationDateTime BETWEEN :start AND :end ", Offer.class)
+                    .setParameter("start", LocalDateTime.from(firstDayOfMonth))
+                    .setParameter("end", LocalDateTime.now());
+                    
+            List<Offer> resultList = query.getResultList();
+//            for (Offer o : resultList) {
+//                o.getCandidates().size();
+//                o.getSkills().size();
+//            }
+            return query.getResultList();
 
         } catch (Exception e) {
             return Collections.EMPTY_LIST;
