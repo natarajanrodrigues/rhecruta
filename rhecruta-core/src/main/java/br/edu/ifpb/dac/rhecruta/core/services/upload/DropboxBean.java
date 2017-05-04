@@ -18,7 +18,7 @@ import javax.ejb.Stateless;
 public class DropboxBean {
     
     private final static String ACCESS_TOKEN
-            = "PIrBwAnAFsAAAAAAAAAAEdbWukbKOhsewKQnZAWYPdhvOcEcj4EbkdBI-mMOo3xs";
+            = "PIrBwAnAFsAAAAAAAAAAF_0xEhTF_XPTXhT90ZG9vRK3NHljO4fs5MPN-2UypaIw";
     //rhecrutapp@gmail.com
     private final DbxClientV2 client;
     
