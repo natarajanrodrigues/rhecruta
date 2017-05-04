@@ -87,5 +87,13 @@ public class CandidateDAOJpaImpl implements CandidateDAO {
             return Collections.EMPTY_LIST;
         }
     }
+
+    @Override
+    public List<Candidate> listApprovedCandidates() {
+        TypedQuery<Candidate> query = manager
+                .createQuery("SELECT c FROM Candidate c"
+                        + " WHERE c.user.approved = true", Candidate.class);
+        return query.getResultList();
+    }
     
 }

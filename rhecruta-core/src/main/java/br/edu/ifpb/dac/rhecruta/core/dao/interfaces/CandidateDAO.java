@@ -19,4 +19,5 @@ public interface CandidateDAO extends DAO<Candidate> {
     void delete(Candidate candidate);
     Candidate get(Long id);
     List<Candidate> listCandidatesToApprove();
+    List<Candidate> listApprovedCandidates();
 }
