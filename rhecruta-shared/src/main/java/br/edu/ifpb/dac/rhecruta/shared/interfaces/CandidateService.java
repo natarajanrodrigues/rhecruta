@@ -21,4 +21,5 @@ public interface CandidateService {
     void delete(Candidate candidate);
     List<Candidate> listCandidatesToApprove();
     void respondRequest(Candidate candidate, boolean approve);
+    List<Candidate> listApprovedCandidates();
 }

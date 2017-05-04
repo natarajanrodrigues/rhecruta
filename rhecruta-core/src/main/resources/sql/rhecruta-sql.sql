@@ -76,7 +76,8 @@ CREATE TABLE invite (
 	offer_id INT NOT NULL,
 	invited_id INT NOT NULL,
 	inviter_id INT NOT NULL,
-	accepted BOOLEAN default FALSE,
+	result TEXT DEFAULT 'NONE',
+	date_time TIMESTAMP NOT NULL,
 	--FK
 	FOREIGN KEY(offer_id) REFERENCES offer(id),
 	FOREIGN KEY(invited_id) REFERENCES candidate(id),

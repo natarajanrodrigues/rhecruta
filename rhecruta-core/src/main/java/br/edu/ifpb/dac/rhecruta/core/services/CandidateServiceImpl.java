@@ -85,5 +85,10 @@ public class CandidateServiceImpl implements CandidateService {
         email.setText(message);
         return email;
     }
+
+    @Override
+    public List<Candidate> listApprovedCandidates() {
+        return candidateDAO.listApprovedCandidates();
+    }
     
 }
