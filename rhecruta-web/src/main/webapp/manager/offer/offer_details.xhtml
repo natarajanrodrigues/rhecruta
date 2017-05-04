@@ -15,75 +15,30 @@ and open the template in the editor.
         <ui:composition template="/manager/offer/offer.xhtml">
             <ui:define name="contentOffer">
 
-                <div>
-                    <h4>Offer </h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>Vacancy</th>
-                            <th>Type</th>
-                            <th>Status</th>
-
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#{offerDetailsBean.offer.id}</td>
-                                <td>#{offerDetailsBean.offer.description}</td>
-                                <td>#{offerDetailsBean.offer.vacancies}</td>
-                                <td>#{offerDetailsBean.offer.type.description}</td>
-                                <td>#{offerDetailsBean.offer.status.description}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr/>
-
                 <div class="row">
-                    <div class="col-md-7">
-                        <h4>Subscribers</h4>
-                        <h:form>
-                            <c:if test="#{offerDetailsBean.offer.candidates.size() > 0}">
+                    <div class="col-md-6">
+                        <h4>Offer </h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Vacancy</th>
+                                <th>Type</th>
+                                <th>Status</th>
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Candidate</div>
-                                    <div class="panel-body">
-
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <th>Name </th>
-                                                <th>Email</th>
-                                                <th class="text-center">Action</th>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="cand" items="#{offerDetailsBean.allCandidates}">
-                                                    <tr>
-                                                        <td>#{cand.firstname} #{cand.lastname}</td>
-                                                        <td>#{cand.user.credentials.email}</td>
-                                                        <td class="text-center">
-                                                            <h:commandButton class="btn btn-xs btn-default" 
-                                                                             value="Schedule interview" 
-                                                                             action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
-                                                                             rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
-                                                            <h:commandButton class="btn btn-xs btn-danger" 
-                                                                             value="Cancel Interview" 
-                                                                             action="#{enterviewBean.cancelEnterview(enterviewBean
-                                                                                       .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
-                                                                             rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-
-                            </c:if>
-                        </h:form>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#{offerDetailsBean.offer.id}</td>
+                                    <td>#{offerDetailsBean.offer.description}</td>
+                                    <td>#{offerDetailsBean.offer.vacancies}</td>
+                                    <td>#{offerDetailsBean.offer.type.description}</td>
+                                    <td>#{offerDetailsBean.offer.status.description}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div class="col-md-5  ">
+                    <div class="col-md-6  ">
                         <h4>Offer skills required</h4>
 
                         <h:form>
@@ -122,6 +77,81 @@ and open the template in the editor.
                             <h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addSkill()}" />
                         </h:form>
                     </div>
+                </div>
+                <hr/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Subscribers</h4>
+                        <h:form>
+                            <c:if test="#{offerDetailsBean.offer.candidates.size() > 0}">
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Candidate</div>
+                                    <div class="panel-body">
+
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <th>Name </th>
+                                                <th>Email</th>
+                                                <th class="text-center">Interview starts at</th>
+                                                <th class="text-center">Interview end at</th>
+                                                <th class="text-center">Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="cand" items="#{offerDetailsBean.allCandidates}">
+                                                    <tr>
+                                                        <td>#{cand.firstname} #{cand.lastname}</td>
+                                                        <td>#{cand.user.credentials.email}</td>
+                                                        <c:if test="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
+                                                            <td class="text-center">
+                                                                - 
+                                                            </td>
+                                                            <td class="text-center">
+                                                                - 
+                                                            </td>
+                                                        </c:if>
+                                                        <c:if test="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
+                                                            <c:set var="interview" value="#{enterviewBean.getByOfferAndCandidate(offerDetailsBean.offer, cand)}"/>
+                                                            
+                                                            <td class="text-center">
+                                                                <h:outputText value="#{interview.start}">
+                                                                    <f:converter converterId="localDateTimeConverter" />
+                                                                </h:outputText>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <h:outputText value="#{interview.end}">
+                                                                    <f:converter converterId="localDateTimeConverter" />
+                                                                </h:outputText>
+                                                            </td>
+
+
+                                                        </c:if>
+                                                        
+                                                        <td class="text-center">
+                                                            <h:commandButton class="btn btn-xs btn-default" 
+                                                                             value="Schedule interview" 
+                                                                             action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
+                                                                             rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
+                                                            <h:commandButton class="btn btn-xs btn-danger" 
+                                                                             value="Cancel Interview" 
+                                                                             action="#{enterviewBean.cancelEnterview(enterviewBean
+                                                                                       .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
+                                                                             rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </c:if>
+                        </h:form>
+                    </div>
+
+                    
 
                 </div>
 

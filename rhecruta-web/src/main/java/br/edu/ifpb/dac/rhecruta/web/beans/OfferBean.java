@@ -6,10 +6,13 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.io.Serializable;
 import java.util.List;
@@ -39,6 +42,9 @@ public class OfferBean implements Serializable{
     
     @Inject
     private OfferService offerService;
+    
+    @Inject
+    private EnterviewService interviewService;
 
     @Inject
     private User loggedUser;
@@ -163,6 +169,10 @@ public class OfferBean implements Serializable{
         init();
         return null;
     }
+    
+//    public Enterview getEnterviewByOfferAndCandidate(Candidate candidate){
+//        return interviewService.getByOfferAnCandidate(this.offer, candidate);
+//    }
     
     
 }
