@@ -54,7 +54,7 @@ and open the template in the editor.
                                                 <p><strong>CPF: </strong> #{interview.candidate.cpf} </p>
                                                 <p><strong>Github: </strong> #{interview.candidate.githubUrl} </p>
                                                 <p><strong>Linkein: </strong> #{interview.candidate.linkedInUrl} </p>
-                                                <p> See curriculum</p>
+                                                <a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{interview.candidate.id}">See candidate curriculum</a>
                                             </div>
                                         </div>
                                     </c:forEach>

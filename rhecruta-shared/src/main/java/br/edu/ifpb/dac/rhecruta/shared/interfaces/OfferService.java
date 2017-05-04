@@ -32,5 +32,5 @@ public interface OfferService {
     List<Candidate> getSubscribers(Offer offer);
     List<Offer> getMonthOffers();
     Object[] getMonthOffersByLanguage();
-    
+    Object[] getMonthCandidatesPerVacancyBySkill();
 }

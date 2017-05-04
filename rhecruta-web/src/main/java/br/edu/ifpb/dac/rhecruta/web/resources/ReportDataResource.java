@@ -90,6 +90,31 @@ public class ReportDataResource {
         
         jsonObject.add("data", data);
         
+        return Response.ok().entity(jsonObject.toString()).build();
+           
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("vacancyperlanguage")
+    public Response getVacancyPerLanguagues(){
+        
+        Object[] monthOffersByLanguage = offerService.getMonthCandidatesPerVacancyBySkill();
+        
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("name", "Skill");
+        JsonArray data = new JsonArray();
+        
+        for (Object o : monthOffersByLanguage) {
+            
+            Object[] arrayO = (Object[]) o;
+            JsonObject json = new JsonObject();
+            json.addProperty("name", (String) arrayO[0]);
+            json.addProperty("y", (Long) arrayO[1]);
+            data.add(json);
+        }
+        
+        jsonObject.add("data", data);
         
         return Response.ok().entity(jsonObject.toString()).build();
            

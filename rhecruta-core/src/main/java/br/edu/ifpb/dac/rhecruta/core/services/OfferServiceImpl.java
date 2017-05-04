@@ -154,4 +154,9 @@ public class OfferServiceImpl implements OfferService {
         return offerDAO.getMonthOffersByLanguage();
     }
     
+    @Override
+    public Object[] getMonthCandidatesPerVacancyBySkill() {
+        return offerDAO.getMonthCandidatesPerVacancyBySkill();
+    }
+    
 }

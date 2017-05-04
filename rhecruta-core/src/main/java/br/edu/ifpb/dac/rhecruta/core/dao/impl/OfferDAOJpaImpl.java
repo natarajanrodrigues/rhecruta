@@ -214,17 +214,36 @@ public class OfferDAOJpaImpl implements OfferDAO {
             
             List<Object[]> resultList = query.getResultList();
             
-            System.out.println(resultList.size());
-            for (Object[] o : resultList) {
-                for (Object a : o) {
-                    System.out.println(a.toString());
-                }
-                System.out.println("\n");
-            }
             return resultList.toArray();
 
         } catch (Exception e) {
             
+            return Collections.EMPTY_LIST.toArray();
+        }
+    }
+    
+    @Override
+    public Object[] getMonthCandidatesPerVacancyBySkill() {
+        try {
+            
+            LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
+            LocalDateTime firstDayOfMonthWithTime = LocalDateTime.of(firstDayOfMonth, LocalTime.MIN);
+            Query query = entityManager
+                    .createQuery(
+                            "SELECT sks as language, sum(o.vacancies) as vagas "
+                            + "FROM Offer o JOIN o.skills sks "
+                            + "WHERE o.creationDateTime BETWEEN :start AND :end "
+                            + "GROUP BY sks")
+                    .setParameter("start", firstDayOfMonthWithTime)
+                    .setParameter("end", LocalDateTime.now());
+                    
+            
+            List<Object[]> resultList = query.getResultList();
+            
+            return resultList.toArray();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Collections.EMPTY_LIST.toArray();
         }
     }

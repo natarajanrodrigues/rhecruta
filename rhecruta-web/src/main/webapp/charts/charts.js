@@ -97,9 +97,59 @@ $(document).ready(function () {
         });
         
     }
+    
+    function chart3() {
+         var options = {
+            chart: {
+                renderTo: 'container3',
+                type: 'column'
+            },
+
+            title: {
+                text: 'Vacancies by Skill'
+            },
+
+            xAxis: {
+                type: 'category',
+                labels: {
+//                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Number of vacancies'
+                }
+            },
+            
+            legend: {
+                enabled: false
+            },
+
+            tooltip: {
+                pointFormat: 'Vacancies with this required skill: <b>{point.y} </b>'
+            },
+            series: [{
+                    
+            }]
+        };
+        
+        var chart2 = new Highcharts.Chart(options);
+        $.getJSON('/rhecruta-web/api/report/vacancyperlanguage', function (data) {
+            options.series[0] = data;
+            console.log(data);
+            var chart2 = new Highcharts.Chart(options);
+        });
+        
+    }
 
     chart1();
     chart2();
+    chart3();
     
 
 });

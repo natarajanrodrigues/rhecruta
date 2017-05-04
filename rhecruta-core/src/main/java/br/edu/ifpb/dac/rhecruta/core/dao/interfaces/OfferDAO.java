@@ -33,5 +33,6 @@ public interface OfferDAO {
 
     public List<Offer> getMonthOffers();
     Object[] getMonthOffersByLanguage();
+    Object[] getMonthCandidatesPerVacancyBySkill();
     
 }
