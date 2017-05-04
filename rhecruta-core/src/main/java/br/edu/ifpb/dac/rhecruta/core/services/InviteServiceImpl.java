@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.InviteDAO;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Invite;
@@ -29,6 +31,10 @@ public class InviteServiceImpl implements InviteService {
     
     @EJB
     private InviteDAO inviteDAO;
+    @EJB
+    private CandidateDAO candidateDAO;
+    @EJB
+    private OfferDAO offerDAO;
 
     @Override
     public void save(Invite invite) {
@@ -60,11 +66,20 @@ public class InviteServiceImpl implements InviteService {
     public void answer(Invite invite, InviteResult result) {
         invite.setResult(result);
         inviteDAO.update(invite);
+        
+        if(result.equals(InviteResult.ACCEPTED)) {
+        
+            Offer offer = invite.getOffer();
+            Candidate candidate = invite.getInvited();
+            
+            offer.subscribe(candidate);
+            offerDAO.update(offer);
+        }
     }
 
     @Override
-    public boolean hasPendentOrAcceptedInvite(Candidate candidate, Offer offer) {
-        return inviteDAO.hasPendentOrAcceptedInvite(candidate.getId(), offer.getId());
+    public boolean hasInvite(Candidate candidate, Offer offer) {
+        return inviteDAO.hasInvite(candidate.getId(), offer.getId());
     }
     
 }

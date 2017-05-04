@@ -215,9 +215,9 @@ and open the template in the editor.
                                                                      action="#{inviteBean.invite(offerDetailsBean.offer, 
                                                                                cand, 
                                                                                administratorBean.loggedAdministrator)}"
-                                                                     rendered="#{!inviteBean.hasPendentOrAcceptedInvite(cand, offerDetailsBean.offer)}"/>
+                                                                     rendered="#{!inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
                                                     <h:outputText value="Invited" 
-                                                                  rendered="#{inviteBean.hasPendentOrAcceptedInvite(cand, offerDetailsBean.offer)}"/>
+                                                                  rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
                                                 </td>
                                             </tr>
                                         </c:forEach>

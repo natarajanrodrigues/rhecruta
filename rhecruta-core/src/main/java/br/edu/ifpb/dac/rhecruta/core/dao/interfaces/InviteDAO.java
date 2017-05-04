@@ -22,5 +22,5 @@ public interface InviteDAO extends DAO<Invite> {
     List<Invite> listByManager(Administrator manager);
     List<Invite> listByCandidate(Candidate candidate);
     List<Invite> listByResult(InviteResult result);
-    boolean hasPendentOrAcceptedInvite(Long candidateId, Long offerId);
+    boolean hasInvite(Long candidateId, Long offerId);
 }

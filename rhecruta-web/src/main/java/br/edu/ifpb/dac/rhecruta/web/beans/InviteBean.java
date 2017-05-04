@@ -85,8 +85,12 @@ public class InviteBean {
         return null;
     }
     
-    public boolean hasPendentOrAcceptedInvite(Candidate cand, Offer offer) {
-        return inviteService.hasPendentOrAcceptedInvite(cand, offer);
+    public boolean hasInvite(Candidate cand, Offer offer) {
+        return inviteService.hasInvite(cand, offer);
+    }
+    
+    public boolean isInviteAnswered(Invite invite) {
+        return !invite.getResult().equals(InviteResult.NONE);
     }
     
     

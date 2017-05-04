@@ -55,9 +55,9 @@ public class InviteDAOJpaImpl implements InviteDAO {
     public List<Invite> listByCandidate(Candidate candidate) {
         TypedQuery<Invite> query = em
                 .createQuery("SELECT i FROM Invite i"
-                        + " WHERE i.invited = :candidate"
+                        + " WHERE i.invited.id = :candidateId"
                         + " ORDER BY i.dateTime DESC", Invite.class)
-                .setParameter("manager", candidate);
+                .setParameter("candidateId", candidate.getId());
         return query.getResultList();
     }
 
@@ -82,15 +82,13 @@ public class InviteDAOJpaImpl implements InviteDAO {
     }
 
     @Override
-    public boolean hasPendentOrAcceptedInvite(Long candidateId, Long offerId) {
+    public boolean hasInvite(Long candidateId, Long offerId) {
         
         TypedQuery<Long> query = em.createQuery("SELECT COUNT(i) FROM Invite i"
                 + " WHERE i.offer.id = :offerId"
-                + " AND i.invited.id = :invitedId AND ( i.result = :none OR i.result = :accepted )", Long.class)
+                + " AND i.invited.id = :invitedId", Long.class)
                 .setParameter("offerId", offerId)
-                .setParameter("invitedId", candidateId)
-                .setParameter("none", InviteResult.NONE)
-                .setParameter("accepted", InviteResult.ACCEPTED);
+                .setParameter("invitedId", candidateId);
         
         Long result = query.getSingleResult();
         return result > 0;

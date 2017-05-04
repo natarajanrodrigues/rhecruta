@@ -24,5 +24,5 @@ public interface InviteService {
     List<Invite> listByManager(Administrator manager);
     List<Invite> listByCandidate(Candidate candidate);
     List<Invite> listByResult(InviteResult result);
-    boolean hasPendentOrAcceptedInvite(Candidate candidate, Offer offer);
+    boolean hasInvite(Candidate candidate, Offer offer);
 }
