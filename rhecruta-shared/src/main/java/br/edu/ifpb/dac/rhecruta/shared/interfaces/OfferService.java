@@ -30,6 +30,7 @@ public interface OfferService {
     List<Offer> getByCandidate(Candidate candidate);
 //    boolean isAttached(Long offerId, Long administratorId);
     List<Candidate> getSubscribers(Offer offer);
-    List<Offer> getMothOffers();
+    List<Offer> getMonthOffers();
+    Object[] getMonthOffersByLanguage();
     
 }

@@ -145,8 +145,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getMothOffers() {
+    public List<Offer> getMonthOffers() {
         return offerDAO.getMonthOffers();
+    }
+    
+    @Override
+    public Object[] getMonthOffersByLanguage() {
+        return offerDAO.getMonthOffersByLanguage();
     }
     
 }

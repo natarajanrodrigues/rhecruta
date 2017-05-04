@@ -32,5 +32,6 @@ public interface OfferDAO {
     List<Candidate> getSubscribers(Offer offer);
 
     public List<Offer> getMonthOffers();
+    Object[] getMonthOffersByLanguage();
     
 }

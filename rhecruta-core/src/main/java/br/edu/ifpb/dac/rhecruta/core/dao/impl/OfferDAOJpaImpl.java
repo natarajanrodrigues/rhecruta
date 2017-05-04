@@ -12,12 +12,14 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -173,9 +175,12 @@ public class OfferDAOJpaImpl implements OfferDAO {
             
             LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
             
+            LocalDateTime firstDayOfMonthWithTime = LocalDateTime.of(firstDayOfMonth, LocalTime.MIN);
+            
+            System.out.println("AQUI " + firstDayOfMonthWithTime);
             TypedQuery<Offer> query = entityManager
                     .createQuery("SELECT o FROM Offer o WHERE o.creationDateTime BETWEEN :start AND :end ", Offer.class)
-                    .setParameter("start", LocalDateTime.from(firstDayOfMonth))
+                    .setParameter("start", firstDayOfMonthWithTime)
                     .setParameter("end", LocalDateTime.now());
                     
             List<Offer> resultList = query.getResultList();
@@ -186,7 +191,42 @@ public class OfferDAOJpaImpl implements OfferDAO {
             return query.getResultList();
 
         } catch (Exception e) {
+            
             return Collections.EMPTY_LIST;
         }
     }
+    
+    @Override
+    public Object[] getMonthOffersByLanguage() {
+        try {
+            
+            LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
+            LocalDateTime firstDayOfMonthWithTime = LocalDateTime.of(firstDayOfMonth, LocalTime.MIN);
+            Query query = entityManager
+                    .createQuery(
+                            "SELECT sks as language, count(sks) as total "
+                            + "FROM Offer o JOIN o.skills sks "
+                            + "WHERE o.creationDateTime BETWEEN :start AND :end "
+                            + "GROUP BY sks")
+                    .setParameter("start", firstDayOfMonthWithTime)
+                    .setParameter("end", LocalDateTime.now());
+                    
+            
+            List<Object[]> resultList = query.getResultList();
+            
+            System.out.println(resultList.size());
+            for (Object[] o : resultList) {
+                for (Object a : o) {
+                    System.out.println(a.toString());
+                }
+                System.out.println("\n");
+            }
+            return resultList.toArray();
+
+        } catch (Exception e) {
+            
+            return Collections.EMPTY_LIST.toArray();
+        }
+    }
+    
 }
