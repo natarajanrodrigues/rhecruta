@@ -76,19 +76,10 @@ public class EnterviewServiceImpl implements EnterviewService {
     private void domainValidate(Enterview enterview) {
         //domain validation
         Offer offer = offerDAO.get(enterview.getOffer().getId());
-        offer.getAdministrators().size();
 
-        List<Administrator> appraisers = new ArrayList<>();
+        Administrator appraiser = offer.getAppraiser();
 
-        //Filtering appraisers
-        //Note: IF JPA WAS COMPATIBLE WITH STREAMS I WOULD LOVE TO USE IT
-        for (Administrator admin : offer.getAdministrators()) {
-            if (admin.getUser().getRole().equals(Role.APPRAISER)) {
-                appraisers.add(admin);
-            }
-        }
-
-        if (appraisers.isEmpty()) {
+        if (appraiser == null) {
             throw new IllegalArgumentException("There's no appraisers in the enterview."
                     + " Who is gonna guide the enterview?");
         }
@@ -104,32 +95,28 @@ public class EnterviewServiceImpl implements EnterviewService {
             throw new IllegalArgumentException("Scheduller too short. The interview should begin at least 30 minutes.");
         }
 
-        //Iterate over the offer appraisers
-        for (Administrator appraiser : appraisers) {
+        //Get the appraiser enterviews scheduled
+        List<Enterview> enterviews = enterviewDAO
+                .listByAppraiser(appraiser);
 
-            //Get the appraiser enterviews scheduled
-            List<Enterview> enterviews = enterviewDAO
-                    .listByAppraiser(appraiser);
+        //iterate over the appraiser enterviews
+        for (Enterview appraiserEnterview : enterviews) {
 
-            //iterate over the appraiser enterviews
-            for (Enterview appraiserEnterview : enterviews) {
+            //If the enterview period get in chock with any other appraiser enterview
+            //throw an exception
+            if ((appraiserEnterview.getStart().isAfter(enterviewEnd)
+                    && appraiserEnterview.getEnd().isAfter(enterviewEnd))
+                    || (appraiserEnterview.getStart().isBefore(enterviewStart)
+                    && appraiserEnterview.getEnd().isBefore(enterviewStart))) {
 
-                //If the enterview period get in chock with any other appraiser enterview
-                //throw an exception
-                if ((appraiserEnterview.getStart().isAfter(enterviewEnd)
-                        && appraiserEnterview.getEnd().isAfter(enterviewEnd))
-                        || (appraiserEnterview.getStart().isBefore(enterviewStart)
-                        && appraiserEnterview.getEnd().isBefore(enterviewStart))) {
-
-                } else {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-                    throw new IllegalArgumentException("The appraiser "
-                            + appraiser.getFirstname() + ' ' + appraiser.getLastname()
-                            + " will be busy at this time. He has an enterview schedule "
-                            + "to " + appraiserEnterview.getStart().format(dtf) + " - " + appraiserEnterview.getEnd().format(dtf) + "."
-                            + " Please choose another period or choose another"
-                            + " appraiser to guide this enterview.");
-                }
+            } else {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                throw new IllegalArgumentException("The appraiser "
+                        + appraiser.getFirstname() + ' ' + appraiser.getLastname()
+                        + " will be busy at this time. He has an enterview schedule "
+                        + "to " + appraiserEnterview.getStart().format(dtf) + " - " + appraiserEnterview.getEnd().format(dtf) + "."
+                        + " Please choose another period or choose another"
+                        + " appraiser to guide this enterview.");
             }
         }
 
@@ -230,14 +217,15 @@ public class EnterviewServiceImpl implements EnterviewService {
     public List<Enterview> listByOffer(Offer offer) {
         return enterviewDAO.listByOffer(offer);
     }
-    
+
     @Override
     public Enterview getByOfferAnCandidate(Offer offer, Candidate candidate) {
         Enterview found = enterviewDAO
                 .getByOfferAndCandidate(offer.getId(), candidate.getId());
-        if(found == null)
+        if (found == null) {
             throw new EJBException(new EntityNotFoundException("There's no Intervew scheduled to "
-                    + offer.getDescription()+ " and "+candidate.getFirstname()));
+                    + offer.getDescription() + " and " + candidate.getFirstname()));
+        }
         return found;
     }
 
@@ -250,7 +238,5 @@ public class EnterviewServiceImpl implements EnterviewService {
     public List<Enterview> listByAppraiser(Administrator administrator) {
         return enterviewDAO.listByAppraiser(administrator);
     }
-
-    
 
 }

@@ -59,10 +59,15 @@ CREATE TABLE offer (
 	--Offer Data
 	id SERIAL,
 	offer_type_id INT NOT NULL,
+        creation_date_time TIMESTAMP NOT NULL,
 	description TEXT NOT NULL,
 	vacancies INTEGER DEFAULT 1,
 	status_id INT NOT NULL,
+        manager_id INT NOT NULL,
+        appraiser_id INT,
 	--PK
+        FOREIGN KEY(manager_id) REFERENCES administrator(id),
+        FOREIGN KEY(appraiser_id) REFERENCES administrator(id),
 	PRIMARY KEY(id)
 );
 
@@ -84,8 +89,9 @@ CREATE TABLE enterview (
 	--Enterview Data
 	id SERIAL,
 	offer_id INT NOT NULL,
+        status_id INT DEFAULT 0,
 	candidate_id INT NOT NULL,
-	score DOUBLE PRECISION default 0,
+	score DOUBLE PRECISION DEFAULT 0,
 	start_time TIMESTAMP NOT NULL,
 	end_time TIMESTAMP,
 	--Embedded Address
@@ -116,15 +122,14 @@ CREATE TABLE system_evaluation (
 	PRIMARY KEY(id)
 );
 
-
-CREATE TABLE offer_administrators (
-	
-	administrator_id INT NOT NULL,
-	offer_id INT NOT NULL,
-	--FK
-	FOREIGN KEY(administrator_id) REFERENCES administrator(id),
-	FOREIGN KEY(offer_id) REFERENCES offer(id)
-);
+-- CREATE TABLE offer_administrators (
+-- 	
+-- 	administrator_id INT NOT NULL,
+-- 	offer_id INT NOT NULL,
+-- 	--FK
+-- 	FOREIGN KEY(administrator_id) REFERENCES administrator(id),
+-- 	FOREIGN KEY(offer_id) REFERENCES offer(id)
+-- );
 
 CREATE TABLE offer_candidates (
 	

@@ -8,7 +8,7 @@ package br.edu.ifpb.dac.rhecruta.web.beans;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferStatus;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.util.List;
@@ -46,10 +46,10 @@ public class OfferBean {
     private void init() {
         if (loggedUser != null)  {
             loggedAdministrator = administratorService.getByUser(getLoggedAdministrator().getUser());
-            this.administratorOffers = offerService.getByAdministrator(loggedAdministrator);
+            this.administratorOffers = offerService.getByManager(loggedAdministrator);
         }
         this.offer = new Offer();
-        this.offer.setStatus(OfferStatus.OPEN);
+        this.offer.setStatus(SystemStatus.OPEN);
         this.creatingOffer = false;
         System.out.println("Construiu o OfferBean!");
     }
@@ -86,7 +86,7 @@ public class OfferBean {
     }
     
     public String save(){
-        offer.addAdministrator(loggedAdministrator);
+        offer.setManager(loggedAdministrator);
         
         offerService.save(offer);
         

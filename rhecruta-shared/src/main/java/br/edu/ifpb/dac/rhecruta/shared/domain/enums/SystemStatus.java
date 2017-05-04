@@ -9,14 +9,14 @@ package br.edu.ifpb.dac.rhecruta.shared.domain.enums;
  *
  * @author Pedro Arthur
  */
-public enum OfferStatus {
+public enum SystemStatus {
     
     OPEN(1, "Open"), CLOSED(2, "Closed");
     
     private final int id;
     private final String description;
     
-    OfferStatus(int id, String description) {
+    SystemStatus(int id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -29,8 +29,8 @@ public enum OfferStatus {
         return this.id;
     }
     
-    public static OfferStatus parse(int id) {    
-        for(OfferStatus offerStatus : OfferStatus.values()) {
+    public static SystemStatus parse(int id) {    
+        for(SystemStatus offerStatus : SystemStatus.values()) {
             if(offerStatus.getId() == id) {
                 return offerStatus;
             }

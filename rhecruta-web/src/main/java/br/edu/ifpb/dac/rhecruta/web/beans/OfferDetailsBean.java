@@ -126,22 +126,22 @@ public class OfferDetailsBean implements Serializable {
         return administratorService.getAllAdministrators();
     }
  
-    public String addAdminToOffer(Administrator administrator) {
-        this.offer.addAdministrator(administrator);
-        this.offerService.update(offer);
-        return null;
-    }
-    
-    public String removeAdminToOffer(Administrator administrator) {
-        this.offer.removeAdministrator(administrator);
-        this.offerService.update(offer);
-        return null;
-    }
-    
-    public boolean isAdmin(Long adminId) {
-        System.out.println("ADM ID: " + adminId);
-        return this.offerService.isAttached(offer.getId(), adminId);
-    }
+//    public String addAdminToOffer(Administrator administrator) {
+//        this.offer.addAdministrator(administrator);
+//        this.offerService.update(offer);
+//        return null;
+//    }
+//    
+//    public String removeAdminToOffer(Administrator administrator) {
+//        this.offer.removeAdministrator(administrator);
+//        this.offerService.update(offer);
+//        return null;
+//    }
+//    
+//    public boolean isAdmin(Long adminId) {
+//        System.out.println("ADM ID: " + adminId);
+//        return this.offerService.isAttached(offer.getId(), adminId);
+//    }
     
     
     public List<Candidate> getAllCandidates() {

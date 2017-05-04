@@ -12,7 +12,6 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
-import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.util.List;
 
 /**

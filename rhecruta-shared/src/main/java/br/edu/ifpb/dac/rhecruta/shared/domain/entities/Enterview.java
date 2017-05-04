@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Address;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -33,6 +33,8 @@ public class Enterview implements Serializable {
     @JoinColumn(name = "offer_id")
     private Offer offer;
     
+    private int statusId;
+    
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
@@ -48,9 +50,10 @@ public class Enterview implements Serializable {
     
     private Double score;
 
-    public Enterview(Long id, Offer offer, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Double score) {
+    public Enterview(Long id, Offer offer, int statusId, Candidate candidate, LocalDateTime start, LocalDateTime end, Address address, Double score) {
         this.id = id;
         this.offer = offer;
+        this.statusId = statusId;
         this.candidate = candidate;
         this.start = start;
         this.end = end;
@@ -59,7 +62,7 @@ public class Enterview implements Serializable {
     }
     
     public Enterview() {
-        
+        this.statusId = SystemStatus.OPEN.getId();
     }
 
     public Long getId() {
@@ -76,6 +79,14 @@ public class Enterview implements Serializable {
 
     public void setOffer(Offer offer) {
         this.offer = offer;
+    }
+
+    public SystemStatus getStatusId() {
+        return SystemStatus.parse(this.statusId);
+    }
+
+    public void setStatusId(SystemStatus status) {
+        this.statusId = status.getId();
     }
 
     public Candidate getCandidate() {
@@ -125,6 +136,6 @@ public class Enterview implements Serializable {
 
     @Override
     public String toString() {
-        return "Enterview{" + "id=" + id + ", offer=" + offer + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", score=" + score + '}';
+        return "Enterview{" + "id=" + id + ", offer=" + offer + ", statusId=" + statusId + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", score=" + score + '}';
     }
 }

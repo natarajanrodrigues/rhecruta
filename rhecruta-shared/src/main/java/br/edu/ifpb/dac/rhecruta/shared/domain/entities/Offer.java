@@ -5,13 +5,13 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.domain.entities;
 
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferStatus;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -43,6 +44,9 @@ public class Offer implements Serializable {
     private String description;
     private Integer vacancies;
     
+    @Column(name = "creation_date_time")
+    private LocalDateTime creationDateTime;
+    
     @Column(name = "status_id")
     private int statusId;
     
@@ -52,27 +56,29 @@ public class Offer implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private final List<Candidate> candidates;
     
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "offer_administrators",
-            joinColumns = @JoinColumn(name = "offer_id"),
-            inverseJoinColumns = @JoinColumn(name = "administrator_id"))
-    private final List<Administrator> administrators;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "manager_id")
+    private Administrator manager;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "appraiser_id")
+    private Administrator appraiser;
 
-    public Offer(Long id, OfferType type, List<String> skills, String description, Integer vacancies, OfferStatus status, List<Candidate> candidates, List<Administrator> administrators) {
+    public Offer(Long id, int typeId, List<String> skills, String description, Integer vacancies, int statusId, List<Candidate> candidates, Administrator manager, Administrator appraiser) {
         this.id = id;
-        this.typeId = type.getId();
+        this.typeId = typeId;
         this.skills = skills;
         this.description = description;
         this.vacancies = vacancies;
-        this.statusId = status.getId();
+        this.statusId = statusId;
         this.candidates = candidates;
-        this.administrators = administrators;
+        this.manager = manager;
+        this.appraiser = appraiser;
     }
-    
+
     public Offer() {   
         this.skills = new ArrayList<>();
         this.candidates = new ArrayList<>();
-        this.administrators = new ArrayList<>();
     }
 
     public Long getId() {
@@ -116,6 +122,14 @@ public class Offer implements Serializable {
         this.description = description;
     }
 
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(LocalDateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
     public Integer getVacancies() {
         return vacancies;
     }
@@ -124,11 +138,11 @@ public class Offer implements Serializable {
         this.vacancies = vacancies;
     }
 
-    public OfferStatus getStatus() {
-        return OfferStatus.parse(this.statusId);
+    public SystemStatus getStatus() {
+        return SystemStatus.parse(this.statusId);
     }
 
-    public void setStatus(OfferStatus status) {
+    public void setStatus(SystemStatus status) {
         this.statusId = status.getId();
     }
 
@@ -143,21 +157,41 @@ public class Offer implements Serializable {
     public void unsubscribe(Candidate candidate) {
         this.candidates.remove(candidate);
     }
-    
-    public List<Administrator> getAdministrators() {
-        return Collections.unmodifiableList(administrators);
+
+    public int getTypeId() {
+        return typeId;
     }
-    
-    public void addAdministrator(Administrator administrator) {
-        this.administrators.add(administrator);
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
-    
-    public void removeAdministrator(Administrator administrator) {
-        this.administrators.remove(administrator);
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public Administrator getManager() {
+        return manager;
+    }
+
+    public void setManager(Administrator manager) {
+        this.manager = manager;
+    }
+
+    public Administrator getAppraiser() {
+        return appraiser;
+    }
+
+    public void setAppraiser(Administrator appraiser) {
+        this.appraiser = appraiser;
     }
 
     @Override
     public String toString() {
-        return "Offer{" + "id=" + id + ", type=" + getStatus() + ", skills=" + skills + ", description=" + description + ", vacancies=" + vacancies + ", status=" + getStatus() + '}';
-    } 
+        return "Offer{" + "id=" + id + ", typeId=" + typeId + ", skills=" + skills + ", description=" + description + ", vacancies=" + vacancies + ", creationDateTime=" + creationDateTime + ", statusId=" + statusId + ", candidates=" + candidates + ", manager=" + manager + ", appraiser=" + appraiser + '}';
+    }
 }

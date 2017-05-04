@@ -54,7 +54,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     @Override
     public List<Enterview> listByAppraiser(Administrator appraiser) {
         TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
-                + " WHERE :appraiser MEMBER OF e.offer.administrators", 
+                + " WHERE e.offer.appraiser = :appraiser", 
                 Enterview.class)
                 .setParameter("appraiser", appraiser);
         return query.getResultList();

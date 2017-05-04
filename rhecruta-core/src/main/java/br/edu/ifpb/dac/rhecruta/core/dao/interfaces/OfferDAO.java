@@ -22,11 +22,12 @@ public interface OfferDAO {
     void remove(Offer offer);
     Offer get(Long id);
     List<Offer> listAll();
-    List<Offer> getByAdministrator(Administrator admnistrator);
+    List<Offer> getByManager(Administrator manager);
+    List<Offer> getByAppraiser(Administrator appraiser);
     Offer getById(Long offerId);
     List<Offer> getByType(OfferType offerTeyp);
     boolean isSubscribed(Long offerId, Candidate candidate);
-    boolean isAttached(Long offerId, Long administratorId);
+//    boolean isAttached(Long offerId, Long administratorId);
     List<Offer> getByCandidate(Candidate candidate);
     List<Candidate> getSubscribers(Offer offer);
     

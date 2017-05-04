@@ -58,10 +58,18 @@ public class OfferDAOJpaImpl implements OfferDAO {
     }
 
     @Override
-    public List<Offer> getByAdministrator(Administrator admnistrator) {
+    public List<Offer> getByManager(Administrator manager) {
         TypedQuery<Offer> query = entityManager
-                .createQuery("SELECT o FROM Offer o, IN (o.administrators) admin WHERE admin.id = :idAdmin ", Offer.class)
-                .setParameter("idAdmin", admnistrator.getId());
+                .createQuery("SELECT o FROM Offer o WHERE o.manager = :manager", Offer.class)
+                .setParameter("manager", manager);
+        return query.getResultList();
+    }
+    
+    @Override
+    public List<Offer> getByAppraiser(Administrator appraiser) {
+        TypedQuery<Offer> query = entityManager
+                .createQuery("SELECT o FROM Offer o WHERE o.appraiser = :appraiser", Offer.class)
+                .setParameter("appraiser", appraiser);
         return query.getResultList();
     }
 
@@ -72,7 +80,6 @@ public class OfferDAOJpaImpl implements OfferDAO {
                 .setParameter("idOffer", offerId);
         Offer offer = query.getSingleResult();
         offer.getCandidates().size();
-        offer.getAdministrators().size();
         offer.getSkills().size();
         return offer;
     }
@@ -86,7 +93,6 @@ public class OfferDAOJpaImpl implements OfferDAO {
 
             List<Offer> resultList = query.getResultList();
             for (Offer o : resultList) {
-                o.getAdministrators().size();
                 o.getCandidates().size();
                 o.getSkills().size();
             }
@@ -117,7 +123,6 @@ public class OfferDAOJpaImpl implements OfferDAO {
                     .setParameter("idCandidate", candidate.getId());
             List<Offer> resultList = query.getResultList();
             for (Offer o : resultList) {
-                o.getAdministrators().size();
                 o.getCandidates().size();
                 o.getSkills().size();
             }
@@ -127,23 +132,23 @@ public class OfferDAOJpaImpl implements OfferDAO {
             return Collections.EMPTY_LIST;
         }
     }
-
-    @Override
-    public boolean isAttached(Long offerId, Long administratorId) {
-
-        System.out.println("OFFER: " + offerId);
-        System.out.println("ADM: " + administratorId);
-        TypedQuery<Offer> query = entityManager
-                .createQuery("SELECT o FROM Offer o, IN (o.administrators) admin WHERE admin.id = :idAdmin AND o.id = :idOffer", Offer.class)
-                .setParameter("idAdmin", administratorId)
-                .setParameter("idOffer", offerId);
-
-        List<Offer> resultList = query.getResultList();
-        System.out.println("SIZE: " + resultList.size());
-
-        return resultList.size() > 0;
-
-    }
+//
+//    @Override
+//    public boolean isAttached(Long offerId, Long administratorId) {
+//
+//        System.out.println("OFFER: " + offerId);
+//        System.out.println("ADM: " + administratorId);
+//        TypedQuery<Offer> query = entityManager
+//                .createQuery("SELECT o FROM Offer o, IN (o.administrators) admin WHERE admin.id = :idAdmin AND o.id = :idOffer", Offer.class)
+//                .setParameter("idAdmin", administratorId)
+//                .setParameter("idOffer", offerId);
+//
+//        List<Offer> resultList = query.getResultList();
+//        System.out.println("SIZE: " + resultList.size());
+//
+//        return resultList.size() > 0;
+//
+//    }
     
     @Override
     public List<Candidate> getSubscribers(Offer offer) {

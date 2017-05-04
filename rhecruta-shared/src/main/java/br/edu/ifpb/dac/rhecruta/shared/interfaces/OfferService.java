@@ -22,11 +22,13 @@ public interface OfferService {
     void update(Offer offer);
     Offer getById(Long offerId);
     List<Offer> listAll();
-    List<Offer> getByAdministrator(Administrator admnistrator);
+//    List<Offer> getByAdministrator(Administrator admnistrator);
+    List<Offer> getByManager(Administrator manager);
+    List<Offer> getByAppraiser(Administrator appraiser);
     List<Offer> getByType(OfferType offerType);
     boolean isSubscribed(Long offerId, Candidate candidate);
     List<Offer> getByCandidate(Candidate candidate);
-    boolean isAttached(Long offerId, Long administratorId);
+//    boolean isAttached(Long offerId, Long administratorId);
     List<Candidate> getSubscribers(Offer offer);
     
 }

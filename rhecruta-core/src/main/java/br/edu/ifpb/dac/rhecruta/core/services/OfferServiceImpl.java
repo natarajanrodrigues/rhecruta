@@ -13,6 +13,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -51,9 +52,10 @@ public class OfferServiceImpl implements OfferService {
     
     @Override
     public void save(Offer offer) {
+        offer.setCreationDateTime(LocalDateTime.now());
         offerDAO.save(offer);
         System.out.println("Offer: "+offer);
-        sendToNewOfferQueue(offer);
+//        sendToNewOfferQueue(offer);
     }
     
     private void sendToNewOfferQueue(Offer offer) {
@@ -95,11 +97,11 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> listAll() {
         return offerDAO.listAll();
     }
-    
-    @Override
-    public List<Offer> getByAdministrator(Administrator admnistrator) {
-        return offerDAO.getByAdministrator(admnistrator);
-    }
+//    
+//    @Override
+//    public List<Offer> getByAppraiser(Administrator appraiser) {
+//        return offerDAO.getByAdministrator(appraiser);
+//    }
     
     @Override
     public Offer getById(Long offerId) {
@@ -121,15 +123,25 @@ public class OfferServiceImpl implements OfferService {
         return offerDAO.getByCandidate(candidate);
     }
 
-    @Override
-    public boolean isAttached(Long offerId, Long administratorId) {
-        System.out.println(offerId + " " + administratorId);
-        return offerDAO.isAttached(offerId, administratorId);
-    }
+//    @Override
+//    public boolean isAttached(Long offerId, Long administratorId) {
+//        System.out.println(offerId + " " + administratorId);
+//        return offerDAO.isAttached(offerId, administratorId);
+//    }
 
     @Override
     public List<Candidate> getSubscribers(Offer offer) {
         return offerDAO.getSubscribers(offer);
+    }
+
+    @Override
+    public List<Offer> getByManager(Administrator manager) {
+        return offerDAO.getByManager(manager);
+    }
+
+    @Override
+    public List<Offer> getByAppraiser(Administrator appraiser) {
+        return offerDAO.getByAppraiser(appraiser);
     }
     
 }

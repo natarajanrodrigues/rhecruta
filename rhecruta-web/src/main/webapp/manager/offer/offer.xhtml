@@ -53,6 +53,7 @@ and open the template in the editor.
                                         <th>ID</th>
                                         <th>Description</th>
                                         <th>Vacancy</th>
+                                        <th>Creation DateTime</th>
                                         <th>Type</th>
                                         <th>Status</th>
                                         <th>Details</th>
@@ -64,6 +65,11 @@ and open the template in the editor.
                                                 <td>#{offer.id}</td>
                                                 <td>#{offer.description}</td>
                                                 <td>#{offer.vacancies}</td>
+                                                <td>
+                                                    <h:outputText value="#{offer.creationDateTime}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </td>
                                                 <td>#{offer.type.description}</td>
                                                 <td>#{offer.status.description}</td>
                                                 <td><h:commandButton class="btn btn-xs btn-info" value="Details" action="#{offerDetailsBean.offerDetails(offer)}"/></td>
