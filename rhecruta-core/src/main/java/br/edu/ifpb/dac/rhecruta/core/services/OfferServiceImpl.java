@@ -143,5 +143,10 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> getByAppraiser(Administrator appraiser) {
         return offerDAO.getByAppraiser(appraiser);
     }
+
+    @Override
+    public List<Offer> getMothOffers() {
+        return offerDAO.getMonthOffers();
+    }
     
 }

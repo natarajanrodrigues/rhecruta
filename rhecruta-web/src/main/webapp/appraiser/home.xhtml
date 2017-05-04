@@ -20,7 +20,7 @@ and open the template in the editor.
                         <div class="col-sm-3 col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
                                 <li class="active"> 
-                                    <a href="#">Offers</a>
+                                    <a href="#">Interviews</a>
                                 </li>
                                 <li><a href="offer/offer.xhtml">My offer registrations</a></li>
                                 
@@ -30,7 +30,34 @@ and open the template in the editor.
                             <div class="section">
                                 <ui:insert name="userArea">
                                 <h:form>
-                                    
+                                    <c:forEach var="interview" items="#{appraiserBean.interviews}">
+                                        <div class="thumbnail">
+                                            <div class="caption">
+                                                
+                                                <p><strong>Offer Description: </strong> #{interview.offer.description}</p>
+                                                <p><strong>Vacancy: </strong> #{interview.offer.vacancies} - <strong>Subscriptions: </strong> #{interview.offer.candidates.size()}</p>
+                                                
+                                                <p><strong>Interview infos: </strong> </p>
+                                                <p> <strong>Date/Time Start: </strong>
+                                                    <h:outputText value="#{interview.start}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </p>
+                                                
+                                                <p> <strong>Date/Time End: </strong>
+                                                    <h:outputText value="#{interview.end}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </p>
+                                                <p> <strong>Candidate Infos</strong></p>
+                                                <p><strong>Name: </strong> #{interview.candidate.firstname} #{interview.candidate.lastname} </p>
+                                                <p><strong>CPF: </strong> #{interview.candidate.cpf} </p>
+                                                <p><strong>Github: </strong> #{interview.candidate.githubUrl} </p>
+                                                <p><strong>Linkein: </strong> #{interview.candidate.linkedInUrl} </p>
+                                                <p> See curriculum</p>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                 </h:form>
                                 </ui:insert>
                             </div>

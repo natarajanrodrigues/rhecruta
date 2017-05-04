@@ -19,12 +19,9 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-sm-3 col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-                                <li class="active"> 
-                                    <a href="#">Offers</a>
-                                </li>
+                                <li><a href="home.xhtml">Offers</a></li>
                                 <li><a href="offer/offer.xhtml">My offer registrations</a></li>
-                                <li><a href="#{facesContext.externalContext.requestContextPath}/faces/candidate/curriculum.xhtml">Curriculum</a></li>
-                                <li><a href="interviews.xhtml">My Interviews</a></li>
+                                <li class="active"><a href="#">My Interviews</a></li>
                                 
                             </ul>
                         </div>
@@ -32,21 +29,24 @@ and open the template in the editor.
                             <div class="section">
                                 <ui:insert name="userArea">
                                 <h:form>
-                                    <c:forEach var="offer" items="#{candidateBean.openOffers}">
-
+                                    <c:forEach var="interview" items="#{candidateBean.interviews}">
                                         <div class="thumbnail">
                                             <div class="caption">
-                                                <p><strong>Id: </strong> #{offer.id}</p>
-                                                <p><strong>Offer Description: </strong> #{offer.description}</p>
-                                                <p><strong>Vacancy: </strong> #{offer.vacancies}</p>
-                                                <p><strong>Subscriptions: </strong> #{offer.candidates.size()}</p>
+                                                <p><strong>Offer Description: </strong> #{interview.offer.description}</p>
+                                                <p><strong>Vacancy: </strong> #{interview.offer.vacancies} - <strong>Subscriptions: </strong> #{interview.offer.candidates.size()}</p>
                                                 
-                                                <c:if test="#{!candidateBean.isLoggedCandidateSubscribed(offer.id)}">
-                                                    <h:commandButton class="btn btn-xs btn-success" value="Subscribe" action="#{candidateBean.subscribe(offer)}"/>
-                                                </c:if>
-                                                <c:if test="#{candidateBean.isLoggedCandidateSubscribed(offer.id)}">
-                                                    <h:commandButton class="btn btn-danger" value="Unsubscribe" action="#{candidateBean.unsubscribe(offer)}"/>
-                                                </c:if>
+                                                <p><strong>Interview infos: </strong> </p>
+                                                <p> <strong>Date/Time Start: </strong>
+                                                    <h:outputText value="#{interview.start}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </p>
+                                                
+                                                <p> <strong>Date/Time End: </strong>
+                                                    <h:outputText value="#{interview.end}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </p>
                                             </div>
                                         </div>
                                     </c:forEach>

@@ -30,5 +30,7 @@ public interface OfferDAO {
 //    boolean isAttached(Long offerId, Long administratorId);
     List<Offer> getByCandidate(Candidate candidate);
     List<Candidate> getSubscribers(Offer offer);
+
+    public List<Offer> getMonthOffers();
     
 }
