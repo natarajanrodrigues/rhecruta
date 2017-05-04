@@ -129,12 +129,11 @@ and open the template in the editor.
 
                 <hr></hr>
 
-                <div class="col-md-12 row">
-                    <h4>Attach Administrators / Appraisers</h4>
-
-                    <h:form>
+                <div class="col-md-12 row" >
+                    
+                    <h:form rendered="#{offerDetailsBean.offer.appraiser ne null}" >
                         <div class="panel panel-default">
-                            <div class="panel-heading">Administrador</div>
+                            <div class="panel-heading">Appraiser</div>
                             <div class="panel-body">
 
                                 <table class="table table-striped">
@@ -145,11 +144,38 @@ and open the template in the editor.
                                         <th class="text-center">Action</th>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="adminstrator" items="#{offerDetailsBean.allAdministrator}">
+                                        <tr>
+                                            <td>#{offerDetailsBean.offer.appraiser.firstname} #{offerDetailsBean.offer.appraiser.lastname}</td>
+                                            <td>#{offerDetailsBean.offer.appraiser.user.credentials.email}</td>
+                                            <td>#{offerDetailsBean.offer.appraiser.user.role.description}</td>
+                                            <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeAppraiserToOffer()}" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </h:form>
+                    
+                    <h:form rendered="#{offerDetailsBean.offer.appraiser eq null}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Add Appraiser</div>
+                            <div class="panel-body">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Type</th>
+                                        <th class="text-center">Action</th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="appraiser" items="#{offerDetailsBean.allAppraisers}">
                                             <tr>
-                                                <td>#{adminstrator.firstname} #{adminstrator.lastname}</td>
-                                                <td>#{adminstrator.user.credentials.email}</td>
-                                                <td>#{adminstrator.user.role.description}</td>
+                                                <td>#{appraiser.firstname} #{appraiser.lastname}</td>
+                                                <td>#{appraiser.user.credentials.email}</td>
+                                                <td>#{appraiser.user.role.description}</td>
+                                                <td class="text-center"><h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addAppraiserToOffer(appraiser)}" /></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

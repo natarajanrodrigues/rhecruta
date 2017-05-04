@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.io.Serializable;
@@ -17,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -111,22 +111,22 @@ public class OfferDetailsBean implements Serializable {
         return null;
     }
     
-    public List<Administrator> getAllAdministrator() {
-        return administratorService.getAllAdministrators();
+    public List<Administrator> getAllAppraisers() {
+        return administratorService.getAllAdministratorsByRole(Role.APPRAISER);
     }
  
-//    public String addAdminToOffer(Administrator administrator) {
-//        this.offer.addAdministrator(administrator);
-//        this.offerService.update(offer);
-//        return null;
-//    }
-//    
-//    public String removeAdminToOffer(Administrator administrator) {
-//        this.offer.removeAdministrator(administrator);
-//        this.offerService.update(offer);
-//        return null;
-//    }
-//    
+    public String addAppraiserToOffer(Administrator administrator) {
+        this.offer.setAppraiser(administrator);
+        this.offerService.update(this.offer);
+        return null;
+    }
+    
+    public String removeAppraiserToOffer() {
+        this.offer.setAppraiser(null);
+        this.offerService.update(offer);
+        return null;
+    }
+    
 //    public boolean isAdmin(Long adminId) {
 //        System.out.println("ADM ID: " + adminId);
 //        return this.offerService.isAttached(offer.getId(), adminId);
