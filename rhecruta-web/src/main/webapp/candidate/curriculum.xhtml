@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+
+        <ui:composition template="/candidate/home_layout.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-2 sidebar">
+                            <ul class="nav nav-sidebar">
+                                <li><a href="#{facesContext.externalContext.requestContextPath}/faces/candidate/home.xhtml">Offers</a></li>
+                                <li><a href="#">My offer registrations</a></li>
+                                <li class="active"><a href="#{facesContext.externalContext.requestContextPath}/faces/candidate/curriculum.xhtml">Curriculum</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
+                            <div class="section">
+                                <h:form enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="curriculum">Please, upload your curriculum</label>
+                                                <h:inputFile id="curriculum" class="form-control" value="#{curriculumBean.part}" />
+                                            </div>
+                                            <div class="btn-group">
+                                            <h:commandButton class="btn btn-primary" 
+                                                                 value="UPLOAD" 
+                                                                 action="#{curriculumBean.uploadFile(candidateBean.loggedCandidate)}" />
+                                            <a class="btn btn-primary" href="#{facesContext.externalContext.requestContextPath}/curriculum?candidateId=#{candidateBean.loggedCandidate.id}">VISUALIZAR</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('curriculumMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
+                
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${param.success eq 'false'}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="alert alert-info">You haven't any curriculum uploaded yet</div>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>
