@@ -76,7 +76,7 @@ public class ReportDataResource {
         Object[] monthOffersByLanguage = offerService.getMonthOffersByLanguage();
         
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", "Languages");
+        jsonObject.addProperty("name", "Skill");
         JsonArray data = new JsonArray();
         
         for (Object o : monthOffersByLanguage) {

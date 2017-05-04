@@ -24,8 +24,8 @@ $(document).ready(function () {
 
             xAxix: {
                 tickInterval: 1.0,
-                allowDecimals: false
-
+                allowDecimals: false,
+                
             },
 
             yAxis: {
@@ -66,11 +66,11 @@ $(document).ready(function () {
             },
 
             title: {
-                text: 'Languages on offers'
+                text: 'Requeried skills on offers'
             },
 
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '<b>{point.percentage:.1f}%</b>'
             },
 
             plotOptions: {
