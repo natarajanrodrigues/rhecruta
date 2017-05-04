@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -22,6 +23,8 @@ public interface EnterviewService {
     void cancel(Enterview enterview);
     List<Enterview> listByOffer(Offer offer);
     Enterview getByOfferAnCandidate(Offer offer, Candidate candidate);
-
+    
+    List<Enterview> listByCandidate(Candidate candidate);
+    List<Enterview> listByAppraiser(Administrator administrator);
     
 }

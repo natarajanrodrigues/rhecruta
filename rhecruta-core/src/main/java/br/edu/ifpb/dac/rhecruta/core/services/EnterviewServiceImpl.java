@@ -241,6 +241,16 @@ public class EnterviewServiceImpl implements EnterviewService {
         return found;
     }
 
+    @Override
+    public List<Enterview> listByCandidate(Candidate candidate) {
+        return enterviewDAO.listByCandidate(candidate);
+    }
+
+    @Override
+    public List<Enterview> listByAppraiser(Administrator administrator) {
+        return enterviewDAO.listByAppraiser(administrator);
+    }
+
     
 
 }

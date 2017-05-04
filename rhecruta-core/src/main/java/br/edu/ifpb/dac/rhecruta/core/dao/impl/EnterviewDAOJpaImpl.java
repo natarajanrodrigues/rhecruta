@@ -50,6 +50,7 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
         manager.merge(obj);
     }
 
+    //TALVEZ TENHA QUE ALTERAR ISSO AQUI
     @Override
     public List<Enterview> listByAppraiser(Administrator appraiser) {
         TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
@@ -90,6 +91,14 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
             return result.get(0);
         }
 
+    }
+
+    @Override
+    public List<Enterview> listByCandidate(Candidate candidate) {
+        TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
+                + " WHERE e.candidate = candidate", Enterview.class)
+                .setParameter("candidate", candidate);
+        return query.getResultList();
     }
 
 }
