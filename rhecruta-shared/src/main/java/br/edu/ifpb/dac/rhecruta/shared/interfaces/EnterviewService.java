@@ -26,5 +26,6 @@ public interface EnterviewService {
     
     List<Enterview> listByCandidate(Candidate candidate);
     List<Enterview> listByAppraiser(Administrator administrator);
+    List<Enterview> listByManager(Administrator administrator);
     
 }

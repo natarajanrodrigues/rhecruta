@@ -101,4 +101,12 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Enterview> listByManager(Administrator administrator) {
+        TypedQuery<Enterview> query = manager.createQuery("SELECT e FROM Enterview e"
+                + " WHERE e.offer.manager = :manager  ORDER BY e.start", Enterview.class)
+                .setParameter("manager", administrator);
+        return query.getResultList();
+    }
+
 }

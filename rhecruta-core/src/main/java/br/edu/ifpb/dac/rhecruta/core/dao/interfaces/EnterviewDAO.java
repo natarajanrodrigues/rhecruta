@@ -23,7 +23,7 @@ public interface EnterviewDAO extends DAO<Enterview> {
     void delete(Enterview enterview);
     public List<Enterview> listByOffer(Offer offer);
     Enterview getByOfferAndCandidate(Long offerId, Long candidateId);
-
-    public List<Enterview> listByCandidate(Candidate candidate);
+    List<Enterview> listByCandidate(Candidate candidate);
+    List<Enterview> listByManager(Administrator administrator);
 
 }
