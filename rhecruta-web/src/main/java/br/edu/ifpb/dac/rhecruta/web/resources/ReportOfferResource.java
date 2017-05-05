@@ -7,8 +7,6 @@ package br.edu.ifpb.dac.rhecruta.web.resources;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +25,16 @@ import javax.ws.rs.core.Response;
  *
  * @author natarajan
  */
-@Path("report")
+@Path("offer")
 @Stateless
-public class ReportDataResource {
+public class ReportOfferResource {
     
     @Inject
     private OfferService offerService;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("perday")
+    @Path("daily")
     public Response getPerDay(){
         
         List<Offer> monthOffers = offerService.getMonthOffers();
@@ -68,57 +66,7 @@ public class ReportDataResource {
            
     }
     
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("perlanguage")
-    public Response getPerLanguagues(){
-        
-        Object[] monthOffersByLanguage = offerService.getMonthOffersByLanguage();
-        
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", "Skill");
-        JsonArray data = new JsonArray();
-        
-        for (Object o : monthOffersByLanguage) {
-            
-            Object[] arrayO = (Object[]) o;
-            JsonObject json = new JsonObject();
-            json.addProperty("name", (String) arrayO[0]);
-            json.addProperty("y", (Long) arrayO[1]);
-            data.add(json);
-        }
-        
-        jsonObject.add("data", data);
-        
-        return Response.ok().entity(jsonObject.toString()).build();
-           
-    }
     
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("vacancyperlanguage")
-    public Response getVacancyPerLanguagues(){
-        
-        Object[] monthOffersByLanguage = offerService.getMonthCandidatesPerVacancyBySkill();
-        
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", "Skill");
-        JsonArray data = new JsonArray();
-        
-        for (Object o : monthOffersByLanguage) {
-            
-            Object[] arrayO = (Object[]) o;
-            JsonObject json = new JsonObject();
-            json.addProperty("name", (String) arrayO[0]);
-            json.addProperty("y", (Long) arrayO[1]);
-            data.add(json);
-        }
-        
-        jsonObject.add("data", data);
-        
-        return Response.ok().entity(jsonObject.toString()).build();
-           
-    }
     
     
 }

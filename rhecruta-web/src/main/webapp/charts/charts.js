@@ -48,7 +48,7 @@ $(document).ready(function () {
             series: [{}]
         };
         var chart = new Highcharts.Chart(options);
-        $.getJSON('/rhecruta-web/api/report/perday', function (data) {
+        $.getJSON('/rhecruta-web/report/offer/daily', function (data) {
             options.series[0] = data;
             console.log(data);
             var chart = new Highcharts.Chart(options);
@@ -90,7 +90,7 @@ $(document).ready(function () {
         };
         
         var chart2 = new Highcharts.Chart(options);
-        $.getJSON('/rhecruta-web/api/report/perlanguage', function (data) {
+        $.getJSON('/rhecruta-web/report/skill', function (data) {
             options.series[0] = data;
             console.log(data);
             var chart2 = new Highcharts.Chart(options);
@@ -139,7 +139,7 @@ $(document).ready(function () {
         };
         
         var chart2 = new Highcharts.Chart(options);
-        $.getJSON('/rhecruta-web/api/report/vacancyperlanguage', function (data) {
+        $.getJSON('/rhecruta-web/report/skill/vacancy', function (data) {
             options.series[0] = data;
             console.log(data);
             var chart2 = new Highcharts.Chart(options);
