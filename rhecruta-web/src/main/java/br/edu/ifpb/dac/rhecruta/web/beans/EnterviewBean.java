@@ -5,13 +5,17 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -23,7 +27,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Pedro Arthur e Natarajan
  */
 @Named
 @ConversationScoped
@@ -40,7 +44,13 @@ public class EnterviewBean implements Serializable {
     private Enterview enterview;
 
     private List<Enterview> enterviewsList;
-
+    
+    @Inject
+    private User loggedUser;
+    
+    @Inject
+    private AdministratorService administratorService;
+    
     @PostConstruct
     public void init() {
         System.out.println("[EnterviewBean] Constructed!!");
@@ -55,7 +65,10 @@ public class EnterviewBean implements Serializable {
     }
 
     private void listEnterviews() {
-        this.enterviewsList = this.enterviewService.listAll();
+        Administrator loggedAdministrator = getLoggedAdministrator();
+        System.out.println("ADMIN LOGGED: " + loggedAdministrator);
+        this.enterviewsList = this.enterviewService.listByManager(loggedAdministrator);
+//        this.enterviewsList = this.enterviewService.listAll();
     }
 
     public String saveEnterview() {
@@ -195,6 +208,15 @@ public class EnterviewBean implements Serializable {
 
     public void setEnterview(Enterview enterview) {
         this.enterview = enterview;
+    }
+    
+    public Administrator getLoggedAdministrator() {
+        System.out.println("aqqqqqqq");
+        if(loggedUser != null) {
+            Administrator logged = this.administratorService.getByUser(loggedUser);
+            System.out.println("Administrator: "+logged);
+            return logged;
+        } return null;
     }
 
 }

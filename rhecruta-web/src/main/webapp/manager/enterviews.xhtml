@@ -36,52 +36,60 @@ and open the template in the editor.
                             </ul>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
-                            <div class="section">
+                            <c:if test="#{enterviewBean.enterviewsList.size() > 0}">
+                                <div class="section" >
 
-                                <h4>Enterviews</h4>
-                                <hr></hr>
+                                    <h4>Enterviews</h4>
+                                    <hr></hr>
 
-                                <div class="table-responsive">
-                                    <h:form>
-                                        <h:dataTable class="table table-striped" var="enterview" 
-                                                     value="#{enterviewBean.enterviewsList}">
+                                    <div class="table-responsive">
+                                        <h:form>
+                                            <h:dataTable class="table table-striped" var="enterview" 
+                                                         value="#{enterviewBean.enterviewsList}">
 
-                                            <h:column>
-                                                <f:facet name="header">Offer</f:facet>
-                                                    #{enterview.offer.description}
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">Candidate Name</f:facet>
-                                                    #{enterview.candidate.firstname} #{enterview.candidate.lastname} 
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">Candidate E-mail</f:facet>
-                                                    #{enterview.candidate.user.credentials.email}
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">Start dateTime</f:facet>
-                                                <h:outputText value="#{enterview.start}">
-                                                    <f:converter converterId="localDateTimeConverter" />
-                                                </h:outputText>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">Start dateTime</f:facet>
-                                                <h:outputText value="#{enterview.end}">
-                                                    <f:converter converterId="localDateTimeConverter" />
-                                                </h:outputText>
-                                            </h:column>
-                                            <h:column>
-                                                <f:facet name="header">Cancel</f:facet>
-                                                <h:commandButton class="btn btn-danger"
-                                                                 value="Cancel Interview"
-                                                                 action="#{enterviewBean.cancelEnterview(enterview)}"
-                                                                 />
-                                            </h:column>
-                                        </h:dataTable>
-                                    </h:form>
+                                                <h:column>
+                                                    <f:facet name="header">Offer</f:facet>
+                                                        #{enterview.offer.description}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Candidate Name</f:facet>
+                                                        #{enterview.candidate.firstname} #{enterview.candidate.lastname} 
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Candidate E-mail</f:facet>
+                                                        #{enterview.candidate.user.credentials.email}
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Start dateTime</f:facet>
+                                                    <h:outputText value="#{enterview.start}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Start dateTime</f:facet>
+                                                    <h:outputText value="#{enterview.end}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Cancel</f:facet>
+                                                    <h:commandButton class="btn btn-danger"
+                                                                     value="Cancel Interview"
+                                                                     action="#{enterviewBean.cancelEnterview(enterview)}"
+                                                                     />
+                                                </h:column>
+                                            </h:dataTable>
+                                        </h:form>
+                                    </div>
+
                                 </div>
+                            </c:if>
 
-                            </div>
+                            <c:if test="#{enterviewBean.enterviewsList eq null or enterviewBean.enterviewsList.size() eq 0}">
+                                <div class="section" rendered="#{enterviewBean.enterviewsList eq null or enterviewBean.enterviewsList.size() eq 0}">
+                                    <h4>There are no interviews on your offers yet.</h4>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

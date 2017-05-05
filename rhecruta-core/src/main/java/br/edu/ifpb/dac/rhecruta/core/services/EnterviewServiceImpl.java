@@ -239,4 +239,9 @@ public class EnterviewServiceImpl implements EnterviewService {
         return enterviewDAO.listByAppraiser(administrator);
     }
 
+    @Override
+    public List<Enterview> listByManager(Administrator administrator) {
+        return enterviewDAO.listByManager(administrator);
+    }
+
 }
