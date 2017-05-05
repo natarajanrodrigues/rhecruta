@@ -18,4 +18,8 @@ public class SessionUtils {
         return (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(create);
     }
+    
+    public static void invalidate() {
+        getSession(false).invalidate();
+    }
 }

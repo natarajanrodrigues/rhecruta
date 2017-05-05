@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -37,9 +38,6 @@ public class CurriculumServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setHeader("Content-Disposition", "inline; filename=\"curriculo.pdf\"");
-        response.setContentType("application/pdf");
-
         String strCandidateId = request.getParameter("candidateId");
 
         if (strCandidateId == null || strCandidateId.isEmpty()) {
@@ -48,6 +46,9 @@ public class CurriculumServlet extends HttpServlet {
 
         try {
             Curriculum curriculum = curriculumService.get(Long.valueOf(strCandidateId));
+            String extension = FilenameUtils.getExtension(curriculum.getFilename());
+            response.setContentType("application/"+extension);
+            response.setHeader("Content-Disposition", "inline; filename=\"curriculo."+extension+"\"");
             ServletOutputStream output = response.getOutputStream();
             output.write(curriculum.getBytes());
         } catch (EJBException ex) {            
