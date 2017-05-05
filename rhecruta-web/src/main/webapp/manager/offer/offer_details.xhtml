@@ -231,6 +231,7 @@ and open the template in the editor.
                                             <th>Email</th>
                                             <th>LinkedIn</th>
                                             <th>Github</th>
+                                            <th class="text-center">Curriculum</th>
                                             <th class="text-center">Invite</th>
                                         </thead>
                                         <tbody>
@@ -240,7 +241,8 @@ and open the template in the editor.
                                                     <td>#{cand.user.credentials.email}</td>
                                                     <td><a href="#{cand.linkedInUrl}">LinkedIn Profile</a></td>
                                                     <td><a href="#{cand.githubUrl}">Github Profile</a></td>
-                                                    <td>
+                                                    <td class="text-center"><a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{cand.id}">Get Curriculum</a></td>
+                                                    <td clas="text-center">
                                                         <h:commandButton class="btn btn-default"
                                                                          value="Invite"
                                                                          action="#{inviteBean.invite(offerDetailsBean.offer, 
@@ -250,6 +252,7 @@ and open the template in the editor.
                                                         <h:outputText value="Invited" 
                                                                       rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
                                                     </td>
+                                                    
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
