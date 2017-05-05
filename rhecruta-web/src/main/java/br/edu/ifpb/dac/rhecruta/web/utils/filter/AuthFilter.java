@@ -40,7 +40,7 @@ public class AuthFilter implements Filter {
         User loggedUser = (User) httpRequest.getSession().getAttribute("loggedUser");
 
         if (loggedUser == null) {
-            httpResponse.sendRedirect("/quickserv-web/faces/index.xhtml");
+            httpResponse.sendRedirect("/rhecruta-web/faces/index.xhtml");
         } else {
 
             String path = httpRequest.getRequestURI();
