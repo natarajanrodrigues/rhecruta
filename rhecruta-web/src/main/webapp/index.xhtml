@@ -159,6 +159,16 @@
 
                     </div>
                 </section>
+                
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${param.roleChanged eq true}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="alert alert-info">You have successfully changed your role
+                            to Appraiser!</div>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
 
 
             </ui:define>

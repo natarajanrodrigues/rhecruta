@@ -6,8 +6,10 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import br.edu.ifpb.dac.rhecruta.web.utils.SessionUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,6 +33,9 @@ public class AdminRoleBean {
     private AdministratorService adminService;
 
     private List<Administrator> administratorList;
+
+    @Inject
+    private User loggedUser;
 
     @PostConstruct
     private void init() {
@@ -57,9 +63,11 @@ public class AdminRoleBean {
         try {
             adminService.changeRole(appraiser, Role.MANAGER);
             listAllAdministrators();
+
             addMessage("adminRoleMsg",
                     createMessage("Role successfully changed!",
                             FacesMessage.SEVERITY_INFO));
+
         } catch (EJBException ex) {
             addMessage("adminRoleMsg",
                     createMessage(ex.getCausedByException().getMessage(),
@@ -70,9 +78,17 @@ public class AdminRoleBean {
 
     public String chanteToAppraiser(Administrator manager) {
         adminService.changeRole(manager, Role.APPRAISER);
-        listAllAdministrators();
 
-        return null;
+        if (loggedUser.getCredentials().authenticate(manager.getUser().getCredentials())) {
+            addMessage("adminRoleMsg",
+                    createMessage("Role successfully changed!",
+                            FacesMessage.SEVERITY_INFO));
+            SessionUtils.invalidate();
+            return "/index.xhtml?faces-redirect=true&roleChanged=true";
+        } else {
+            listAllAdministrators();
+            return null;
+        }
     }
 
     public boolean isManager(Administrator admin) {
