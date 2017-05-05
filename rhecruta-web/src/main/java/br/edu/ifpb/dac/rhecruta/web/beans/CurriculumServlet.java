@@ -12,6 +12,10 @@ import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -40,6 +44,9 @@ public class CurriculumServlet extends HttpServlet {
 
         String strCandidateId = request.getParameter("candidateId");
 
+        Object from = request.getParameter("from");
+        System.out.println("[CurriculumServlet] from: " + from);
+
         if (strCandidateId == null || strCandidateId.isEmpty()) {
             response.sendRedirect("curriculum");
         }
@@ -47,13 +54,23 @@ public class CurriculumServlet extends HttpServlet {
         try {
             Curriculum curriculum = curriculumService.get(Long.valueOf(strCandidateId));
             String extension = FilenameUtils.getExtension(curriculum.getFilename());
-            response.setContentType("application/"+extension);
-            response.setHeader("Content-Disposition", "inline; filename=\"curriculo."+extension+"\"");
+            response.setContentType("application/" + extension);
+            response.setHeader("Content-Disposition", "inline; filename=\"curriculo." + extension + "\"");
             ServletOutputStream output = response.getOutputStream();
             output.write(curriculum.getBytes());
-        } catch (EJBException ex) {            
-            response.sendRedirect("faces/candidate/curriculum.xhtml?success=false");
+        } catch (EJBException ex) {
+            String url = request.getHeader("Referer");
+            response.sendRedirect(addParam(url,"error","curriculumNotFound"));
         }
+    }
+    
+    private String addParam(String url, String key, String value) {
+        String expression = key + "=" + value;
+        if(url.contains(expression))
+            return url;
+        if(url.contains("?"))
+            return url + "&" + expression;
+        return url + "?" + expression;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

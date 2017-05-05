@@ -41,7 +41,7 @@ and open the template in the editor.
                                             <h:commandButton class="btn btn-primary" 
                                                                  value="UPLOAD" 
                                                                  action="#{curriculumBean.uploadFile(candidateBean.loggedCandidate)}" />
-                                            <a class="btn btn-primary" href="#{facesContext.externalContext.requestContextPath}/curriculum?candidateId=#{candidateBean.loggedCandidate.id}">VISUALIZAR</a>
+                                            <a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{candidateBean.loggedCandidate.id}">VISUALIZAR</a>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@ and open the template in the editor.
                 </h:panelGroup>
                 
                 <!-- Modal Messages -->
-                <h:panelGroup layout="block" rendered="${param.success eq 'false'}">
+                <h:panelGroup layout="block" rendered="${param.error eq 'curriculumNotFound'}">
                     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
                         <div class="modal-dialog modal-sm" role="document">
                             <div class="alert alert-info">You haven't any curriculum uploaded yet</div>

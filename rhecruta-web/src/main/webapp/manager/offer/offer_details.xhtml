@@ -271,6 +271,14 @@ and open the template in the editor.
                         </div>	 
                     </div>
                 </h:panelGroup>  
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${param.error eq 'curriculumNotFound'}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="alert alert-info">You haven't any curriculum uploaded yet</div>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
 
 
             </ui:define>
