@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -41,7 +42,34 @@ public class CurriculumServiceImpl implements CurriculumService {
     
     @Override
     public void upload(Curriculum curriculum) {
-        uploader.upload(curriculum);
+        try {
+            validate(curriculum);
+            uploader.upload(curriculum);
+        } catch (IllegalArgumentException ex) {
+            throw new EJBException(ex);
+        }
+    }
+    
+    private void validate(Curriculum curriculum) {
+        if(curriculum == null)
+            throw new IllegalArgumentException("You're passing a null curriculum."
+                    + " Please, attach your best curriculum and try again!");
+        byte[] bytes = curriculum.getBytes();
+        String fileName = curriculum.getFilename();
+        Long candidateId = curriculum.getCandidateId();
+        
+        if(bytes == null || bytes.length == 0)
+            throw new IllegalArgumentException("You didn't attach any file. Please, "
+                    + "attach your best curriculum and try again!");
+        if(fileName == null || !getExtension(fileName).equals("pdf"))
+            throw new IllegalArgumentException("We only accept pdf files.");
+        if(candidateId == null || candidateId <= 0)
+            throw new IllegalArgumentException("This file is not related to a candidate."
+                    + " Are you logged in?");    
+    }
+    
+    private String getExtension(String filename) {
+        return FilenameUtils.getExtension(filename);
     }
     
 }
