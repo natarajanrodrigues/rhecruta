@@ -30,8 +30,6 @@ and open the template in the editor.
                                 <li><a href="offer/offer.xhtml">Offers</a></li>
                                 <li><a href="enterviews.xhtml">Enterviews</a></li>
                                 <li><a href="reports.xhtml">Reports</a></li>
-                                <li><a href="#">Analytics</a></li>
-                                <li><a href="#">Export</a></li>
                                 <li><h:link value="Administrators" outcome="administrators"/></li>
                             </ul>
                         </div>
@@ -88,6 +86,7 @@ and open the template in the editor.
                                                     <th>Lastname</th>
                                                     <th>CPF</th>
                                                     <th>E-mail</th>
+                                                    <th class="text-center">On Suggestions</th>
                                                     <th>Github</th>
                                                     <th>LinkedIn</th>
                                                     <th>Approve</th>
@@ -101,8 +100,9 @@ and open the template in the editor.
                                                             <td>#{candidate.lastname}</td>
                                                             <td>#{candidate.cpf}</td>
                                                             <td>#{candidate.user.credentials.email}</td>
-                                                            <td><a href="#{candidate.githubUrl}">Github profile</a></td>
-                                                            <td><a href="#{candidate.linkedInUrl}">LinkedIn profile</a></td>
+                                                            <td class="text-center">#{candidateBean.isValidCandidateOnSuggestions(candidate)}</td>
+                                                            <td>#{candidate.githubUrl}</td>
+                                                            <td>#{candidate.linkedInUrl}</td>
                                                             <td><h:commandButton class="btn btn-xs btn-success" value="Approve" action="#{candidateBean.respondRequest(candidate, true)}"/></td>
                                                             <td><h:commandButton class="btn btn-xs btn-danger" value="Deny" action="#{candidateBean.respondRequest(candidate, false)}"/></td>
                                                         </tr>

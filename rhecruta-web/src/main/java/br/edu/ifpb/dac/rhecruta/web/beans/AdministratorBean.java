@@ -6,9 +6,12 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.util.List;
 import javax.annotation.PostConstruct;

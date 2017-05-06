@@ -10,12 +10,15 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -45,6 +48,9 @@ public class CandidateBean {
     
     @Inject
     private User loggedUser;
+    
+    @Inject
+    private EvaluationService evaluationService;
     
     private Candidate candidate = new Candidate();
     private User user = new User();
@@ -91,7 +97,15 @@ public class CandidateBean {
     }
     
     public List<Candidate> getApprovedCandidates() {
-        return candidateService.listApprovedCandidates();
+        List<Candidate> listApprovedCandidates = candidateService.listApprovedCandidates();
+        
+        Collections.sort(listApprovedCandidates, (c1, c2) -> 
+                new Double(evaluationService.getRank(c1)).compareTo(
+                        new Double(evaluationService.getRank(c2))) );
+        
+        Collections.reverse(listApprovedCandidates);
+        
+        return listApprovedCandidates;
     }
     
     public String respondRequest(Candidate candidate, boolean approve) {
@@ -171,6 +185,26 @@ public class CandidateBean {
     
     public List<Enterview> getInterviews(){
         return interviewService.listByCandidate(getLoggedCandidate());
+    }
+    
+    public String isValidCandidateOnSuggestions(Candidate candidate) {
+        List<SimpleUser> resultList = evaluationService.searchSimpleUserWithOr(candidate);
+        
+        switch(resultList.size()) {
+            case 1: {
+                return "Exists/Correct";
+            }
+            case 0: {
+                return "Don't exists yet";
+            }
+            default: return "Conflict with existing";
+        }
+        
+    }
+    
+    public double rank(Candidate candidate) {
+        System.out.println("CAND " + candidate);
+        return evaluationService.getRank(candidate);
     }
     
 }
