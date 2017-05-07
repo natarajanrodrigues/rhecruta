@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.GithubRepository;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.RankedUser;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
@@ -16,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Remote;
@@ -35,6 +38,7 @@ import javax.ws.rs.core.Response.Status;
 @Remote(EvaluationService.class)
 @Stateless
 public class EvaluationServiceImpl implements EvaluationService{
+    
     private static String URL = "http://localhost:8090/suggestions-web/api/";
     private Client client = ClientBuilder.newClient();
     private WebTarget target = client.target(URL);
@@ -66,6 +70,32 @@ public class EvaluationServiceImpl implements EvaluationService{
             System.out.println("Veja o erro: " + responseString);
             return null;
         }
+    }
+    
+    @Override
+    public Set<String> getSkills(Candidate candidate) {
+        Set<String> skills = new TreeSet<>();
+        List<GithubRepository> repositories = getRepitories(candidate);
+        repositories.forEach((repository) -> {
+            skills.addAll(repository.getLanguages());
+        });
+        return skills;
+    }
+    
+    @Override
+    public double getMatch(Offer offer, Candidate candidate) {
+        List<String> offerSkills = offer.getSkills();
+        Set<String> candidateSkills = getSkills(candidate);
+        
+        int matched = 0;
+        for(String offerSkill : offerSkills) {
+            if(candidateSkills.stream()
+                    .anyMatch((p) -> p.equalsIgnoreCase(offerSkill))){
+                matched++;
+            }
+        }
+        
+        return (double) matched / (double) offerSkills.size();
     }
     
     @Override

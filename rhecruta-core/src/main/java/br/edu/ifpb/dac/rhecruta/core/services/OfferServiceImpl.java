@@ -48,18 +48,22 @@ public class OfferServiceImpl implements OfferService {
 
     @Resource(lookup = "jms/dac/rhecruta/newOfferQueue")
     private Queue newOfferQueue;
-
+    
+    @EJB
+    private SystemEvaluationSenderMessage systemEvaluationSender;
     
     @Override
     public void save(Offer offer) {
         offer.setCreationDateTime(LocalDateTime.now());
-        offerDAO.save(offer);
-        System.out.println("Offer: "+offer);
-//        sendToNewOfferQueue(offer);
+        Long id = offerDAO.save(offer);
+        System.out.println("[OfferServiceImpl] Offer was successfully saved. ID: "+id);
+        if(offer.getType().equals(OfferType.OPEN)) {
+            sendToNewOfferQueue(id);
+        }
     }
     
-    private void sendToNewOfferQueue(Offer offer) {
-        Message message = createMessage(offer.getId());
+    private void sendToNewOfferQueue(Long id) {
+        Message message = createMessage(id);
         JMSProducer producer = jmsContext.createProducer();
         producer.send(newOfferQueue, message);
     }
@@ -90,6 +94,19 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void update(Offer offer) {
+        offerDAO.update(offer);
+    }
+    
+    @Override
+    public void subscribe(Candidate candidate, Offer offer) {
+        offer.subscribe(candidate);
+        offerDAO.update(offer);
+        systemEvaluationSender.sendToSystemEvaluationQueue(offer, candidate);
+    }
+    
+    @Override
+    public void unsubscribe(Candidate candidate, Offer offer) {
+        offer.unsubscribe(candidate);
         offerDAO.update(offer);
     }
 

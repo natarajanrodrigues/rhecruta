@@ -10,9 +10,13 @@ import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.GithubRepository;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
@@ -43,6 +47,9 @@ public class NewOfferListener implements MessageListener {
     private CandidateDAO candidateDAO;
     @EJB
     private OfferDAO offerDAO;
+    @EJB
+    private EvaluationService evaluationService;
+    
 
     @Override
     public void onMessage(Message message) {
@@ -52,13 +59,12 @@ public class NewOfferListener implements MessageListener {
             Long offerId = Long.valueOf(strOfferId);
             Offer offer = offerDAO.getById(offerId);
             
-            //For now is sending to all candidates. But when LinkedIn
-            //and Github Client API be done this list will be filtered by
-            //candidate skills. :P
             List<Candidate> candidates = candidateDAO.listApprovedCandidates();
             for(Candidate candidate : candidates) {
-                Email email = createEmail(candidate, offer);
-                emailRequester.send(email);
+                if(evaluationService.getMatch(offer, candidate) > 0) {
+                    Email email = createEmail(candidate, offer);
+                    emailRequester.send(email);
+                }
             }
             
         } catch (JMSException ex) {

@@ -6,9 +6,11 @@
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.GithubRepository;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -21,4 +23,6 @@ public interface EvaluationService {
     List<GithubRepository> getRepitories(Candidate candidate);
     double getRank(Candidate candidate);
     List<SimpleUser> searchSimpleUserWithOr(Candidate candidate);
+    Set<String> getSkills(Candidate candidate);
+    double getMatch(Offer offer, Candidate candidate);
 }
