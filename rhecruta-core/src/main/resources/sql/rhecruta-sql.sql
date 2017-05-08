@@ -104,6 +104,7 @@ CREATE TABLE enterview (
 	street VARCHAR(255),
 	complement VARCHAR(255),
 	number VARCHAR(255),
+        calendar_id VARCHAR(255),
 	--FK
 	FOREIGN KEY(offer_id) REFERENCES offer(id),
 	FOREIGN KEY(candidate_id) REFERENCES candidate(id),

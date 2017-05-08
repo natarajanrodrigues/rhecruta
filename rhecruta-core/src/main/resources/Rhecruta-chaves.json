@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "clean-wonder-166918",
+  "private_key_id": "fce23c7e2e794d8901474a417f2e7fd1923cf1c6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqRbuCSZDzX0TH\nVE9qYrr8TTr0veCHpYaMRtGfGBHDjUJPbOfwMZjvLMFtj1TaMEXzUB2e2HJJ3wZ+\n1sF4claSGpSeS9YDTqiFmVFC3IVTiT5SIbrQNNnZIsGA9HUSBR1u+Jy0FmDHx/CK\nRi9Ee3rPIIWBWbsTfp2nyiykCZI/jtX9DiAjaD4h+p4Og8IP6NetMeySRMtf1iwe\n8W6YqWwsC5Xu2QAcmvqQOlp5x4teVtKEEL908RD60KHW+VAch6cmjfVwd/+FfPxc\nqlk5WFy1uVilhoR4t2eutAUdZusI92g1ZeqYXMj6QGdrE7YvZSMQrpexxl02UzXZ\nLTGUPD3NAgMBAAECggEBAJOkkZnApoKRWjcpAQ+zeoWphfSP7HBSdB+QjNVR7p1N\nEHGEcn1Q1FaXzUVt4lqrPwxirLx+3GL3k09Kcko5gp1/lNzJz1Hg07m8nrzGMIml\n2Lco7i75lOh1/aoOzrCIZORDiMWTHeo9kXKktvm/xFZz0a++mbumr5e9dAXtErYu\nfhnCAnB906z8f4XtzP4WU73YN1QpNd4i/kdGf/405D8X8/l1bfJUK2AppZ3OlLPE\nSwbWsd1de8DSxqHLqwgYLn3er0GvvgyLQkLBNRJSkMuuX0uYNNnC7xB7PmpNyS3P\nNQPe4rQ9KErt0+RQoeDGDO7/gInRoyPCYvH5hzZP2SECgYEA5CCKFxCi5DZwNEUD\nQrS54wOw6YmBHBcl/pi7L2pR6we6bMd+WmgsmfYNzUqCzFiDdN47bCVrTuL1pI3E\nxJ/PDBipxEtgVfjP9spNJotFxig0HPibJJkOu8cO6r42ZzexyIpMFXVtSDpgNAHh\nCzTGROgZSkxEQanlw1iBY9hjmbUCgYEAvxOWcjKK8u8zzwhoK98ytqyFvcBtQOhl\nhU9f7xb3Zj0Y+/2AcjJljJBnHb/WxAfYB4ElioEg/xxV3hZCCtZZg3rZwg+2USzz\nKNFpnBjF15Io5Eof7BNJN8sufCTLy/J/laUFDanUuAmrhpx+LHT/HKC1fMg5LGdy\n7TNzUgMLwrkCgYEAp2nVzU1xLSdiOom29dopXJcV2p0Fefbm9Ctjm01cJq46OqBA\nctpmeOpggJrA2HPQrRB17UycrnzSpls/3sgkqwzicWKbpRv+im82JSYqI1zXubcc\nK8SDUnynzs+enyr5NmF/qnPNqibk+OW0IIQvSNxHywWjRckIC87EzeA8X80CgYA1\n2mhxoSsmUyKv/DeX/d1GPROoql5gh99tFjT8puVtjFTJWOZlySxz1JMrgFEgiPFr\nFAwnoENTg4H0CSPt+AHcm7haCKGi+V9DJtp0I0tHeatKxFWA7OKa9goQ9TH3Nk6d\nN5hYBICuqhMM6nhpQURRpj3ggHIUwMdUcUbUW4VqCQKBgFIAXm+I5EAC6iDnWwlp\ndjWSIEYb4tHgMYHt8SREI7yEZy204FMHinMLlzZD/zSrhG9kEa/5TAfakhGvEKvk\ntHGvyxbphdxRKQcGpZJdHAbR9FY2k7eZc5gbOZqp2cIeeD9IflvzBHL9mb/SVVbP\nRlNDQ3ApZ0WPPlqQtq/CSO5c\n-----END PRIVATE KEY-----\n",
+  "client_email": "rhecruta@clean-wonder-166918.iam.gserviceaccount.com",
+  "client_id": "114068852205520278240",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rhecruta%40clean-wonder-166918.iam.gserviceaccount.com"
+}
