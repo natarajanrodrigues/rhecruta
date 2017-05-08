@@ -41,8 +41,10 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
     }
 
     @Override
-    public void save(Enterview obj) {
+    public Long save(Enterview obj) {
         manager.persist(obj);
+        manager.flush();
+        return obj.getId();
     }
 
     @Override

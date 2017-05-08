@@ -28,7 +28,7 @@ public class Enterview implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+        
     @ManyToOne
     @JoinColumn(name = "offer_id")
     private Offer offer;
@@ -48,6 +48,10 @@ public class Enterview implements Serializable {
     
     @Embedded
     private Address address;
+    
+    @Column(name = "calendar_id")
+    private String calendarId;
+    
     
     private Double score;
 
@@ -135,8 +139,17 @@ public class Enterview implements Serializable {
         return now.isAfter(this.end);
     }
 
+    public String getCalendarId() {
+        return calendarId;
+    }
+
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+    }
+
     @Override
     public String toString() {
-        return "Enterview{" + "id=" + id + ", offer=" + offer + ", statusId=" + statusId + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", score=" + score + '}';
+        return "Enterview{" + "id=" + id + ", offer=" + offer + ", statusId=" + statusId + ", candidate=" + candidate + ", start=" + start + ", end=" + end + ", address=" + address + ", calendarId=" + calendarId + ", score=" + score + '}';
     }
+    
 }

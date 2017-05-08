@@ -198,4 +198,15 @@ public class Offer implements Serializable {
     public String toString() {
         return "Offer{" + "id=" + id + ", typeId=" + typeId + ", skills=" + skills + ", description=" + description + ", vacancies=" + vacancies + ", creationDateTime=" + creationDateTime + ", statusId=" + statusId + ", candidates=" + candidates + ", manager=" + manager + ", appraiser=" + appraiser + '}';
     }
+    
+    public String prettyString(){
+        StringBuilder sb = new StringBuilder();
+        String recuo = "\n";
+        sb
+                .append("Oferta: \n")
+                .append("Descrição: ").append(this.getDescription()).append(recuo)
+                .append("Vagas: ").append(this.getVacancies()).append(recuo)
+                .append("Habilidades solicitadas: ").append(this.getSkills().toString()).append(recuo);
+        return sb.toString();
+    }
 }

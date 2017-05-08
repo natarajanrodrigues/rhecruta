@@ -18,6 +18,7 @@ import java.util.List;
 public interface EnterviewService {
     
     void save(Enterview enterview);
+    void update(Enterview enterview);
     List<Enterview> listAll();
     void evaluate(Enterview enterview, Double score);
     void cancel(Enterview enterview);

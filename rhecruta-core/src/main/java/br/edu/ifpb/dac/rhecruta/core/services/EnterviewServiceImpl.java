@@ -12,15 +12,13 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
-import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewHandlerService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -39,20 +37,28 @@ public class EnterviewServiceImpl implements EnterviewService {
     private EnterviewDAO enterviewDAO;
     @EJB
     private OfferDAO offerDAO;
+    
     @EJB
-    private EmailRequester emailRequester;
+    private EnterviewHandlerService enterviewHandler;
 
     @Override
     public void save(Enterview enterview) {
         System.out.println("[EnterviewServiceImpl] Enterview to be saved: " + enterview);
-        Email createdEmail = createEmail(enterview, true);
         try {
             validate(enterview);
-            enterviewDAO.save(enterview);
-            emailRequester.send(createdEmail);
+            Long savedInterview = enterviewDAO.save(enterview);
+            enterview.setId(savedInterview);
+            enterviewHandler.handleCriation(enterview);
+
         } catch (IllegalArgumentException ex) {
             throw new EJBException(ex);
         }
+    }
+    
+    @Override
+    public void update(Enterview enterview) {
+        System.out.println("[EnterviewServiceImpl] Updating to be saved: " + enterview);
+        enterviewDAO.update(enterview);
     }
 
     private void validate(Enterview enterview) {
@@ -142,11 +148,12 @@ public class EnterviewServiceImpl implements EnterviewService {
 
     @Override
     public void cancel(Enterview enterview) {
-        Email createdEmail = createEmail(enterview, false);
+        
         if (!enterview.isFinished()) {
             Enterview found = enterviewDAO.findById(enterview.getId());
+            enterviewHandler.handleDeletion(enterview);
             enterviewDAO.delete(found);
-            emailRequester.send(createdEmail);
+            
         } else {
             throw new EJBException(
                     new IllegalArgumentException("You can't cancel a finished interview!")
@@ -168,48 +175,6 @@ public class EnterviewServiceImpl implements EnterviewService {
         }
     }
 
-    private Email createEmail(Enterview enterview, boolean marked) {
-        String message;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");;
-
-        if (marked) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Olá ").append(enterview.getCandidate().getFirstname()).append(" estamos felizes em confirmar "
-                    + "que foi marcada uma entrevista para você. Veja os detalhes da oferta e da entrevista:\n")
-                    .append(prettyOfferToString(enterview.getOffer()))
-                    .append("Data/Hora Início: ").append(dtf.format(enterview.getStart())).append("\n")
-                    .append("Data/Hora Final: ").append(dtf.format(enterview.getEnd()));
-
-            message = sb.toString();
-        } else {
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("Olá ").append(enterview.getCandidate().getFirstname()).append(", infelizmente a entrevista da oferta "
-                    + "descrita abaixo foi cancelada. Aguarde por novas instruções.:\n")
-                    .append(prettyOfferToString(enterview.getOffer()));
-
-            message = sb.toString();
-        }
-        Email email = new Email();
-        email.setFrom("rhecrutapp@gmail.com");
-        email.setTo(enterview.getCandidate().getUser().getCredentials().getEmail());
-        email.setRequestedDate(LocalDateTime.now());
-        String subject = marked ? "Entrevista marcada" : "Entrevista cancelada";
-        email.setSubject(subject);
-        email.setText(message);
-        return email;
-    }
-
-    private static String prettyOfferToString(Offer offer) {
-        StringBuilder sb = new StringBuilder();
-        String recuo = "\n";
-        sb
-                .append("Oferta: \n")
-                .append("Descrição: ").append(offer.getDescription()).append(recuo)
-                .append("Vagas: ").append(offer.getVacancies()).append(recuo)
-                .append("Habilidades solicitadas: ").append(offer.getSkills().toString()).append(recuo);
-        return sb.toString();
-    }
 
     @Override
     public List<Enterview> listByOffer(Offer offer) {

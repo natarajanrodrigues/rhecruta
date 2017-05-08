@@ -75,6 +75,7 @@ public class EnterviewBean implements Serializable {
 
         enterview.setCandidate(selectedCandidate);
         enterview.setOffer(selectedOffer);
+        
 
         System.out.println("[EnterviewBean] Enterview to be saved: " + enterview);
 

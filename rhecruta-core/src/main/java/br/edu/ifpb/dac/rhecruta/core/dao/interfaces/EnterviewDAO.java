@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Pedro Arthur
  */
-public interface EnterviewDAO extends DAO<Enterview> {
+public interface EnterviewDAO  {
     
     List<Enterview> listAll();
     Enterview findById(Long id);
@@ -25,5 +25,7 @@ public interface EnterviewDAO extends DAO<Enterview> {
     Enterview getByOfferAndCandidate(Long offerId, Long candidateId);
     List<Enterview> listByCandidate(Candidate candidate);
     List<Enterview> listByManager(Administrator administrator);
+    Long save(Enterview obj);
+    void update(Enterview obj);
     Long countInterviewsByOffer(Offer offer);
 }
