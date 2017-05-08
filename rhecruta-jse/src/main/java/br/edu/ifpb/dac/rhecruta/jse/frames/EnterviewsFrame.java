@@ -11,6 +11,7 @@ import br.edu.ifpb.dac.rhecruta.jse.ServiceLocator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JList;
 import javax.swing.ScrollPaneConstants;
@@ -27,7 +28,7 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
     private EnterviewService enterviewService;
     private Administrator administrator;
     private ServiceLocator serviceLocator = new ServiceLocator();
-    private List<Enterview> enterviews;
+    private List<Enterview> enterviews = new ArrayList<>();
 
     public EnterviewsFrame() {
     }
@@ -42,6 +43,7 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
 
         this.setResizable(false);
         this.setTitle("Rhecruta | " + administrator.getFirstname() + " Interviews");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
         jList1.setCellRenderer(new EnterviewPanel());
         jList1.setModel(new EnterviewModal(enterviews));
@@ -62,10 +64,21 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane2.setViewportView(jList1);
+
+        jLabel1.setText("Click on a list item to see more infos and Evalue with a Score:");
+
+        jButton1.setText("Reload");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,19 +86,40 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        if(enterviewService == null){
+           this.enterviewService =  serviceLocator.lookup(ENTERVIEW_RESOURCE, EnterviewService.class);
+        }
+        
+        enterviews = enterviewService.listByAppraiser(administrator);
+        jList1.setModel(new EnterviewModal(enterviews));
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +160,8 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<Enterview> jList1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

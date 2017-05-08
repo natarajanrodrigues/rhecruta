@@ -13,7 +13,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import javax.security.auth.login.LoginException;
 
 /**
@@ -34,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
             return found;
         } catch (LoginException ex) {
             System.out.println("Catched LoginException, throwing EJBException with the LoginException wrapped!");
-            throw new EJBException(ex.getMessage());
+            throw new EJBException(ex);
         }
     }
 

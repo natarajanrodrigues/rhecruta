@@ -38,7 +38,6 @@ public class LoginFrame extends javax.swing.JFrame implements ActionListener{
         serviceLocator = new ServiceLocator();
         loginService = serviceLocator.lookup(LOGIN_RESOURCE, LoginService.class);
         administratorService = serviceLocator.lookup(ADMINISTRATOR_RESOURCE, AdministratorService.class);
-        
         emailTextField.addActionListener(this);
         passwordField.addActionListener(this);
         
@@ -155,7 +154,7 @@ public class LoginFrame extends javax.swing.JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "Loged with success!");
         } catch (EJBException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getCausedByException().getMessage());
         }
         
         if(user != null){

@@ -6,26 +6,12 @@
 package br.edu.ifpb.dac.rhecruta.jse.panels;
 
 import br.edu.ifpb.dac.rhecruta.jse.ServiceLocator;
-import br.edu.ifpb.dac.rhecruta.shared.domain.dto.Curriculum;
-import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService;
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -47,6 +33,7 @@ public class EnterviewPanel extends javax.swing.JPanel implements ListCellRender
         setBackground(Color.white);
         serviceLocator = new ServiceLocator();
         curriculumService = serviceLocator.lookup(CURRICULUM_SERVICE, CurriculumService.class);
+        
     }
     
 
@@ -55,11 +42,11 @@ public class EnterviewPanel extends javax.swing.JPanel implements ListCellRender
         enterview = value;
         
         if (enterview.getScore() != null) {
-            setBackground(new Color(240, 248, 255));
+            setBackground(new Color(173, 216, 230));
             scoreLabel.setText(enterview.getScore().toString());
         } else {
-            setBackground(new Color(173, 216, 230));
-            scoreLabel.setText("NO EVALUE");
+            setBackground(new Color(240, 248, 255));
+            scoreLabel.setText("NO SCORE");
         }
         
         if (isSelected) {

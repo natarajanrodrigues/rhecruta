@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.Email;
 public class Credentials implements Serializable {
     
     @Column(nullable = false, unique = true)
-    @Email(message = "Please, enter a valid email")
+    @Email(message= "#{messages['validator.email']}")
     private String email;
     @Column(nullable = false, unique = false)
     private String password;

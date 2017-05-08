@@ -165,7 +165,7 @@ public class EnterviewServiceImpl implements EnterviewService {
             throw new IllegalArgumentException("You can't evaluate this enterview yet."
                     + " Please wait 'til " + enterview.getEnd().format(dtf));
         }
-        if (enterview.isFinished() && enterview.getScore() >= 0) {
+        if (enterview.isFinished() && enterview.getScore() != null && enterview.getScore() >= 0) {
             throw new IllegalArgumentException("This enterview was already evaluated!");
         }
     }

@@ -72,5 +72,10 @@ public class CurriculumServiceImpl implements CurriculumService {
     private String getExtension(String filename) {
         return FilenameUtils.getExtension(filename);
     }
+
+    @Override
+    public boolean hasCurriculum(Long candidateId) {
+        return curriculumDAO.hasCurriculum(candidateId);
+    }
     
 }
