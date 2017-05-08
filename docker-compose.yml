@@ -1,0 +1,44 @@
+version: '2'
+services:
+  # DB
+  postgres-rhecruta:
+    container_name: rhecruta-db
+    image: npw/rhecruta-db
+    build: ./rhecruta-core/postgres
+    ports:
+     - "5434:5432"
+    expose:
+     - 5434
+    volumes:
+     - postgres-volume-rhecruta:/var/lib/postgresql/data/
+       
+  #core
+  rhecruta-core:
+    container_name: rhecruta-core
+    build: ./rhecruta-core
+    image: npw/rhecruta-core
+    ports:
+     - "8082:8080"
+     - "4951:4848"
+    links:
+     - "postgres-rhecruta:banco-rhecruta"
+
+  #web
+  rhecruta-web:
+    container_name: rhecruta-web
+    build: ./rhecruta-web
+    image: npw/rhecruta-web
+    ports:
+     - "8083:8080"
+     - "4952:4848"
+    links:
+     - "rhecruta-core:rhecruta-core-server"
+
+networks:
+  default:
+    external:
+      name: cliente_default_ntw
+volumes:
+    postgres-volume-rhecruta:
+      driver: local
+    

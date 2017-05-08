@@ -13,4 +13,11 @@
 
 ./bin/asadmin create-jms-resource --restype javax.jms.Queue jms/dac/filesToUploadQueue
 
+./bin/asadmin create-jms-resource --restype javax.jms.Queue dac/rhecruta/systemEvaluationQueue
+
+./bin/asadmin create-jms-resource --restype javax.jms.Topic jms/dac/newInterview
+
+./bin/asadmin create-jms-resource --restype javax.jms.Topic jms/dac/cancelInterview
+
+
 ```
