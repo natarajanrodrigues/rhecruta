@@ -25,7 +25,7 @@ import javax.jms.Queue;
 public class RequestUploadBean {
     
     @EJB
-    private DropboxBean dropbox; // WHY?
+    private DropboxBean dropbox;
     
     @Inject
     @JMSConnectionFactory(value = "jms/dac/dacConnectionFactory")

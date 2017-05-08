@@ -14,6 +14,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Invite;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.InviteResult;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.InviteService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.EJB;
@@ -34,7 +35,10 @@ public class InviteServiceImpl implements InviteService {
     @EJB
     private CandidateDAO candidateDAO;
     @EJB
-    private OfferDAO offerDAO;
+    private OfferService offerService;
+    @EJB
+    private SystemEvaluationSenderMessage systemEvaluationSender;
+    
 
     @Override
     public void save(Invite invite) {
@@ -72,10 +76,11 @@ public class InviteServiceImpl implements InviteService {
             Offer offer = invite.getOffer();
             Candidate candidate = invite.getInvited();
             
-            offer.subscribe(candidate);
-            offerDAO.update(offer);
+            offerService.subscribe(candidate, offer);
         }
     }
+    
+    
 
     @Override
     public boolean hasInvite(Candidate candidate, Offer offer) {

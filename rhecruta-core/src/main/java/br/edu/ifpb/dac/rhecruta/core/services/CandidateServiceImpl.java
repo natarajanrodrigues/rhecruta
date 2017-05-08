@@ -8,9 +8,11 @@ package br.edu.ifpb.dac.rhecruta.core.services;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,7 +31,9 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateDAO candidateDAO;
     @EJB
     private EmailRequester emailRequester;
-
+    @EJB
+    private EvaluationService evaluationService;
+    
     @Override
     public Candidate getByUser(User user) {
         return candidateDAO.getCandidateByUser(user);
@@ -63,6 +67,17 @@ public class CandidateServiceImpl implements CandidateService {
             delete(candidate);
         else {
             candidate.getUser().setApproved(true);
+            List<SimpleUser> resultSearch = evaluationService.searchSimpleUser(candidate);
+            SimpleUser suggestionUser;
+            if (resultSearch.size() == 1) {
+                suggestionUser = resultSearch.get(0);
+                candidate.setIdEvaluation(suggestionUser.getId());
+            } else {
+                suggestionUser = evaluationService.createSimpleUser(candidate);
+                System.out.println("[Simple user Created]: "+ suggestionUser);
+            }
+            
+            candidate.setIdEvaluation(suggestionUser.getId());
             update(candidate);
         }
         emailRequester.send(createdEmail);

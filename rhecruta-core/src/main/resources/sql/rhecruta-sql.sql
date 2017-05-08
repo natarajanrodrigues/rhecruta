@@ -12,6 +12,7 @@ CREATE TABLE system_user (
 CREATE TABLE candidate (
 	--Candidate data
 	id SERIAL,
+        id_evaluation INT,
 	cpf VARCHAR(14) UNIQUE,
 	firstname VARCHAR(255) NOT NULL,
 	lastname VARCHAR(255) NOT NULL,

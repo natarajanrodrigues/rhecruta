@@ -30,6 +30,9 @@ public class Candidate implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @Column(name = "id_evaluation")
+    private Long idEvaluation;
+    
     @Column(unique = true)
     private String cpf;
     
@@ -127,11 +130,19 @@ public class Candidate implements Serializable {
         this.githubUrl = githubUrl;
     }
 
-    @Override
-    public String toString() {
-        return "Candidate{" + "id=" + id + ", cpf=" + cpf + ", firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", user=" + user + ", linkedInUrl=" + linkedInUrl + ", githubUrl=" + githubUrl + '}';
+    public Long getIdEvaluation() {
+        return idEvaluation;
     }
 
+    public void setIdEvaluation(Long idEvaluation) {
+        this.idEvaluation = idEvaluation;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" + "id=" + id + ", idEvaluation=" + idEvaluation + ", cpf=" + cpf + ", firstname=" + firstname + ", lastname=" + lastname + ", address=" + address + ", user=" + user + ", linkedInUrl=" + linkedInUrl + ", githubUrl=" + githubUrl + '}';
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;

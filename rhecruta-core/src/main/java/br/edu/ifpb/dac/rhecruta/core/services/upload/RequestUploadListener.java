@@ -34,7 +34,7 @@ import javax.jms.MessageListener;
 public class RequestUploadListener implements MessageListener {
 
     @EJB
-    private DropboxBean dropboxBean; // WHY?
+    private DropboxBean dropboxBean;
     @EJB
     private CurriculumDAO curriculumDAO;
 

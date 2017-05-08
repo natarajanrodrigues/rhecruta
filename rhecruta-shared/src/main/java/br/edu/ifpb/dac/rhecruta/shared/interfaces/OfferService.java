@@ -22,6 +22,8 @@ public interface OfferService {
     void update(Offer offer);
     Offer getById(Long offerId);
     List<Offer> listAll();
+    void subscribe(Candidate candidate, Offer offer);
+    void unsubscribe(Candidate candidate, Offer offer);
 //    List<Offer> getByAdministrator(Administrator admnistrator);
     List<Offer> getByManager(Administrator manager);
     List<Offer> getByAppraiser(Administrator appraiser);
