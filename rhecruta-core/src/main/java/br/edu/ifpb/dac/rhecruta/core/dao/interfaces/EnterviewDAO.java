@@ -25,5 +25,5 @@ public interface EnterviewDAO extends DAO<Enterview> {
     Enterview getByOfferAndCandidate(Long offerId, Long candidateId);
     List<Enterview> listByCandidate(Candidate candidate);
     List<Enterview> listByManager(Administrator administrator);
-
+    Long countInterviewsByOffer(Offer offer);
 }

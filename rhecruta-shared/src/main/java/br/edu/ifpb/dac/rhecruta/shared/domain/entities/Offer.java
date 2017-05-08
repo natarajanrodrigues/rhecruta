@@ -54,7 +54,7 @@ public class Offer implements Serializable {
     @JoinTable(name = "offer_candidates",
             joinColumns = @JoinColumn(name = "offer_id"),
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
-    private final List<Candidate> candidates;
+    private List<Candidate> candidates;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manager_id")
@@ -156,6 +156,10 @@ public class Offer implements Serializable {
     
     public void unsubscribe(Candidate candidate) {
         this.candidates.remove(candidate);
+    }
+    
+    public void unsubscribeAll() {
+        this.candidates = new ArrayList<>();
     }
 
     public int getTypeId() {

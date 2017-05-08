@@ -129,8 +129,9 @@ and open the template in the editor.
                                                     <div class="form-group" style="padding-right: 5px">    
                                                         <h:inputText class="form-control " value="#{offerBean.skill}"/>
                                                     </div>
-                                                    <h:commandButton class="btn btn-success" value="Add" action="#{offerBean.addSkill()}" >
-                                                        <!--<f:ajax render="skills" />-->
+                                                    <h:commandButton class="btn btn-success" value="Add" 
+                                                                     action="#{offerBean.addSkill()}"
+                                                                     >
                                                     </h:commandButton>
                                                 </div>
                                                 
@@ -174,6 +175,14 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+                <!-- Modal Messages -->
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('offerMsg')}">
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                        </div>	 
+                    </div>
+                </h:panelGroup>
             </ui:define>
 
         </ui:composition>

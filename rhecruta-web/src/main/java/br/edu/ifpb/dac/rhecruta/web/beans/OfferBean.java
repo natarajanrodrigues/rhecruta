@@ -18,8 +18,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -136,9 +139,28 @@ public class OfferBean implements Serializable{
     }
     
     public String removeOffer(Offer offer) {
-        offerService.remove(offer);
-        init();
+        try {
+            offerService.remove(offer);
+            init();
+            addMessage("offerMsg", 
+                    createMessage("The offer was successfully removed!",
+                    FacesMessage.SEVERITY_INFO));
+        } catch (EJBException ex) {
+            addMessage("offerMsg", 
+                    createMessage(ex.getCausedByException().getMessage(),
+                    FacesMessage.SEVERITY_ERROR));
+        }
         return null;
+    }
+    
+    private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(text);
+        message.setSeverity(severity);
+        return message;
+    }
+
+    private void addMessage(String clientId, FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, message);
     }
     
     public void initConversation() {

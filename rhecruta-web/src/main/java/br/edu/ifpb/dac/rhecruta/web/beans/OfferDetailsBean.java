@@ -183,4 +183,8 @@ public class OfferDetailsBean implements Serializable {
     public String scheduleInterview(Candidate candidate) {
         return null;
     }
+    
+    public boolean hasSelectedOfferSubscribers() {
+        return !offer.getCandidates().isEmpty();
+    }
 }

@@ -32,4 +32,6 @@ public class SystemEvaluationServiceImpl implements SystemEvaluationService {
                 " && offer: " + offer);
         return systemEvaluationDAO.getByOfferAndCandidate(offer, candidate);
     }
+    
+    
 }

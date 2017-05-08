@@ -14,6 +14,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -56,5 +57,14 @@ public class SystemEvaluationDAOJpaImpl implements SystemEvaluationDAO {
             return null;
         return result.get(0);
     }
-    
+
+    @Override
+    public void deleteByOffer(Offer offer) {
+        Query query = manager
+                .createQuery("DELETE FROM SystemEvaluation se"
+                        + " WHERE se.offer.id = :offerId")
+                .setParameter("offerId", offer.getId());
+        query.executeUpdate();
+    }
+
 }

@@ -212,5 +212,9 @@ public class EnterviewBean implements Serializable {
             return logged;
         } return null;
     }
+    
+    public boolean wasEvaluated(Enterview interview) {
+        return interview.getScore() != null;
+    }
 
 }

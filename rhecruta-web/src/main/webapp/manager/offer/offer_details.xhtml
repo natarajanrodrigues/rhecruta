@@ -57,7 +57,14 @@ and open the template in the editor.
                                                 <ui:repeat var="sk" value="#{offerDetailsBean.offer.skills}">
                                                     <tr>
                                                         <td>#{sk}</td>
-                                                        <td class="text-center"><h:commandButton class="btn btn-danger" value="Remove" action="#{offerDetailsBean.removeSkill(sk)}" /></td>
+                                                        <td class="text-center">
+                                                            <h:commandButton class="btn btn-danger" 
+                                                                             value="Remove" 
+                                                                             action="#{offerDetailsBean
+                                                                                       .removeSkill(sk)}"
+                                                                             rendered="#{!offerDetailsBean
+                                                                                         .hasSelectedOfferSubscribers()}"/>
+                                                        </td>
                                                     </tr>
                                                 </ui:repeat>
                                             </tbody>
@@ -68,11 +75,15 @@ and open the template in the editor.
                             </c:if>
                         </h:form>
 
-                        <h:form class="form-inline" style="padding:5px">
+                        <h:form class="form-inline" 
+                                style="padding:5px"
+                                rendered="#{!offerDetailsBean
+                                            .hasSelectedOfferSubscribers()}">
 
                             <label>New Skill</label>
                             <div class="form-group" style="padding-right: 5px">    
-                                <h:inputText class="form-control " value="#{offerDetailsBean.skill}"/>
+                                <h:inputText class="form-control" 
+                                             value="#{offerDetailsBean.skill}"/>
                             </div>
                             <h:commandButton class="btn btn-success" value="Add" action="#{offerDetailsBean.addSkill()}" />
                         </h:form>
@@ -94,6 +105,7 @@ and open the template in the editor.
                                             <thead>
                                                 <th>Name </th>
                                                 <th>Email</th>
+                                                <th>System Evaluation</th>
                                                 <th class="text-center">Interview starts at</th>
                                                 <th class="text-center">Interview end at</th>
                                                 <th class="text-center">Action</th>
@@ -103,6 +115,12 @@ and open the template in the editor.
                                                     <tr>
                                                         <td>#{cand.firstname} #{cand.lastname}</td>
                                                         <td>#{cand.user.credentials.email}</td>
+                                                        <td>
+                                                            <h:outputText value="#{systemEvaluationBean
+                                                                                   .getSystemScoreByOffAndCandidate(offerDetailsBean.offer, cand)*100}">
+                                                                <f:convertNumber pattern="#0.0" />
+                                                            </h:outputText>%
+                                                        </td>
                                                         <c:choose>
                                                             <c:when test="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
                                                                 <td class="text-center">

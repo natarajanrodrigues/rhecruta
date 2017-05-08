@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
+import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.SystemEvaluationDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
@@ -20,6 +22,10 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
@@ -33,6 +39,7 @@ import javax.persistence.NoResultException;
  * @author Pedro Arthur
  */
 
+@TransactionManagement(TransactionManagementType.CONTAINER)
 @Stateless
 @Remote(OfferService.class)
 public class OfferServiceImpl implements OfferService {
@@ -40,7 +47,11 @@ public class OfferServiceImpl implements OfferService {
     @EJB
     private OfferDAO offerDAO;
     @EJB
+    private EnterviewDAO enterviewDAO;
+    @EJB
     private EmailRequester emailRequester;
+    @EJB
+    private SystemEvaluationDAO systemEvaluationDAO;
     
     @Inject
     @JMSConnectionFactory(value = "jms/dac/dacConnectionFactory")
@@ -73,14 +84,25 @@ public class OfferServiceImpl implements OfferService {
         return message;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public void remove(Offer offer) {
         try {
+            removingValidate(offer);
+            offer.unsubscribeAll();
+            offerDAO.update(offer);
+            systemEvaluationDAO.deleteByOffer(offer);
             Offer found = find(offer.getId());
             offerDAO.remove(found);
-        } catch (EntityNotFoundException ex) {
+        } catch (EntityNotFoundException | IllegalArgumentException ex) {
             throw new EJBException(ex);
         }
+    }
+    
+    private void removingValidate(Offer offer) {
+        if(countScheduledInterview(offer) > 0) 
+            throw new IllegalArgumentException("You can't remove a offer which"
+                    + " already has scheduled interviews!");
     }
     
     private Offer find(Long id) throws EntityNotFoundException {
@@ -90,6 +112,11 @@ public class OfferServiceImpl implements OfferService {
         } catch (NoResultException ex) {
             throw new EntityNotFoundException("You're trying to remove a non existent offer!");
         }
+    }
+    
+    @Override
+    public Long countScheduledInterview(Offer offer) {
+        return enterviewDAO.countInterviewsByOffer(offer);
     }
 
     @Override
@@ -114,11 +141,6 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> listAll() {
         return offerDAO.listAll();
     }
-//    
-//    @Override
-//    public List<Offer> getByAppraiser(Administrator appraiser) {
-//        return offerDAO.getByAdministrator(appraiser);
-//    }
     
     @Override
     public Offer getById(Long offerId) {
@@ -139,12 +161,6 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> getByCandidate(Candidate candidate) {
         return offerDAO.getByCandidate(candidate);
     }
-
-//    @Override
-//    public boolean isAttached(Long offerId, Long administratorId) {
-//        System.out.println(offerId + " " + administratorId);
-//        return offerDAO.isAttached(offerId, administratorId);
-//    }
 
     @Override
     public List<Candidate> getSubscribers(Offer offer) {

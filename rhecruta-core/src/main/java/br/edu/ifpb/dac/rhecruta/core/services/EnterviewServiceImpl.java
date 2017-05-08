@@ -160,14 +160,11 @@ public class EnterviewServiceImpl implements EnterviewService {
             throw new IllegalArgumentException("You're trying to evaluate a null enterview.");
         }
         if (score == null || score < 0) {
-            throw new IllegalArgumentException("You're can't evaluate an enterview with the score: " + score);
+            throw new IllegalArgumentException("You can't evaluate an enterview with the score: " + score);
         }
         if (!enterview.isFinished()) {
             throw new IllegalArgumentException("You can't evaluate this enterview yet."
                     + " Please wait 'til " + enterview.getEnd().format(dtf));
-        }
-        if (enterview.isFinished() && enterview.getScore() >= 0) {
-            throw new IllegalArgumentException("This enterview was already evaluated!");
         }
     }
 

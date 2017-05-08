@@ -18,4 +18,5 @@ public interface SystemEvaluationDAO {
     void save(SystemEvaluation systemEvaluation);
     List<SystemEvaluation> listByOffer(Offer offer);
     SystemEvaluation getByOfferAndCandidate(Offer offer, Candidate candidate);
+    void deleteByOffer(Offer offer);
 }

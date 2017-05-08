@@ -30,9 +30,11 @@ public interface OfferService {
     List<Offer> getByType(OfferType offerType);
     boolean isSubscribed(Long offerId, Candidate candidate);
     List<Offer> getByCandidate(Candidate candidate);
+    Long countScheduledInterview(Offer offer);
 //    boolean isAttached(Long offerId, Long administratorId);
     List<Candidate> getSubscribers(Offer offer);
     List<Offer> getMonthOffers();
     Object[] getMonthOffersByLanguage();
     Object[] getMonthCandidatesPerVacancyBySkill();
+    
 }

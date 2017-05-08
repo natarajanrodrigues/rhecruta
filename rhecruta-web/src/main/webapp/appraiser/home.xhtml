@@ -49,19 +49,21 @@ and open the template in the editor.
                                                                     <f:converter converterId="localDateTimeConverter" />
                                                                 </h:outputText>
                                                             </p>
-                                                            <h:commandButton class="btn btn-default" 
-                                                                             value="#{!interview.score ? 'Evaluate' : 'Evaluate Again'}"
-                                                                             action="#{appraiserBean.startEvaluation(interview)}">
-                                                                <f:ajax execute="@this" onevent="openEvaluationModal()" />
-                                                            </h:commandButton>
-                                                            <h:panelGroup rendered="#{interview.score}">
+                                                            <h:panelGroup rendered="#{enterviewBean.wasEvaluated(interview)}">
                                                                 <p>
                                                                     <strong>Score: </strong> 
-                                                                    <h:outputText value="#{interview.score}">
+                                                                    <h:outputText value="#{interview.score*100}">
                                                                         <f:convertNumber pattern="#0.0" />
                                                                     </h:outputText>%
                                                                 </p>
                                                             </h:panelGroup>
+                                                            <h:commandButton class="btn btn-default" 
+                                                                             value="#{!enterviewBean.wasEvaluated(interview) ? 'Evaluate' : 'Evaluate Again'}"
+                                                                             action="#{appraiserBean.startEvaluation(interview)}">
+                                                                <f:ajax execute="@this" 
+                                                                        onevent="openEvaluationModal()" />
+                                                            </h:commandButton>
+                                                            
                                                         </div>
                                                         
                                                         <div class="col-md-8 container-fluid pull-right">
