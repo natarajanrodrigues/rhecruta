@@ -178,7 +178,7 @@ public class EnterviewServiceImpl implements EnterviewService {
             StringBuilder sb = new StringBuilder();
             sb.append("Olá ").append(enterview.getCandidate().getFirstname()).append(" estamos felizes em confirmar "
                     + "que foi marcada uma entrevista para você. Veja os detalhes da oferta e da entrevista:\n")
-                    .append(prettyOfferToString(enterview.getOffer()))
+                    .append(enterview.getOffer().prettyString())
                     .append("Data/Hora Início: ").append(dtf.format(enterview.getStart())).append("\n")
                     .append("Data/Hora Final: ").append(dtf.format(enterview.getEnd()));
 
@@ -188,7 +188,7 @@ public class EnterviewServiceImpl implements EnterviewService {
             StringBuilder sb = new StringBuilder();
             sb.append("Olá ").append(enterview.getCandidate().getFirstname()).append(", infelizmente a entrevista da oferta "
                     + "descrita abaixo foi cancelada. Aguarde por novas instruções.:\n")
-                    .append(prettyOfferToString(enterview.getOffer()));
+                    .append(enterview.getOffer().prettyString());
 
             message = sb.toString();
         }
@@ -200,17 +200,6 @@ public class EnterviewServiceImpl implements EnterviewService {
         email.setSubject(subject);
         email.setText(message);
         return email;
-    }
-
-    private static String prettyOfferToString(Offer offer) {
-        StringBuilder sb = new StringBuilder();
-        String recuo = "\n";
-        sb
-                .append("Oferta: \n")
-                .append("Descrição: ").append(offer.getDescription()).append(recuo)
-                .append("Vagas: ").append(offer.getVacancies()).append(recuo)
-                .append("Habilidades solicitadas: ").append(offer.getSkills().toString()).append(recuo);
-        return sb.toString();
     }
 
     @Override
