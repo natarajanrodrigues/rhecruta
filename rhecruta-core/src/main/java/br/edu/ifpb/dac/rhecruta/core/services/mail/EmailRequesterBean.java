@@ -36,10 +36,10 @@ public class EmailRequesterBean implements EmailRequester {
     public void send(Email email) {
         // Melhor definir antes daqui, metodo send não precisa 
         // modificar dados do email
-//        email.setRequestedDate(LocalDateTime.now()); 
-//        //
-//        JMSProducer producer = context.createProducer();
-//        ObjectMessage message = context.createObjectMessage(email);
-//        producer.send(queue, message);
+        email.setRequestedDate(LocalDateTime.now()); 
+        //
+        JMSProducer producer = context.createProducer();
+        ObjectMessage message = context.createObjectMessage(email);
+        producer.send(queue, message);
     }
 }
