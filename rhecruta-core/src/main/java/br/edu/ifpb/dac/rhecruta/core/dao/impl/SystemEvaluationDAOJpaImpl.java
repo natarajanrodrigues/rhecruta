@@ -46,8 +46,9 @@ public class SystemEvaluationDAOJpaImpl implements SystemEvaluationDAO {
     public SystemEvaluation getByOfferAndCandidate(Offer offer, Candidate candidate) {
         TypedQuery<SystemEvaluation> query = manager
                 .createQuery("SELECT se FROM SystemEvaluation se"
-                + " WHERE se.offer.id = :offerId"
-                + " AND se.candidate.id = :candidateId", SystemEvaluation.class)
+                        + " WHERE se.offer.id = :offerId"
+                        + " AND se.candidate.id = :candidateId",
+                        SystemEvaluation.class)
                 .setParameter("offerId", offer.getId())
                 .setParameter("candidateId", candidate.getId());
         List<SystemEvaluation> result = query.getResultList();

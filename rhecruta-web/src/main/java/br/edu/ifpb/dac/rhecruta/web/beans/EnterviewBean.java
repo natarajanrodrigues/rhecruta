@@ -122,13 +122,7 @@ public class EnterviewBean implements Serializable {
     }
 
     public boolean hasEnterview(Offer offer, Candidate candidate) {
-        try {
-            enterviewService
-                    .getByOfferAnCandidate(offer, candidate);
-            return true;
-        } catch (EJBException ex) {
-            return false;
-        }
+        return enterviewService.hasInterview(offer, candidate);
     }
     
     public Enterview getByOfferAndCandidate(Offer offer, Candidate candidate) {

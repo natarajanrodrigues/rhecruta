@@ -13,6 +13,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
+import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
@@ -159,7 +160,7 @@ public class EnterviewServiceImpl implements EnterviewService {
             throw new IllegalArgumentException("You're trying to evaluate a null enterview.");
         }
         if (score == null || score < 0) {
-            throw new IllegalArgumentException("You're can't evaluate an enterview the score: " + score);
+            throw new IllegalArgumentException("You're can't evaluate an enterview with the score: " + score);
         }
         if (!enterview.isFinished()) {
             throw new IllegalArgumentException("You can't evaluate this enterview yet."
@@ -227,6 +228,13 @@ public class EnterviewServiceImpl implements EnterviewService {
                     + offer.getDescription() + " and " + candidate.getFirstname()));
         }
         return found;
+    }
+    
+    @Override
+    public boolean hasInterview(Offer offer, Candidate candidate) {
+        return enterviewDAO
+                .getByOfferAndCandidate(offer.getId(),
+                        candidate.getId()) != null;
     }
 
     @Override

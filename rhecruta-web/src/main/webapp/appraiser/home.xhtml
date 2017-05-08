@@ -22,8 +22,6 @@ and open the template in the editor.
                                 <li class="active"> 
                                     <a href="#">Interviews</a>
                                 </li>
-                                <li><a href="offer/offer.xhtml">My offer registrations</a></li>
-
                             </ul>
                         </div>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main container-fluid">
@@ -31,71 +29,120 @@ and open the template in the editor.
                                 <ui:insert name="userArea">
                                     <h:form>
                                         <c:forEach var="interview" items="#{appraiserBean.interviews}">
-                                            <div class="thumbnail">
-                                                <div class="caption clearfix">
+                                            <div class="well well-lg">
+                                                <div class="container-fluid">
+                                                    <div class="row">
 
-                                                    <div class="col-md-6">
-                                                        <p><strong>Offer Description: </strong> #{interview.offer.description}</p>
-                                                        <p><strong>Vacancy: </strong> #{interview.offer.vacancies} - <strong>Subscriptions: </strong> #{interview.offer.candidates.size()}</p>
+                                                        <div class="col-md-4">
+                                                            <p><strong>Offer Description: </strong> #{interview.offer.description}</p>
+                                                            <p><strong>Vacancy: </strong> #{interview.offer.vacancies} - <strong>Subscriptions: </strong> #{interview.offer.candidates.size()}</p>
 
-                                                        <p><strong>Interview infos: </strong> </p>
-                                                        <p> <strong>Date/Time Start: </strong>
-                                                            <h:outputText value="#{interview.start}">
-                                                                <f:converter converterId="localDateTimeConverter" />
-                                                            </h:outputText>
-                                                        </p>
+                                                            <p><strong>Interview infos: </strong> </p>
+                                                            <p> <strong>Date/Time Start: </strong>
+                                                                <h:outputText value="#{interview.start}">
+                                                                    <f:converter converterId="localDateTimeConverter" />
+                                                                </h:outputText>
+                                                            </p>
 
-                                                        <p> <strong>Date/Time End: </strong>
-                                                            <h:outputText value="#{interview.end}">
-                                                                <f:converter converterId="localDateTimeConverter" />
-                                                            </h:outputText>
-                                                        </p>
-                                                    </div>
+                                                            <p> <strong>Date/Time End: </strong>
+                                                                <h:outputText value="#{interview.end}">
+                                                                    <f:converter converterId="localDateTimeConverter" />
+                                                                </h:outputText>
+                                                            </p>
+                                                            <h:commandButton class="btn btn-default" 
+                                                                             value="#{!interview.score ? 'Evaluate' : 'Evaluate Again'}"
+                                                                             action="#{appraiserBean.startEvaluation(interview)}">
+                                                                <f:ajax execute="@this" onevent="openEvaluationModal()" />
+                                                            </h:commandButton>
+                                                            <h:panelGroup rendered="#{interview.score}">
+                                                                <p>
+                                                                    <strong>Score: </strong> 
+                                                                    <h:outputText value="#{interview.score}">
+                                                                        <f:convertNumber pattern="#0.0" />
+                                                                    </h:outputText>%
+                                                                </p>
+                                                            </h:panelGroup>
+                                                        </div>
+                                                        
+                                                        <div class="col-md-8 container-fluid pull-right">
+                                                            <div class="panel panel-default">
+                                                                <div class="panel-heading">Candidate infos</div>
+                                                                <div class="panel-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-striped">
+                                                                            <thead>
+                                                                                <th>Name </th>
+                                                                                <th>Email</th>
+                                                                                <th class="text-center">Curriculum</th>
+                                                                                <th>System Evaluation</th>
+                                                                            </thead>
+                                                                            <tbody>
 
-                                                    <!--                                                <p> <strong>Candidate Infos</strong></p>-->
-                                                    <div class="col-md-6 container-fluid ">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">Candidate infos</div>
-                                                            <div class="panel-body">
+                                                                                <tr>
+                                                                                    <td>#{interview.candidate.firstname} #{cand.lastname}</td>
+                                                                                    <td>#{interview.candidate.user.credentials.email}</td>
+                                                                                    <td class="text-center"><a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{interview.candidate.id}">Get Curriculum</a></td>
+                                                                                    <td>
+                                                                                        <c:choose>
+                                                                                            <c:when test="#{systemEvaluationBean
+                                                                                                                  .getSystemScoreByOffAndCandidate(interview.offer, 
+                                                                                                                  interview.candidate) >= 0}">
+                                                                                                <h:outputText value="#{systemEvaluationBean.getSystemScoreByOffAndCandidate(interview.offer, 
+                                                                                            interview.candidate)*100}">
+                                                                                                    <f:convertNumber pattern="#0.0" />
+                                                                                                </h:outputText>%
+                                                                                            </c:when>
+                                                                                            <c:otherwise>
+                                                                                                Not evaluated yet
+                                                                                            </c:otherwise>
+                                                                                        </c:choose>
+                                                                                    </td>
+                                                                                </tr>
 
-                                                                <table class="table table-striped">
-                                                                    <thead>
-                                                                        <th>Name </th>
-                                                                        <th>Email</th>
-                                                                        <th class="text-center">Curriculum</th>
-                                                                    </thead>
-                                                                    <tbody>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
 
-                                                                        <tr>
-                                                                            <td>#{interview.candidate.firstname} #{cand.lastname}</td>
-                                                                            <td>#{interview.candidate.user.credentials.email}</td>
-                                                                            <td class="text-center"><a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{interview.candidate.id}">Get Curriculum</a></td>
-                                                                        </tr>
-
-                                                                    </tbody>
-                                                                </table>
                                                             </div>
-
                                                         </div>
                                                     </div>
-        <!--                                                <p><strong>Name: </strong> #{interview.candidate.firstname} #{interview.candidate.lastname} </p>
-                                                        <p><strong>CPF: </strong> #{interview.candidate.cpf} </p>
-                                                        <p><strong>Github: </strong> #{interview.candidate.githubUrl} </p>
-                                                        <p><strong>Linkein: </strong> #{interview.candidate.linkedInUrl} </p>
-                                                        <a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{interview.candidate.id}">See candidate curriculum</a>-->
                                                 </div>
                                             </div>
                                         </c:forEach>
                                     </h:form>
                                     <!-- Modal Messages -->
-                                    <h:panelGroup layout="block" rendered="${param.error eq 'curriculumNotFound'}">
+                                    <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('evaluateMsg')}">
                                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
                                             <div class="modal-dialog modal-sm" role="document">
-                                                <div class="alert alert-info">This candidate doesn't have any curriculum uploaded yet</div>
+                                                <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
                                             </div>	 
                                         </div>
-                                    </h:panelGroup>
+                                    </h:panelGroup>  
                                 </ui:insert>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="evaluationModal" class="modal fade bs-example-modal-sm" tabindex="-1" 
+                     role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                                <h4>Evaluation</h4>
+                                <p>Put the interview score below</p>
+                                <h:form>
+                                    <div class="form-group">
+                                        <label for="interviewScore">score: </label>
+                                        <h:inputText id="interviewScore"
+                                                     class="form-control" 
+                                                     value="#{appraiserBean.score}"/>
+                                    </div>
+                                    <h:commandButton class="btn btn-primary"
+                                                     action="#{appraiserBean.evaluate()}"
+                                                     value="Save"/>
+                                </h:form>
                             </div>
                         </div>
                     </div>

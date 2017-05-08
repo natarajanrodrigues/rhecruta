@@ -103,42 +103,41 @@ and open the template in the editor.
                                                     <tr>
                                                         <td>#{cand.firstname} #{cand.lastname}</td>
                                                         <td>#{cand.user.credentials.email}</td>
-                                                        <c:if test="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
-                                                            <td class="text-center">
-                                                                - 
-                                                            </td>
-                                                            <td class="text-center">
-                                                                - 
-                                                            </td>
-                                                        </c:if>
-                                                        <c:if test="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
-                                                            <c:set var="interview" value="#{enterviewBean.getByOfferAndCandidate(offerDetailsBean.offer, cand)}"/>
+                                                        <c:choose>
+                                                            <c:when test="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}" >
+                                                                <td class="text-center">
+                                                                    - 
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    - 
+                                                                </td>
+                                                                <td>
+                                                                <h:commandButton class="btn btn-xs btn-default" 
+                                                                                 value="Schedule interview" 
+                                                                                 action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"/>
+                                                                </td>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:set var="interview" value="#{enterviewBean.getByOfferAndCandidate(offerDetailsBean.offer, cand)}"/>
 
-                                                            <td class="text-center">
-                                                                <h:outputText value="#{interview.start}">
-                                                                    <f:converter converterId="localDateTimeConverter" />
-                                                                </h:outputText>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <h:outputText value="#{interview.end}">
-                                                                    <f:converter converterId="localDateTimeConverter" />
-                                                                </h:outputText>
-                                                            </td>
-
-
-                                                        </c:if>
-
-                                                        <td class="text-center">
-                                                            <h:commandButton class="btn btn-xs btn-default" 
-                                                                             value="Schedule interview" 
-                                                                             action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"
-                                                                             rendered="#{!enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
-                                                            <h:commandButton class="btn btn-xs btn-danger" 
-                                                                             value="Cancel Interview" 
-                                                                             action="#{enterviewBean.cancelEnterview(enterviewBean
-                                                                                       .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"
-                                                                             rendered="#{enterviewBean.hasEnterview(offerDetailsBean.offer, cand)}"/>
-                                                        </td>
+                                                                <td class="text-center">
+                                                                    <h:outputText value="#{interview.start}">
+                                                                        <f:converter converterId="localDateTimeConverter" />
+                                                                    </h:outputText>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <h:outputText value="#{interview.end}">
+                                                                        <f:converter converterId="localDateTimeConverter" />
+                                                                    </h:outputText>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <h:commandButton class="btn btn-xs btn-danger" 
+                                                                                     value="Cancel Interview" 
+                                                                                     action="#{enterviewBean.cancelEnterview(enterviewBean
+                                                                                               .getByOfferAndCandidate(offerDetailsBean.offer, cand))}"/>
+                                                                </td>
+                                                            </c:otherwise>    
+                                                        </c:choose>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -245,8 +244,8 @@ and open the template in the editor.
                                                             <!--<f:convertNumber type="percent" />-->
                                                             <f:convertNumber pattern="##0.00%" />
                                                         </h:outputText>
-                                                        
-                                                        
+
+
                                                     </td>
                                                     <td class="text-center"><a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{cand.id}">Get Curriculum</a></td>
                                                     <td clas="text-center">
@@ -259,7 +258,7 @@ and open the template in the editor.
                                                         <h:outputText value="Invited" 
                                                                       rendered="#{inviteBean.hasInvite(cand, offerDetailsBean.offer)}"/>
                                                     </td>
-                                                    
+
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

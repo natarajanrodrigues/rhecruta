@@ -18,10 +18,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.EJB;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -76,10 +74,8 @@ public class OfferBean implements Serializable{
     }
     
     public Administrator getLoggedAdministrator() {
-        System.out.println("User: "+loggedUser);
         if(loggedUser != null) {
             Administrator logged = this.administratorService.getByUser(loggedUser);
-            System.out.println("Administrator: "+logged);
             return logged;
         } return null;
     }
@@ -104,19 +100,6 @@ public class OfferBean implements Serializable{
         return null;
     }
     
-    public void initConversation() {
-        if (conversation.isTransient()) {
-            this.conversation.begin();
-        }
-    }
-
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            this.conversation.end();
-        }
-    }
-    
-    
     public boolean isCreatingOffer() {
         return creatingOffer;
     }
@@ -140,25 +123,13 @@ public class OfferBean implements Serializable{
         offerService.save(offer);
         
         init();
-//        endConversation();
-//        initConversation();
-//        init();
-//        return null;
         return "/manager/offer/offer.xhtml?faces-redirect=true";
     }    
     
     public String offerDetails(Offer offer) {
         this.offer = offerService.getById(offer.getId());
-        
-//        System.out.println("OFFER " + offer);
-//        System.out.println("AQUI AS SKILLS");
-//        for (String s : offer.getSkills()) {
-//            System.out.println(s);
-//        }
         return "/manager/offer/offer_details.xhtml?faces-redirect=true";
     }
-    
-    
 
     public List<Offer> getAdministratorOffers() {
         return this.administratorOffers;
@@ -170,9 +141,16 @@ public class OfferBean implements Serializable{
         return null;
     }
     
-//    public Enterview getEnterviewByOfferAndCandidate(Candidate candidate){
-//        return interviewService.getByOfferAnCandidate(this.offer, candidate);
-//    }
-    
-    
+    public void initConversation() {
+        if (conversation.isTransient()) {
+            this.conversation.begin();
+        }
+    }
+
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            this.conversation.end();
+        }
+    }   
+
 }

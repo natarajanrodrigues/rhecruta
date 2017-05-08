@@ -11,10 +11,15 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.EJBException;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,8 +29,11 @@ import javax.inject.Named;
  */
 
 @Named
-@RequestScoped
-public class AppraiserBean {
+@ConversationScoped
+public class AppraiserBean implements Serializable {
+    
+    @Inject
+    private Conversation conversation;
     
     @Inject
     private AdministratorService administratorService;
@@ -41,18 +49,27 @@ public class AppraiserBean {
     @Inject
     private EnterviewService interviewService;
     
+    private Enterview enterview;
+    private double score;
+    
     @PostConstruct
     private void postConstruct() {
-        
+        initConversation();
         this.loggedAppraiser = getLoggedAdministrator();
-        System.out.println("Construi o AdministratorBean!");
+        System.out.println("[AppraiserBean] constructed!");
     }
     
     @PreDestroy
     private void preDestroy() {
-        System.out.println("Destrui o AdministratorBean!");
+        endConversation();
+        System.out.println("[AppraiserBean] erased!");
     }
     
+    public String startEvaluation(Enterview enterview) {
+        System.out.println("[AppraiserBean.startEvaluation(enterview)] enterview: "+enterview);
+        this.enterview = enterview;
+        return null;
+    }
     
     public Administrator getLoggedAdministrator() {
         System.out.println("User: "+loggedUser);
@@ -65,6 +82,59 @@ public class AppraiserBean {
     
     public List<Enterview> getInterviews(){
         return interviewService.listByAppraiser(getLoggedAdministrator());
+    }
+
+    public Enterview getEnterview() {
+        return enterview;
+    }
+
+    public void setEnterview(Enterview enterview) {
+        this.enterview = enterview;
+    }
+    
+    public String evaluate() {
+        try {
+            System.out.println("[AppraiserBean.evaluate()] evaluating...");
+            interviewService.evaluate(this.enterview, score);
+            addMessage("evaluateMsg", 
+                    createMessage("The interview was evaluated with "+score+" successfully!", 
+                    FacesMessage.SEVERITY_INFO));
+        } catch (EJBException ex) {
+            addMessage("evaluateMsg", 
+                    createMessage(ex.getCausedByException().getMessage(),
+                    FacesMessage.SEVERITY_INFO));
+        }
+        return null;
+    }
+    
+    private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(text);
+        message.setSeverity(severity);
+        return message;
+    }
+
+    private void addMessage(String clientId, FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, message);
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+    
+    private void initConversation() {
+        if(this.conversation.isTransient()) {
+            this.conversation.begin();
+        }
+    }
+    
+    private void endConversation() {
+        if(!this.conversation.isTransient()) {
+            this.conversation.end();
+        }
     }
     
     

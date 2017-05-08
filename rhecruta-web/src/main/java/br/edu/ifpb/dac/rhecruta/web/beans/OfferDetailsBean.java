@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -54,7 +53,6 @@ public class OfferDetailsBean implements Serializable {
     @PostConstruct
     private void init() {
         this.skill = "";
-//        this.offer = new Offer();
         initConversation();
         System.out.println("Construiu o OfferDetailsBean!");
     }
