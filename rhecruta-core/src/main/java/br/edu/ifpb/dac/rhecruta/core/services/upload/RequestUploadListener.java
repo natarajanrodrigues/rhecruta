@@ -7,12 +7,6 @@ package br.edu.ifpb.dac.rhecruta.core.services.upload;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CurriculumDAO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.dto.Curriculum;
-import com.dropbox.core.DbxException;
-import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.DbxUserFilesRequests;
-import com.dropbox.core.v2.files.UploadErrorException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.ActivationConfigProperty;
@@ -21,7 +15,6 @@ import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -41,7 +34,7 @@ import org.apache.commons.io.FilenameUtils;
 public class RequestUploadListener implements MessageListener {
 
     @EJB
-    private DropboxBean dropboxBean;
+    private DropboxBean dropboxBean; // WHY?
     @EJB
     private CurriculumDAO curriculumDAO;
 

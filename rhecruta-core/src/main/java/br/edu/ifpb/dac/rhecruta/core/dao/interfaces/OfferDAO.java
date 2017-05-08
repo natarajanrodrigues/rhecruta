@@ -15,10 +15,8 @@ import java.util.List;
  *
  * @author Pedro Arthur
  */
-public interface OfferDAO {
+public interface OfferDAO extends DAO<Offer> {
     
-    void save(Offer offer);
-    void update(Offer offer);
     void remove(Offer offer);
     Offer get(Long id);
     List<Offer> listAll();

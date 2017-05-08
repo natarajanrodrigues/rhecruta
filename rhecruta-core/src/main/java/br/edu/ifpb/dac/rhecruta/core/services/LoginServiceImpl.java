@@ -34,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
             return found;
         } catch (LoginException ex) {
             System.out.println("Catched LoginException, throwing EJBException with the LoginException wrapped!");
-            throw new EJBException(ex);
+            throw new EJBException(ex.getMessage());
         }
     }
 
