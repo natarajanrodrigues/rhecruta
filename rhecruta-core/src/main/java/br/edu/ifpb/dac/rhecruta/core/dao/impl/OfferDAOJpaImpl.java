@@ -35,8 +35,10 @@ public class OfferDAOJpaImpl implements OfferDAO {
     private EntityManager entityManager;
 
     @Override
-    public void save(Offer offer) {
+    public Long save(Offer offer) {
         entityManager.persist(offer);
+        entityManager.flush();
+        return offer.getId();
     }
 
     @Override

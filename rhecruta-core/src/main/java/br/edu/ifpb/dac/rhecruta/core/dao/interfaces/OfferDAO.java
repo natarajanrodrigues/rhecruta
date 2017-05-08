@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface OfferDAO {
     
-    void save(Offer offer);
+    Long save(Offer offer);
     void update(Offer offer);
     void remove(Offer offer);
     Offer get(Long id);

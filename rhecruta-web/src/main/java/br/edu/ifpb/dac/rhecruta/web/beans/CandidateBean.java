@@ -146,16 +146,13 @@ public class CandidateBean {
     }
     
     public String subscribe(Offer offer) {
-        
-        offer.subscribe(getLoggedCandidate());
-        offerService.update(offer);
+        offerService.subscribe(getLoggedCandidate(), offer);
         return null;
     }
     
     public String unsubscribe(Offer offer) {
         
-        offer.unsubscribe(getLoggedCandidate());
-        offerService.update(offer);
+         offerService.unsubscribe(getLoggedCandidate(), offer);
         return null;
     }
 
