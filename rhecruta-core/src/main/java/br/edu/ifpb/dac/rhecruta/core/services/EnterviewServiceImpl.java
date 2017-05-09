@@ -169,9 +169,9 @@ public class EnterviewServiceImpl implements EnterviewService {
         if (score == null || score < 0) {
             throw new IllegalArgumentException("You can't evaluate an enterview with the score: " + score);
         }
-        if (!enterview.isFinished()) {
+        if (!enterview.getStart().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("You can't evaluate this enterview yet."
-                    + " Please wait 'til " + enterview.getEnd().format(dtf));
+                    + " Please wait 'til " + enterview.getStart().format(dtf));
         }
     }
 
