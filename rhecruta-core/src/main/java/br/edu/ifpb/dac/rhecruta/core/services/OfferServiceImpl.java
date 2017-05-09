@@ -9,6 +9,7 @@ import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.SystemEvaluationDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -16,6 +17,7 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.enums.OfferType;
 import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -190,6 +192,14 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public Object[] getMonthCandidatesPerVacancyBySkill() {
         return offerDAO.getMonthCandidatesPerVacancyBySkill();
+    }
+
+    @Override
+    public List<EnterviewSystemEvaluationDTO> getResultOrderedByScore(Offer offer) {
+        List<EnterviewSystemEvaluationDTO> result = enterviewDAO
+                .getResultByOfferOrderedByScore(offer.getId());
+        Collections.sort(result);
+        return result;
     }
     
 }

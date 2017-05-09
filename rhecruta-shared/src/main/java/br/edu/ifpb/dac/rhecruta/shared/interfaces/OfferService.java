@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -36,5 +37,8 @@ public interface OfferService {
     List<Offer> getMonthOffers();
     Object[] getMonthOffersByLanguage();
     Object[] getMonthCandidatesPerVacancyBySkill();
+    
+    List<EnterviewSystemEvaluationDTO> getResultOrderedByScore(Offer offer);
+    
     
 }

@@ -130,9 +130,9 @@ and open the template in the editor.
                                                                     - 
                                                                 </td>
                                                                 <td>
-                                                                <h:commandButton class="btn btn-xs btn-default" 
-                                                                                 value="Schedule interview" 
-                                                                                 action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"/>
+                                                                    <h:commandButton class="btn btn-xs btn-default" 
+                                                                                     value="Schedule interview" 
+                                                                                     action="#{enterviewBean.newEnterview(offerDetailsBean.offer, cand)}"/>
                                                                 </td>
                                                             </c:when>
                                                             <c:otherwise>
@@ -287,6 +287,46 @@ and open the template in the editor.
                         </h:form>
                     </div>
                 </div>
+
+                <h4>Interviewed candidates</h4>
+                <hr></hr>
+
+                <div class="row">
+                    <div class="col-md-12" >
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Candidates</div>
+                            <div class="panel-body">
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th>Name </th>
+                                        <th>Email</th>
+                                        <th class="text-center">Curriculum</th>
+                                        <th class="text-center">Final Score</th>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="entsys" items="#{offerDetailsBean.result}">
+                                            <tr>
+                                                <td>#{entsys.enterview.candidate.firstname} #{entsys.enterview.candidate.lastname}</td>
+                                                <td>#{entsys.enterview.candidate.user.credentials.email}</td>
+                                                <td class="text-center"><a class="btn btn-primary" href="/rhecruta-web/curriculum?candidateId=#{entsys.enterview.candidate.id}">Get Curriculum</a></td>
+                                                <td>
+                                                    <center>
+                                                    <h:outputText value="#{entsys.finalScore*100}">
+                                                        <f:convertNumber pattern="#0.00" />
+                                                    </h:outputText>%
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('inviteMsg')}">
                     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
                         <div class="modal-dialog modal-sm" role="document">
