@@ -14,6 +14,7 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -113,5 +114,35 @@ public class AdministratorDAOJpaImpl implements AdministratorDAO {
                 .setParameter("roleId", role.getId());
         return query.getResultList();
     }
+
+    @Override
+    public Administrator getByCPF(String cpf) {
+        
+        try {
+            TypedQuery<Administrator> query = this.manager
+                .createQuery("SELECT a FROM Administrator a WHERE a.cpf = :cpf", 
+                Administrator.class)
+                .setParameter("cpf", cpf);
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Administrator getByEmail(String email) {
+        try {
+            TypedQuery<Administrator> query = this.manager
+                .createQuery("SELECT a FROM Administrator a WHERE a.user.credentials.email = :email", 
+                Administrator.class)
+                .setParameter("email", email);
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
     
 }

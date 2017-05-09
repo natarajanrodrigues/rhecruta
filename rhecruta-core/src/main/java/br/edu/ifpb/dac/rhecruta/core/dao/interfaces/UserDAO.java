@@ -19,5 +19,7 @@ public interface UserDAO {
     List<User> usersToApprove();
     
     void updatePassword(User user, String password);
+
+    List<User> searchByEmail(String email);
     
 }

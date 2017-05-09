@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Candidate implements Serializable {
     private Long idEvaluation;
     
     @Column(unique = true)
+    @CPF
     private String cpf;
     
     @Column(nullable = false)

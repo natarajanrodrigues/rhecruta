@@ -29,7 +29,7 @@
                                 </small>
                             </h1>
 
-                            <h4 class="text-center">Register as Candidate</h4>
+                            <h4 class="text-center">Register as Administrator</h4>
                             <!-- ADMIN FORM -->
                             <h:panelGroup id="panel1" class="container">
 
@@ -40,7 +40,7 @@
                                         <div class="form-group">
                                             <label>Firstname</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{administratorBean.administrator.firstname}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administrator.firstname}" required="true" requiredMessage="Enter your first name"/>
                                                 <span class="input-group-addon" id="firstname-addon">
                                                     <i class="fa fa-user" aria-hidden="true"></i>
                                                 </span>
@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <label>Lastname</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{administratorBean.administrator.lastname}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.administrator.lastname}" required="true" requiredMessage="Enter your last name"/>
                                                 <span class="input-group-addon" id="lastname-addon">
                                                     <i class="fa fa-user" aria-hidden="true"></i>
                                                 </span>
@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <label>E-mail</label>
                                             <div class="input-group">
-                                                <h:inputText class="form-control" value="#{administratorBean.credentials.email}"/>
+                                                <h:inputText class="form-control" value="#{administratorBean.credentials.email}" required="true" requiredMessage="Enter a email"/>
                                                 <span class="input-group-addon" id="email-addon">
                                                     <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                 </span>
@@ -68,7 +68,7 @@
                                         <div class="form-group">
                                             <label>Password</label>
                                             <div class="input-group">
-                                                <h:inputSecret class="form-control" value="#{administratorBean.credentials.password}"/>
+                                                <h:inputSecret class="form-control" value="#{administratorBean.credentials.password}" required="true" requiredMessage="Enter a password"/>
                                                 <span class="input-group-addon" id="password-addon">
                                                     <i class="fa fa-key" aria-hidden="true"></i>
                                                 </span>
@@ -139,6 +139,8 @@
                     </div>
                 </section>
                 <script type="text/javascript" src="vendor/rhecruta/js/cpfValidator.js"></script>    
+                <!-- Modal Messages -->
+                
             </ui:define>
 
         </ui:composition>

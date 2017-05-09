@@ -11,11 +11,14 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.SimpleUser;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
+import br.edu.ifpb.dac.rhecruta.shared.exceptions.UniqueFieldException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CandidateService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -33,6 +36,8 @@ public class CandidateServiceImpl implements CandidateService {
     private EmailRequester emailRequester;
     @EJB
     private EvaluationService evaluationService;
+    @EJB
+    private UserService userService;
     
     @Override
     public Candidate getByUser(User user) {
@@ -41,7 +46,24 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public void save(Candidate candidate) {
-        candidateDAO.save(candidate);
+        try {
+            validateCandidate(candidate);
+            candidateDAO.save(candidate);
+        } catch(UniqueFieldException | IllegalArgumentException e) {
+            throw new EJBException(e.getMessage());
+        }
+        
+    }
+    
+    private void validateCandidate(Candidate candidate) throws UniqueFieldException {
+        //procurar por administrator com a mesmo email
+        Candidate byEmail = candidateDAO.getByEmail(candidate.getUser().getCredentials().getEmail());
+        if (byEmail != null)
+            throw new UniqueFieldException("A user with this email already exists");
+        //procurar por administrator com mesmo cpf
+        Candidate byCPF = candidateDAO.getByCPF(candidate.getCpf());
+        if (byCPF != null) 
+            throw new IllegalArgumentException("A candidate with this CPF already exists");
     }
 
     @Override

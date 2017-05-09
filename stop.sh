@@ -9,4 +9,4 @@ docker rmi -f npw/rhecruta-web
 
 
 # REMOVENDO VOLUME
-# docker volume remove rhecruta_postgres-volume-rhecruta
+docker volume remove rhecruta_postgres-volume-rhecruta

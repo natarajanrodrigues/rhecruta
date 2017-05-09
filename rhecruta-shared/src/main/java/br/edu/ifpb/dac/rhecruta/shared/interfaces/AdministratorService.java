@@ -25,5 +25,5 @@ public interface AdministratorService {
     void respondRequest(Administrator administrator, boolean approve);
     List<Administrator> getAllAdministrators();
     List<Administrator> getAllAdministratorsByRole(Role role);
-    
+    Administrator getByCPF(String cpf);
 }

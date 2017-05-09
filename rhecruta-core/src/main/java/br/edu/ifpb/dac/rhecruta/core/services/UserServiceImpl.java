@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public List<User> usersToApprove() {
         return userDAO.usersToApprove();
     }
-    
+
     
     
 }

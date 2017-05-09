@@ -95,5 +95,33 @@ public class CandidateDAOJpaImpl implements CandidateDAO {
                         + " WHERE c.user.approved = true", Candidate.class);
         return query.getResultList();
     }
+
+    @Override
+    public Candidate getByCPF(String cpf) {
+        try {
+            TypedQuery<Candidate> query = this.manager
+                .createQuery("SELECT c FROM Candidate c WHERE c.cpf = :cpf", 
+                Candidate.class)
+                .setParameter("cpf", cpf);
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+    
+    @Override
+    public Candidate getByEmail(String email) {
+        try {
+            TypedQuery<Candidate> query = this.manager
+                .createQuery("SELECT c FROM Candidate c WHERE c.user.credentials.email = :email", 
+                Candidate.class)
+                .setParameter("email", email);
+            return query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
     
 }

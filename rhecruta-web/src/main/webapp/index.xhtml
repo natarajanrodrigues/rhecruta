@@ -24,6 +24,10 @@
                     </div>
                 </section>
                 
+                <ui:fragment rendered="#{not empty facesContext.messageList}">
+                    <script>window.location.hash = 'signup';</script>
+                </ui:fragment>
+                
                 <section id="signup" class="section">
                     <div class="container">
 
@@ -46,12 +50,12 @@
                                 <h:panelGroup id="panel1" class="container">
 
                                     <h:form id="user-form2" rendered="#{registerBean.candidateSelected}">
-
+                                        <h:messages class="container-fluid list-unstyled" errorClass="alert alert-danger" infoClass="alert alert-info"/>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Firstname</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.firstname}"/>
+                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.firstname}" required="true" requiredMessage="Enter your first name" />
                                                     <span class="input-group-addon" id="firstname-addon">
                                                         <i class="fa fa-user" aria-hidden="true"></i>
                                                     </span>
@@ -60,7 +64,7 @@
                                             <div class="form-group">
                                                 <label>Lastname</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.lastname}"/>
+                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.lastname}" required="true" requiredMessage="Enter your last name"/>
                                                     <span class="input-group-addon" id="lastname-addon">
                                                         <i class="fa fa-user" aria-hidden="true"></i>
                                                     </span>
@@ -69,7 +73,8 @@
                                             <div class="form-group">
                                                 <label>CPF</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.cpf}"/>
+                                                    
+                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.cpf}" onkeypress="MascaraCPF(this);" maxlength="14" required="true" requiredMessage="Enter your CPF"/>
                                                     <span class="input-group-addon" id="cpf-addon">
                                                         <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                                     </span>
@@ -78,7 +83,7 @@
                                             <div class="form-group">
                                                 <label>E-mail</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.credentials.email}"/>
+                                                    <h:inputText class="form-control" value="#{candidateBean.credentials.email}" required="true" requiredMessage="Enter a email"/>
                                                     <span class="input-group-addon" id="email-addon">
                                                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                                     </span>
@@ -87,7 +92,7 @@
                                             <div class="form-group">
                                                 <label>Password</label>
                                                 <div class="input-group">
-                                                    <h:inputSecret class="form-control" value="#{candidateBean.credentials.password}"/>
+                                                    <h:inputSecret class="form-control" value="#{candidateBean.credentials.password}" required="true" requiredMessage="Enter a password"/>
                                                     <span class="input-group-addon" id="password-addon">
                                                         <i class="fa fa-key" aria-hidden="true"></i>
                                                     </span>
@@ -98,7 +103,7 @@
                                             <div class="form-group">
                                                 <label>Github Account</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.githubUrl}"/>
+                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.githubUrl}" required="true" requiredMessage="Enter your Github Account"/>
                                                     <span class="input-group-addon" id="github-addon">
                                                         <i class="fa fa-github" aria-hidden="true"></i>
                                                     </span>
@@ -107,7 +112,7 @@
                                             <div class="form-group">
                                                 <label>LinkedIn Account</label>
                                                 <div class="input-group">
-                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.linkedInUrl}"/>
+                                                    <h:inputText class="form-control" value="#{candidateBean.candidate.linkedInUrl}" required="true" requiredMessage="Enter your Linkedin Account"/>
                                                     <span class="input-group-addon" id="linkedIn-addon">
                                                         <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                                                     </span>
@@ -159,20 +164,20 @@
 
                     </div>
                 </section>
-                
-                <!-- Modal Messages -->
-                <h:panelGroup layout="block" rendered="${param.roleChanged eq true}">
+                <script type="text/javascript" src="vendor/rhecruta/js/cpfValidator.js"></script>    
+                 <!--Modal Messages--> 
+<!--                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('adminRoleMsg')}">
                     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
                         <div class="modal-dialog modal-sm" role="document">
                             <div class="alert alert-info">You have successfully changed your role
                             to Appraiser!</div>
                         </div>	 
                     </div>
-                </h:panelGroup>
+                </h:panelGroup>-->
 
-
+                
             </ui:define>
-
+            
         </ui:composition>
         
     </h:body>

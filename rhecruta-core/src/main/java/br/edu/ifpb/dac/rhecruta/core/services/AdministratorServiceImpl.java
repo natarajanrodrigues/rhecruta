@@ -14,7 +14,9 @@ import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.Role;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
+import br.edu.ifpb.dac.rhecruta.shared.exceptions.UniqueFieldException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.AdministratorService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +40,9 @@ public class AdministratorServiceImpl implements AdministratorService {
     private EmailRequester emailRequester;
     @EJB
     private EnterviewDAO enterviewDAO;
-
+    @EJB
+    private UserService userService;
+    
     @Override
     public Administrator getByUser(User user) {
         return administratorDAO.getAdministratorByUser(user);
@@ -46,8 +50,24 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public void save(Administrator administrator) {
-        System.out.println("[AdministratorServiceImpl: " + administrator + "]");
-        administratorDAO.save(administrator);
+        try {
+            System.out.println("[AdministratorServiceImpl: " + administrator + "]");
+            validateAdministrator(administrator);
+            administratorDAO.save(administrator);
+        } catch(UniqueFieldException | IllegalArgumentException e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    private void validateAdministrator(Administrator administrator) throws UniqueFieldException {
+        //procurar por administrator com a mesmo email
+        Administrator byEmail = administratorDAO.getByEmail(administrator.getUser().getCredentials().getEmail());
+        if (byEmail != null)
+            throw new UniqueFieldException("A user with this email already exists");
+        //procurar por administrator com mesmo cpf
+        Administrator byCPF = administratorDAO.getByCPF(administrator.getCpf());
+        if (byCPF != null) 
+            throw new IllegalArgumentException("A user with this CPF already exists");
     }
 
     @Override
@@ -140,6 +160,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public List<Administrator> getAllAdministratorsByRole(Role role) {
         return this.administratorDAO.getAllByRole(role);
+    }
+
+    @Override
+    public Administrator getByCPF(String cpf) {
+        return this.administratorDAO.getByCPF(cpf);
     }
 
 }

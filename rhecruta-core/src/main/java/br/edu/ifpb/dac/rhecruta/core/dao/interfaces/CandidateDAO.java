@@ -20,4 +20,6 @@ public interface CandidateDAO extends DAO<Candidate> {
     Candidate get(Long id);
     List<Candidate> listCandidatesToApprove();
     List<Candidate> listApprovedCandidates();
+    Candidate getByCPF(String cpf);
+    Candidate getByEmail(String email);
 }

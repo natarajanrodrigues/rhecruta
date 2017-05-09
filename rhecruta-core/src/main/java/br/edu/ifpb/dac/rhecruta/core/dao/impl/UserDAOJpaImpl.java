@@ -65,6 +65,23 @@ public class UserDAOJpaImpl implements UserDAO {
         credentials.setPassword(password);
         found.setCredentials(credentials);
     }
+
+    @Override
+    public List<User> searchByEmail(String email) {
+        
+        TypedQuery<User> query = manager
+                .createQuery("SELECT u FROM User u"
+                + " WHERE u.credentials.email = :email", User.class)
+                .setParameter("email", email);
+        
+        List<User> list = query.getResultList();
+        
+        if (list == null || list.isEmpty() )
+            return Collections.EMPTY_LIST;
+        else return list;
+    }
+    
+    
     
     
 }

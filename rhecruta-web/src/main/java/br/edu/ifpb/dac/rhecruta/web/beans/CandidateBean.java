@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -72,16 +73,38 @@ public class CandidateBean {
     }
     
     public String saveCandidact() {
-        System.out.println("Salvando candidato...");
-        this.user.setCredentials(credentials);
-        this.user.setRole(Role.CANDIDATE);
-        this.candidate.setUser(user);
-        System.out.println(candidate);
         
-        this.candidateService.save(candidate);
-        this.candidate = new Candidate();
+        try {
+            System.out.println("Salvando candidato...");
+            this.user.setCredentials(credentials);
+            this.user.setRole(Role.CANDIDATE);
+            this.candidate.setUser(user);
+            System.out.println(candidate);
+
+            this.candidateService.save(candidate);
+            this.candidate = new Candidate();
+
+            return "result_request_register.xhtml?faces-redirect=true";
+            
+        } catch (EJBException ex) {
+            addMessage("adminRoleMsg",
+                    createMessage(ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR));
+            
+            return null;
+        }
         
-        return "result_request_register.xhtml?faces-redirect=true";
+
+    }
+    
+    private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(text);
+        message.setSeverity(severity);
+        return message;
+    }
+    
+    private void addMessage(String clientId, FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, message);
     }
     
     public Candidate getLoggedCandidate() {

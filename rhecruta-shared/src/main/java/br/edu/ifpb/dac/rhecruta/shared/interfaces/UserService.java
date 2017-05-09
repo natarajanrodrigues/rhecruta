@@ -15,6 +15,5 @@ import java.util.List;
 public interface UserService {
     
     List<User> usersToApprove();
-    
     void changePassword(User user, String password, String confirmPassword);
 }

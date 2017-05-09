@@ -22,4 +22,6 @@ public interface AdministratorDAO extends DAO<Administrator> {
     List<Administrator> listAdministratorsToApprove();
     List<Administrator> getAll();
     List<Administrator> getAllByRole(Role role);
+    Administrator getByCPF(String cpf);
+    Administrator getByEmail(String email);
 }

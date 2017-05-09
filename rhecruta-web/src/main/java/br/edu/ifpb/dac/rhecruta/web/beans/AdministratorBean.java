@@ -16,6 +16,7 @@ import br.edu.ifpb.dac.rhecruta.shared.interfaces.UserService;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -62,14 +63,33 @@ public class AdministratorBean {
     
     public String saveAdministrator() {
         //
-        this.user.setCredentials(credentials);
-        this.administrator.setUser(user);
-        //
-        this.administratorService.save(administrator);
+        try {
+            this.user.setCredentials(credentials);
+            this.administrator.setUser(user);
+            //
+            this.administratorService.save(administrator);
+
+            System.out.println("[AdministratorBean: "+administrator+"]");
+
+            return "result_request_register.xhtml?faces-redirect=true";
+            
+        } catch (EJBException ex) {
+            addMessage("adminRoleMsg",
+                    createMessage(ex.getMessage(),
+                            FacesMessage.SEVERITY_ERROR));
+        }
+        return null;
         
-        System.out.println("[AdministratorBean: "+administrator+"]");
-        
-        return "result_request_register.xhtml?faces-redirect=true";
+    }
+    
+    private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
+        FacesMessage message = new FacesMessage(text);
+        message.setSeverity(severity);
+        return message;
+    }
+    
+    private void addMessage(String clientId, FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(clientId, message);
     }
     
     public String updateAdministrator() {
