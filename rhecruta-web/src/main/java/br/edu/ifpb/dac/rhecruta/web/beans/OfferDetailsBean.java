@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -186,5 +187,9 @@ public class OfferDetailsBean implements Serializable {
     
     public boolean hasSelectedOfferSubscribers() {
         return !offer.getCandidates().isEmpty();
+    }
+    
+    public List<EnterviewSystemEvaluationDTO> getResult() {
+        return offerService.getResultOrderedByScore(this.offer);
     }
 }

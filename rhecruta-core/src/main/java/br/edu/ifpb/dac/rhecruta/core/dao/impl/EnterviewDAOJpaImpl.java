@@ -6,6 +6,7 @@
 package br.edu.ifpb.dac.rhecruta.core.dao.impl;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
@@ -15,6 +16,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -121,6 +123,18 @@ public class EnterviewDAOJpaImpl implements EnterviewDAO {
                 + " WHERE e.offer.id = :offerId", Long.class)
                 .setParameter("offerId", offer.getId());
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<EnterviewSystemEvaluationDTO> getResultByOfferOrderedByScore(Long offerId) {
+        TypedQuery<EnterviewSystemEvaluationDTO> query = manager
+                .createQuery("SELECT new br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO(e,se)"
+                + " FROM Enterview e, SystemEvaluation se"
+                + " WHERE e.offer.id = se.offer.id AND e.candidate.cpf = se.candidate.cpf"
+                        + " AND e.offer.id = :offerId AND e.score IS NOT NULL", 
+                        EnterviewSystemEvaluationDTO.class)
+                .setParameter("offerId", offerId);
+        return query.getResultList();
     }
 
 }

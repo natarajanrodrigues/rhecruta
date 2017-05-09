@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.dao.interfaces;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
@@ -28,4 +29,5 @@ public interface EnterviewDAO  {
     Long save(Enterview obj);
     void update(Enterview obj);
     Long countInterviewsByOffer(Offer offer);
+    List<EnterviewSystemEvaluationDTO> getResultByOfferOrderedByScore(Long offerId);
 }

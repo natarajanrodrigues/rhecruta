@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
+import br.edu.ifpb.dac.rhecruta.shared.domain.dto.EnterviewSystemEvaluationDTO;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
@@ -174,5 +175,4 @@ public class OfferBean implements Serializable{
             this.conversation.end();
         }
     }   
-
 }
