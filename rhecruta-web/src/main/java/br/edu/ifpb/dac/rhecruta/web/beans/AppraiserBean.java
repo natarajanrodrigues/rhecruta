@@ -95,7 +95,7 @@ public class AppraiserBean implements Serializable {
     public String evaluate() {
         try {
             System.out.println("[AppraiserBean.evaluate()] evaluating...");
-            interviewService.evaluate(this.enterview, score);
+            interviewService.evaluate(this.enterview, score/100);
             addMessage("evaluateMsg", 
                     createMessage("The interview was evaluated with "+score+" successfully!", 
                     FacesMessage.SEVERITY_INFO));

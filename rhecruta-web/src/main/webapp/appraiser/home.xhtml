@@ -53,7 +53,7 @@ and open the template in the editor.
                                                                 <p>
                                                                     <strong>Score: </strong> 
                                                                     <h:outputText value="#{interview.score*100}">
-                                                                        <f:convertNumber pattern="#0.0" />
+                                                                        <f:convertNumber pattern="#0.00" />
                                                                     </h:outputText>%
                                                                 </p>
                                                             </h:panelGroup>
@@ -136,7 +136,7 @@ and open the template in the editor.
                                 <p>Put the interview score below</p>
                                 <h:form>
                                     <div class="form-group">
-                                        <label for="interviewScore">score: </label>
+                                        <label for="interviewScore">Score (0-100) : </label>
                                         <h:inputText id="interviewScore"
                                                      class="form-control" 
                                                      value="#{appraiserBean.score}"/>
