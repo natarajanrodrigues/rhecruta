@@ -1,14 +1,14 @@
-<domain application-root="${com.sun.aas.instanceRoot}/applications" version="137" log-root="${com.sun.aas.instanceRoot}/logs">
+<domain application-root="${com.sun.aas.instanceRoot}/applications" version="28" log-root="${com.sun.aas.instanceRoot}/logs">
   <security-configurations>
     <authentication-service default="true" name="adminAuth" use-password-credential="true">
       <security-provider provider-name="adminSpc" name="spcrealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.admin.util.AdminLoginModule" name="adminSpecialLM">
+        <login-module-config module-class="com.sun.enterprise.admin.util.AdminLoginModule" control-flag="sufficient" name="adminSpecialLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
       </security-provider>
       <security-provider provider-name="adminFile" name="filerealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.security.auth.login.FileLoginModule" name="adminFileLM">
+        <login-module-config module-class="com.sun.enterprise.security.auth.login.FileLoginModule" control-flag="sufficient" name="adminFileLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
@@ -21,14 +21,7 @@
     </authorization-service>
   </security-configurations>
   <managed-job-config></managed-job-config>
-  <system-applications>
-    <application context-root="" object-type="system-admin" name="__admingui" directory-deployed="true" location="${com.sun.aas.installRootURI}/lib/install/applications/__admingui">
-      <module name="__admingui">
-        <engine sniffer="web"></engine>
-        <engine sniffer="security"></engine>
-      </module>
-    </application>
-  </system-applications>
+  <system-applications></system-applications>
   <resources>
     <jdbc-resource pool-name="__TimerPool" object-type="system-admin" jndi-name="jdbc/__TimerPool"></jdbc-resource>
     <jdbc-resource pool-name="DerbyPool" object-type="system-all" jndi-name="jdbc/__default"></jdbc-resource>
@@ -44,89 +37,63 @@
       <property name="DatabaseName" value="sun-appserv-samples"></property>
       <property name="connectionAttributes" value=";create=true"></property>
     </jdbc-connection-pool>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
     <connector-resource pool-name="jms/__defaultConnectionFactory-Connection-Pool" object-type="system-all-req" jndi-name="jms/__defaultConnectionFactory"></connector-resource>
-    <context-service object-type="system-all" jndi-name="concurrent/__defaultContextService"></context-service>
-    <managed-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedExecutorService"></managed-executor-service>
-    <managed-scheduled-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedScheduledExecutorService"></managed-scheduled-executor-service>
-    <managed-thread-factory object-type="system-all" jndi-name="concurrent/__defaultManagedThreadFactory"></managed-thread-factory>
-    <jdbc-connection-pool datasource-classname="org.apache.derby.jdbc.ClientDataSource" name="SamplePool" res-type="javax.sql.DataSource">
-      <property name="URL" value="jdbc:derby://localhost:1527/sample"></property>
-      <property name="PortNumber" value="1527"></property>
-      <property name="Password" value="app"></property>
-      <property name="DatabaseName" value="sample"></property>
-      <property name="serverName" value="localhost"></property>
-      <property name="User" value="app"></property>
-    </jdbc-connection-pool>
-    <jdbc-resource pool-name="SamplePool" jndi-name="jdbc/sample"></jdbc-resource>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/dacConectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/Queue">
-      <property name="Name" value="jms_dac_Queue"></property>
-    </admin-object-resource>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/dac/ConectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
-    <connector-resource pool-name="jms/dac/ConectionFactory-Connection-Pool" jndi-name="jms/dac/ConectionFactory"></connector-resource>
-    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/dac/ConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
-    <connector-resource pool-name="jms/dac/ConnectionFactory-Connection-Pool" jndi-name="jms/dac/ConnectionFactory"></connector-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/fila1">
-      <property name="Name" value="jms_fila1"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/fila2">
-      <property name="Name" value="jms_fila2"></property>
-    </admin-object-resource>
-    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/dac/dacConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
-    <connector-resource pool-name="jms/dac/dacConnectionFactory-Connection-Pool" jndi-name="jms/dac/dacConnectionFactory"></connector-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/newEmailsQueue">
-      <property name="Name" value="jms_dac_newEmailsQueue"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/waitingEmailsQueue">
-      <property name="Name" value="jms_dac_waitingEmailsQueue"></property>
-    </admin-object-resource>
-    <mail-resource host="smtp.gmail.com" description="A new JavaMail Session" from="rhecrutapp@gmail.com" user="rhecrutapp" jndi-name="dac/rhecruta/javaMailSession">
-      <property name="mail.smtp.port" value="465"></property>
-      <property name="mail.smtp.socketFactory.port" value="465"></property>
-      <property name="mail.smtp.socketFactory.fallback" value="false"></property>
-      <property name="mail.smtp.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"></property>
-      <property name="mail.smtp.auth" value="true"></property>
-      <property name="mail.smtp.password" value="rhecrutadac"></property>
-    </mail-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/rhecruta/newOfferQueue">
-      <property name="Name" value="jms_dac_rhecruta_newOfferQueue"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/filesToUploadQueue">
-      <property name="Name" value="jms_dac_filesToUploadQueue"></property>
-    </admin-object-resource>
-    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/suggCon-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
-    <connector-resource pool-name="jms/suggCon-Connection-Pool" jndi-name="jms/suggCon"></connector-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/suggQueue">
-      <property name="Name" value="jms_suggQueue"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Topic" jndi-name="jms/dac/newInterview">
-      <property name="Name" value="jms_dac_newInterview"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/systemEvaluationQueue">
-      <property name="Name" value="jms_dac_systemEvaluationQueue"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="dac/rhecruta/systemEvaluationQueue">
-      <property name="Name" value="dac_rhecruta_systemEvaluationQueue"></property>
-    </admin-object-resource>
-    <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Topic" jndi-name="jms/dac/cancelInterview">
-      <property name="Name" value="jms_dac_cancelInterview"></property>
-    </admin-object-resource>
+    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/dac/ConectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+        <connector-resource pool-name="jms/dac/ConectionFactory-Connection-Pool" jndi-name="jms/dac/ConectionFactory"></connector-resource>
+        <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/dac/ConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+        <connector-resource pool-name="jms/dac/ConnectionFactory-Connection-Pool" jndi-name="jms/dac/ConnectionFactory"></connector-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/fila1">
+            <property name="Name" value="jms_fila1"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/fila2">
+            <property name="Name" value="jms_fila2"></property>
+        </admin-object-resource>
+        <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/dac/dacConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+        <connector-resource pool-name="jms/dac/dacConnectionFactory-Connection-Pool" jndi-name="jms/dac/dacConnectionFactory"></connector-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/newEmailsQueue">
+            <property name="Name" value="jms_dac_newEmailsQueue"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/waitingEmailsQueue">
+            <property name="Name" value="jms_dac_waitingEmailsQueue"></property>
+        </admin-object-resource>
+        <mail-resource host="smtp.gmail.com" description="A new JavaMail Session" from="rhecrutapp@gmail.com" user="rhecrutapp" jndi-name="dac/rhecruta/javaMailSession">
+            <property name="mail.smtp.port" value="465"></property>
+            <property name="mail.smtp.socketFactory.port" value="465"></property>
+            <property name="mail.smtp.socketFactory.fallback" value="false"></property>
+            <property name="mail.smtp.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"></property>
+            <property name="mail.smtp.auth" value="true"></property>
+            <property name="mail.smtp.password" value="rhecrutadac"></property>
+        </mail-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/rhecruta/newOfferQueue">
+            <property name="Name" value="jms_dac_rhecruta_newOfferQueue"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/filesToUploadQueue">
+            <property name="Name" value="jms_dac_filesToUploadQueue"></property>
+        </admin-object-resource>
+        <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/suggCon-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+        <connector-resource pool-name="jms/suggCon-Connection-Pool" jndi-name="jms/suggCon"></connector-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/suggQueue">
+            <property name="Name" value="jms_suggQueue"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Topic" jndi-name="jms/dac/newInterview">
+            <property name="Name" value="jms_dac_newInterview"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="jms/dac/systemEvaluationQueue">
+            <property name="Name" value="jms_dac_systemEvaluationQueue"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Queue" jndi-name="dac/rhecruta/systemEvaluationQueue">
+            <property name="Name" value="dac_rhecruta_systemEvaluationQueue"></property>
+        </admin-object-resource>
+        <admin-object-resource res-adapter="jmsra" res-type="javax.jms.Topic" jndi-name="jms/dac/cancelInterview">
+            <property name="Name" value="jms_dac_cancelInterview"></property>
+        </admin-object-resource>
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
-      <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
-      <application-ref ref="rhecruta-core" virtual-servers="server"></application-ref>
-      <application-ref ref="rhecruta-web" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
       <resource-ref ref="jms/__defaultConnectionFactory"></resource-ref>
-      <resource-ref ref="concurrent/__defaultContextService"></resource-ref>
-      <resource-ref ref="concurrent/__defaultManagedExecutorService"></resource-ref>
-      <resource-ref ref="concurrent/__defaultManagedScheduledExecutorService"></resource-ref>
-      <resource-ref ref="concurrent/__defaultManagedThreadFactory"></resource-ref>
-      <resource-ref ref="jdbc/sample"></resource-ref>
-      <resource-ref ref="jms/dac/Queue"></resource-ref>
       <resource-ref ref="jms/dac/ConectionFactory"></resource-ref>
       <resource-ref ref="jms/dac/ConnectionFactory"></resource-ref>
       <resource-ref ref="jms/fila1"></resource-ref>
@@ -168,7 +135,9 @@
         </iiop-listener>
       </iiop-service>
       <admin-service system-jmx-connector-name="system" type="das-and-server">
-        <jmx-connector address="0.0.0.0" port="8686" name="system" auth-realm-name="admin-realm" security-enabled="false"></jmx-connector>
+        <jmx-connector address="0.0.0.0" port="8686" name="system" auth-realm-name="admin-realm">
+          <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" client-auth="want" cert-nickname="s1as"></ssl>
+        </jmx-connector>
         <property name="adminConsoleContextRoot" value="/admin"></property>
         <property name="adminConsoleDownloadLocation" value="${com.sun.aas.installRoot}/lib/install/applications/admingui.war"></property>
         <property name="ipsRoot" value="${com.sun.aas.installRoot}/.."></property>
@@ -184,30 +153,12 @@
       <notification-service-configuration enabled="true">
         <log-notifier-configuration enabled="true"></log-notifier-configuration>
       </notification-service-configuration>
-      <monitoring-service-configuration></monitoring-service-configuration>
-      <health-check-service-configuration>
-        <log-notifier></log-notifier>
-      </health-check-service-configuration>
-      <phone-home-runtime-configuration phone-home-id="03beca88-40b0-4050-b586-6ef32bc235f7"></phone-home-runtime-configuration>
       <batch-runtime-configuration></batch-runtime-configuration>
+      <phone-home-runtime-configuration></phone-home-runtime-configuration>
       <jms-service default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
       </jms-service>
-      <cdi-service></cdi-service>
-      <web-container>
-        <session-config>
-          <session-manager>
-            <store-properties></store-properties>
-            <manager-properties></manager-properties>
-          </session-manager>
-          <session-properties></session-properties>
-        </session-config>
-      </web-container>
-      <ejb-container>
-        <ejb-timer-service></ejb-timer-service>
-      </ejb-container>
       <rest-config></rest-config>
-      <mdb-container></mdb-container>
       <diagnostic-service></diagnostic-service>
       <security-service>
         <auth-realm classname="com.sun.enterprise.security.auth.realm.file.FileRealm" name="admin-realm">
@@ -270,7 +221,7 @@
         </message-security-config>
         <property name="default-digest-algorithm" value="SHA-256"></property>
       </security-service>
-      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,address=9009,server=n,suspend=y" java-home="/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home" system-classpath="">
+      <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9009" system-classpath="">
         <jvm-options>-XX:MaxPermSize=192m</jvm-options>
         <jvm-options>-client</jvm-options>
         <jvm-options>-Djava.awt.headless=true</jvm-options>
@@ -325,18 +276,33 @@
               <file-cache></file-cache>
             </http>
           </protocol>
+          <protocol name="sec-admin-listener" security-enabled="true">
+            <http encoded-slash-enabled="true" default-virtual-server="__asadmin">
+              <file-cache></file-cache>
+            </http>
+            <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" client-auth="want" cert-nickname="s1as"></ssl>
+          </protocol>
+          <protocol name="admin-http-redirect">
+            <http-redirect secure="true"></http-redirect>
+          </protocol>
+          <protocol name="pu-protocol">
+            <port-unification>
+              <protocol-finder protocol="sec-admin-listener" classname="org.glassfish.grizzly.config.portunif.HttpProtocolFinder" name="http-finder"></protocol-finder>
+              <protocol-finder protocol="admin-http-redirect" classname="org.glassfish.grizzly.config.portunif.HttpProtocolFinder" name="admin-http-redirect"></protocol-finder>
+            </port-unification>
+          </protocol>
         </protocols>
         <network-listeners>
           <network-listener protocol="http-listener-1" port="8080" name="http-listener-1" thread-pool="http-thread-pool" transport="tcp"></network-listener>
           <network-listener protocol="http-listener-2" port="8181" name="http-listener-2" thread-pool="http-thread-pool" transport="tcp"></network-listener>
-          <network-listener protocol="admin-listener" port="4848" name="admin-listener" thread-pool="admin-thread-pool" transport="tcp"></network-listener>
+          <network-listener protocol="pu-protocol" port="4848" name="admin-listener" thread-pool="admin-thread-pool" transport="tcp"></network-listener>
         </network-listeners>
         <transports>
           <transport name="tcp"></transport>
         </transports>
       </network-config>
       <thread-pools>
-        <thread-pool name="admin-thread-pool" min-thread-pool-size="1" max-thread-pool-size="15" max-queue-size="256"></thread-pool>
+        <thread-pool name="admin-thread-pool" min-thread-pool-size="1" max-queue-size="256" max-thread-pool-size="15"></thread-pool>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" max-thread-pool-size="200"></thread-pool>
       </thread-pools>
@@ -368,7 +334,9 @@
         </iiop-listener>
       </iiop-service>
       <admin-service system-jmx-connector-name="system">
-        <jmx-connector address="0.0.0.0" port="${JMX_SYSTEM_CONNECTOR_PORT}" name="system" auth-realm-name="admin-realm" security-enabled="false"></jmx-connector>
+        <jmx-connector address="0.0.0.0" port="${JMX_SYSTEM_CONNECTOR_PORT}" name="system" auth-realm-name="admin-realm">
+          <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" client-auth="want" cert-nickname="glassfish-instance"></ssl>
+        </jmx-connector>
         <property name="adminConsoleDownloadLocation" value="${com.sun.aas.installRoot}/lib/install/applications/admingui.war"></property>
         <das-config></das-config>
       </admin-service>
@@ -386,7 +354,7 @@
       </ejb-container>
       <mdb-container></mdb-container>
       <jms-service addresslist-behavior="priority" default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
       </jms-service>
       <log-service file="${com.sun.aas.instanceRoot}/logs/server.log" log-rotation-limit-in-bytes="2000000">
         <module-log-levels></module-log-levels>
@@ -451,7 +419,6 @@
       <notification-service-configuration enabled="true">
         <log-notifier-configuration enabled="true"></log-notifier-configuration>
       </notification-service-configuration>
-      <monitoring-service-configuration></monitoring-service-configuration>
       <diagnostic-service></diagnostic-service>
       <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${JAVA_DEBUGGER_PORT}" system-classpath="">
         <jvm-options>-XX:MaxPermSize=192m</jvm-options>
@@ -514,7 +481,7 @@
             <http encoded-slash-enabled="true" default-virtual-server="__asadmin">
               <file-cache></file-cache>
             </http>
-            <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" client-auth="want" cert-nickname="glassfish-instance" renegotiate-on-client-auth-want="false"></ssl>
+            <ssl classname="com.sun.enterprise.security.ssl.GlassfishSSLImpl" client-auth="want" cert-nickname="glassfish-instance"></ssl>
           </protocol>
           <protocol name="admin-http-redirect">
             <http-redirect secure="true"></http-redirect>
@@ -538,7 +505,7 @@
       <thread-pools>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" min-thread-pool-size="2" max-thread-pool-size="200"></thread-pool>
-        <thread-pool name="admin-thread-pool" min-thread-pool-size="1" max-thread-pool-size="15" max-queue-size="256"></thread-pool>
+        <thread-pool name="admin-thread-pool" min-thread-pool-size="1" max-queue-size="256" max-thread-pool-size="15"></thread-pool>
       </thread-pools>
       <group-management-service>
         <failure-detection></failure-detection>
@@ -559,53 +526,10 @@
     </config>
   </configs>
   <property name="administrative.domain.name" value="domain1"></property>
-  <secure-admin special-admin-indicator="8a1180ff-94ff-49b3-97ba-f37abc91642e">
+  <secure-admin special-admin-indicator="67ff66ac-4700-4d49-b343-94d436a641bf" enabled="true">
     <secure-admin-principal dn="CN=localhost,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US"></secure-admin-principal>
     <secure-admin-principal dn="CN=localhost-instance,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US"></secure-admin-principal>
   </secure-admin>
   <clusters></clusters>
-  <applications>
-    <application context-root="/rhecruta-core" object-type="user" name="rhecruta-core" directory-deployed="true" location="file:/Users/natarajan/Dropbox/ADS_2016.2/DAC/projeto/rhecruta/rhecruta-core/target/rhecruta-core-1.0-SNAPSHOT/">
-      <property name="archiveType" value="war"></property>
-      <property name="appLocation" value="file:/Users/natarajan/Dropbox/ADS_2016.2/DAC/projeto/rhecruta/rhecruta-core/target/rhecruta-core-1.0-SNAPSHOT/"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="97926933295988736"></property>
-      <property name="org.glassfish.persistence.app_name_property" value="rhecruta-core"></property>
-      <property name="defaultAppName" value="rhecruta-core-1.0-SNAPSHOT"></property>
-      <module name="rhecruta-core">
-        <engine sniffer="ejb"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="weld"></engine>
-        <engine sniffer="jpa"></engine>
-        <engine sniffer="resources"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-      <resources>
-        <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGSimpleDataSource" name="java:app/post-gre-sql_rhecruta_postgresPool" wrap-jdbc-objects="false" connection-validation-method="auto-commit" res-type="javax.sql.DataSource">
-          <property name="URL" value="jdbc:postgresql://localhost:5432/rhecruta"></property>
-          <property name="driverClass" value="org.postgresql.Driver"></property>
-          <property name="Password" value="123456"></property>
-          <property name="portNumber" value="5432"></property>
-          <property name="databaseName" value="rhecruta"></property>
-          <property name="User" value="postgres"></property>
-          <property name="serverName" value="localhost"></property>
-        </jdbc-connection-pool>
-        <jdbc-resource pool-name="java:app/post-gre-sql_rhecruta_postgresPool" jndi-name="java:app/rhecruta-data-source"></jdbc-resource>
-      </resources>
-    </application>
-    <application context-root="/rhecruta-web" object-type="user" name="rhecruta-web" directory-deployed="true" location="file:/Users/natarajan/Dropbox/ADS_2016.2/DAC/projeto/rhecruta/rhecruta-web/target/rhecruta-web-1.0-SNAPSHOT/">
-      <property name="archiveType" value="war"></property>
-      <property name="org.glassfish.ejb.startup.keepstate" value="true"></property>
-      <property name="appLocation" value="file:/Users/natarajan/Dropbox/ADS_2016.2/DAC/projeto/rhecruta/rhecruta-web/target/rhecruta-web-1.0-SNAPSHOT/"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="97926933295923200"></property>
-      <property name="defaultAppName" value="rhecruta-web-1.0-SNAPSHOT"></property>
-      <property name="keepSessions" value="true"></property>
-      <module name="rhecruta-web">
-        <engine sniffer="ejb"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="weld"></engine>
-        <engine sniffer="jpa"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-  </applications>
+  <applications></applications>
 </domain>

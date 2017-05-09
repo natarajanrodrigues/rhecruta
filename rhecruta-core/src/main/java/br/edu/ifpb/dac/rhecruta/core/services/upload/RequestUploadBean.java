@@ -5,7 +5,9 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services.upload;
 
+import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.dto.Curriculum;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,6 +35,18 @@ public class RequestUploadBean {
 
     @Resource(lookup = "jms/dac/filesToUploadQueue")
     private Queue queue;
+    
+    @EJB
+    private StartMDB sb;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
+        if (!sb.isInit()) {
+            System.out.println("NUNCA DEVE ACONTECER");
+        }
+        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
+    }
     
     public void upload(Curriculum file) {
         

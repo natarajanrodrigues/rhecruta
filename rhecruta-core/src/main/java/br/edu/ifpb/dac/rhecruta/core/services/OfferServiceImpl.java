@@ -8,6 +8,7 @@ package br.edu.ifpb.dac.rhecruta.core.services;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.EnterviewDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.SystemEvaluationDAO;
+import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
@@ -17,6 +18,7 @@ import br.edu.ifpb.dac.rhecruta.shared.exceptions.EntityNotFoundException;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.OfferService;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -62,6 +64,20 @@ public class OfferServiceImpl implements OfferService {
     
     @EJB
     private SystemEvaluationSenderMessage systemEvaluationSender;
+    
+    
+    @EJB
+    private StartMDB sb;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
+        if (!sb.isInit()) {
+            System.out.println("NUNCA DEVE ACONTECER");
+        }
+        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
+    }
+    
     
     @Override
     public void save(Offer offer) {

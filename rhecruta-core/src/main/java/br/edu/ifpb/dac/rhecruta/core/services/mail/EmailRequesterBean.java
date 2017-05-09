@@ -5,9 +5,12 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services.mail;
 
+import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import java.time.LocalDateTime;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -31,6 +34,18 @@ public class EmailRequesterBean implements EmailRequester {
 
     @Resource(lookup = "jms/dac/newEmailsQueue")
     private Queue queue;
+    
+    @EJB
+    private StartMDB sb;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
+        if (!sb.isInit()) {
+            System.out.println("NUNCA DEVE ACONTECER");
+        }
+        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
+    }
 
     @Override
     public void send(Email email) {

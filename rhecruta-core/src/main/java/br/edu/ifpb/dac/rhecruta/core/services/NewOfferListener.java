@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.core.services;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
+import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
@@ -19,6 +20,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -49,7 +51,18 @@ public class NewOfferListener implements MessageListener {
     private OfferDAO offerDAO;
     @EJB
     private EvaluationService evaluationService;
-    
+
+    @EJB
+    private StartMDB sb;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
+        if (!sb.isInit()) {
+            System.out.println("NUNCA DEVE ACONTECER");
+        }
+        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
+    }
 
     @Override
     public void onMessage(Message message) {
