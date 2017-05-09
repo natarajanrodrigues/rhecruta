@@ -71,13 +71,13 @@ public class EmailSender {
 
     @Schedule(second = "10", minute = "*/1", hour = "*", persistent = false)
     private void trySendWaitingEmails() {
-        System.out.println("[EmailSenderBean] trying re-send failed emails...");
-        JMSConsumer consumer = jmsContext.createConsumer(waitingEmailsQueue);
-        while (true) {
-            Email email = consumer.receiveBody(Email.class, 1000);
-            if (email == null) break;
-            send(email);
-        }
+//        System.out.println("[EmailSenderBean] trying re-send failed emails...");
+//        JMSConsumer consumer = jmsContext.createConsumer(waitingEmailsQueue);
+//        while (true) {
+//            Email email = consumer.receiveBody(Email.class, 1000);
+//            if (email == null) break;
+//            send(email);
+//        }
     }
 
     private void sendToWaitingQueue(Email email) {

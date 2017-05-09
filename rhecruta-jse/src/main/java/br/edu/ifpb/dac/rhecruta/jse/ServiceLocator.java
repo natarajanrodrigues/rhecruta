@@ -19,7 +19,7 @@ import javax.naming.NamingException;
 public class ServiceLocator {
     
     
-    protected <T> T lookup(String resource, Class<T> type) {
+    public <T> T lookup(String resource, Class<T> type) {
         try {
 
             InitialContext context = new InitialContext(createProperties());

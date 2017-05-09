@@ -45,7 +45,11 @@ public class SystemEvaluation implements Serializable {
     public SystemEvaluation() {
     
     }
-
+    
+    public Long getId() {
+        return id;
+    }
+    
     public Double getScore() {
         return score;
     }

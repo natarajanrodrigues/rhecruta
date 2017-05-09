@@ -7,6 +7,7 @@ package br.edu.ifpb.dac.rhecruta.shared.interfaces;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Credentials;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
+import javax.security.auth.login.LoginException;
 
 /**
  *

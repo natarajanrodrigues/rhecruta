@@ -50,6 +50,7 @@ public class CurriculumServiceImpl implements CurriculumService {
         }
     }
     
+    // Criar classe validadora de Curriculum
     private void validate(Curriculum curriculum) {
         if(curriculum == null)
             throw new IllegalArgumentException("You're passing a null curriculum."
@@ -70,6 +71,11 @@ public class CurriculumServiceImpl implements CurriculumService {
     
     private String getExtension(String filename) {
         return FilenameUtils.getExtension(filename);
+    }
+
+    @Override
+    public boolean hasCurriculum(Long candidateId) {
+        return curriculumDAO.hasCurriculum(candidateId);
     }
     
 }

@@ -15,4 +15,5 @@ public interface CurriculumDAO {
     
     Curriculum getByCandidateId(Long candidateId);
     void upload(Curriculum curriculum);
+    boolean hasCurriculum(Long canditeId);
 }

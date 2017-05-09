@@ -16,4 +16,5 @@ public interface CurriculumService {
     
     Curriculum get(Long candidateId);
     void upload(Curriculum curriculum);
+    boolean hasCurriculum(Long candidateId);
 }

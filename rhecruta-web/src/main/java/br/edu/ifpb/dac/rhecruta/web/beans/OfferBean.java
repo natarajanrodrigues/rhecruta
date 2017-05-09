@@ -6,8 +6,6 @@
 package br.edu.ifpb.dac.rhecruta.web.beans;
 
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
-import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
-import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.User;
 import br.edu.ifpb.dac.rhecruta.shared.domain.enums.SystemStatus;
@@ -23,6 +21,8 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 

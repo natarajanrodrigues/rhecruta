@@ -10,8 +10,6 @@ import br.edu.ifpb.dac.rhecruta.core.services.upload.DropboxBean;
 import br.edu.ifpb.dac.rhecruta.shared.domain.dto.Curriculum;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.files.DbxUserFilesRequests;
-import com.dropbox.core.v2.files.GetMetadataError;
-import com.dropbox.core.v2.files.GetMetadataErrorException;
 import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.files.SearchErrorException;
 import com.dropbox.core.v2.files.SearchMatch;
@@ -165,6 +163,30 @@ public class CurriculumDAODbxImpl implements CurriculumDAO {
         } catch (DbxException ex) {
             throw new IllegalArgumentException(ex.getMessage());
         }
+    }
+
+    @Override
+    public boolean hasCurriculum(Long candidateId) {
+        System.out.println("[CurriculumDAODbxImpl] Searching by candidateId: "+candidateId);
+        try {
+            String candidateFolder = getCandidateFolderPath(candidateId);
+            System.out.println("[CurriculumDAODbxImpl] candidateFolderPath: "+candidateFolder);
+            SearchResult searchResult = files.search(candidateFolder, candidateId.toString());
+            List<SearchMatch> matches = searchResult.getMatches();
+            
+            if(matches.isEmpty()) {
+                System.out.println("[CurriculumDAODbxImpl] No matches.");
+              return false;
+            } 
+            
+        } catch (DbxException ex) {
+            System.out.println("[CurriculumDAODbxImpl] Exception. :/");
+            Logger.getLogger(CurriculumDAODbxImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } 
+        
+        System.out.println("[CurriculumDAODbxImpl] Returning false...");
+        return false;
     }
     
     

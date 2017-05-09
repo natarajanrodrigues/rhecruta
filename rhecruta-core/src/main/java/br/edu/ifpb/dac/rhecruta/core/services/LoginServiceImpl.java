@@ -13,7 +13,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
 import javax.security.auth.login.LoginException;
 
 /**
