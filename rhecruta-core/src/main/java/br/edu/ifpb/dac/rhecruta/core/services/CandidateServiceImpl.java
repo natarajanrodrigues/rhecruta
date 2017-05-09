@@ -89,6 +89,7 @@ public class CandidateServiceImpl implements CandidateService {
             delete(candidate);
         else {
             candidate.getUser().setApproved(true);
+            
             List<SimpleUser> resultSearch = evaluationService.searchSimpleUser(candidate);
             SimpleUser suggestionUser;
             if (resultSearch.size() == 1) {
