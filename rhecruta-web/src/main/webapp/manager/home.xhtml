@@ -118,7 +118,21 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+                <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('githuberror')}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="errorModal">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <h:messages class="list-unstyled" infoClass="alert alert-info" errorClass="alert alert-danger" layout="block"/>
+                    </div>	 
+                </div>
+            </h:panelGroup> 
+            <script type="text/javascript" >
+                $('#modalLogin').on('shown.bs.modal', function() {
+                    $(this).find('.autofocus').focus();
+                });
+            </script>    
             </ui:define>
+            
+            
 
         </ui:composition>
 

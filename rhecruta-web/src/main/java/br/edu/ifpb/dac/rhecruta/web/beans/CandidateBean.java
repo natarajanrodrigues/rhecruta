@@ -132,7 +132,14 @@ public class CandidateBean {
     }
     
     public String respondRequest(Candidate candidate, boolean approve) {
-        this.candidateService.respondRequest(candidate, approve);
+        try {
+            this.candidateService.respondRequest(candidate, approve);
+        } catch(EJBException e) {
+            FacesMessage message = new FacesMessage(e.getMessage());
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            FacesContext.getCurrentInstance().addMessage("githuberror", message);
+        }
+        
         return null;
     }
     

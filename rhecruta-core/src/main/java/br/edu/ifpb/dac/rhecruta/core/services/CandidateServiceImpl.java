@@ -99,6 +99,9 @@ public class CandidateServiceImpl implements CandidateService {
                 System.out.println("[Simple user Created]: "+ suggestionUser);
             }
             
+            if (suggestionUser == null) {
+                throw new EJBException("Invalid github user");
+            }
             candidate.setIdEvaluation(suggestionUser.getId());
             update(candidate);
         }
