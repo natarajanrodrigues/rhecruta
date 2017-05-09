@@ -22,7 +22,7 @@ services:
      - "4951:4848"
     links:
      - "postgres-rhecruta:banco-rhecruta"
-
+  
   #web
   rhecruta-web:
     container_name: rhecruta-web
