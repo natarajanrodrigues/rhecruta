@@ -5,7 +5,6 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services;
 
-import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import java.util.logging.Level;
@@ -36,18 +35,6 @@ public class SystemEvaluationSenderMessage {
     
     @Resource(lookup = "dac/rhecruta/systemEvaluationQueue")
     private Queue systemEvaluationQueue;
-    
-    @EJB
-    private StartMDB sb;
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
-        if (!sb.isInit()) {
-            System.out.println("NUNCA DEVE ACONTECER");
-        }
-        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
-    }
     
     public void sendToSystemEvaluationQueue(Offer offer, Candidate candidate) {
         

@@ -5,7 +5,6 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services.calendar;
 
-import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.GoogleCalendarInterviewService;
@@ -41,18 +40,6 @@ public class CalendarRequestCreateListener implements MessageListener {
     
     @EJB
     private EnterviewService interviewService;
-
-    @EJB
-    private StartMDB sb;
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
-        if (!sb.isInit()) {
-            System.out.println("NUNCA DEVE ACONTECER");
-        }
-        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
-    }
     
     @Override
     public void onMessage(Message message) {

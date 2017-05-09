@@ -5,7 +5,6 @@
  */
 package br.edu.ifpb.dac.rhecruta.core.services.mail;
 
-import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import com.sun.mail.util.MailConnectException;
 import java.time.LocalDateTime;
@@ -43,18 +42,6 @@ public class EmailSender {
     
     @Resource(lookup = "dac/rhecruta/javaMailSession")
     private Session session;
-    
-    @EJB
-    private StartMDB sb;
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
-        if (!sb.isInit()) {
-            System.out.println("NUNCA DEVE ACONTECER");
-        }
-        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
-    }
     
     public void send(Email email) {
         try {

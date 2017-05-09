@@ -8,7 +8,6 @@ package br.edu.ifpb.dac.rhecruta.core.services;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CandidateDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.SystemEvaluationDAO;
-import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.SystemEvaluation;
@@ -49,18 +48,6 @@ public class SystemEvaluationListener implements MessageListener {
     
     private double calculateScore(double match, double rank) {
         return (match*MATCH_WEIGHT) + (rank*RANK_WEIGHT);
-    }
-    
-    @EJB
-    private StartMDB sb;
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
-        if (!sb.isInit()) {
-            System.out.println("NUNCA DEVE ACONTECER");
-        }
-        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
     }
 
     @Override

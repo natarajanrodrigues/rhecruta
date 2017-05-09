@@ -6,7 +6,6 @@
 package br.edu.ifpb.dac.rhecruta.core.services.upload;
 
 import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.CurriculumDAO;
-import br.edu.ifpb.dac.rhecruta.core.mdb.StartMDB;
 import br.edu.ifpb.dac.rhecruta.shared.domain.dto.Curriculum;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,18 +38,6 @@ public class RequestUploadListener implements MessageListener {
     private DropboxBean dropboxBean;
     @EJB
     private CurriculumDAO curriculumDAO;
-
-    @EJB
-    private StartMDB sb;
-
-    @PostConstruct
-    public void init() {
-        System.out.println("[INIT MDB COMEÇOU: NewOfferListener]");
-        if (!sb.isInit()) {
-            System.out.println("NUNCA DEVE ACONTECER");
-        }
-        System.out.println("[INICIOU MDB TERMINOU: NewOfferListener]");
-    }
     
     @Override
     public void onMessage(Message message) {
