@@ -7,9 +7,12 @@ package br.edu.ifpb.dac.rhecruta.jse.panels;
 
 import br.edu.ifpb.dac.rhecruta.jse.ServiceLocator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.SystemEvaluation;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.SystemEvaluationService;
 import java.awt.Color;
 import java.awt.Component;
+import java.text.DecimalFormat;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -18,35 +21,56 @@ import javax.swing.ListCellRenderer;
  *
  * @author Wensttay de Sousa Alencar <yattsnew@gmail.com>
  */
-public class EnterviewPanel extends javax.swing.JPanel implements ListCellRenderer<Enterview>{
+public class InterviewPanel extends javax.swing.JPanel implements ListCellRenderer<Enterview>{
 
     private final String CURRICULUM_SERVICE = "java:global/rhecruta-core/CurriculumServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService";
     private CurriculumService curriculumService;
     private ServiceLocator serviceLocator;
+    
     private Enterview enterview;
+    private static final String SYSTEM_EVALUATION_RESOURCE = "java:global/rhecruta-core/SystemEvaluationServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.SystemEvaluationService";
+    private DecimalFormat decimalFormat = new DecimalFormat("##.00");
+    private SystemEvaluationService systemEvaluationService;
+    private SystemEvaluation evaluation;
 
     /**
      * Creates new form NewJPanel
      */
-    public EnterviewPanel() {
+    public InterviewPanel() {
         initComponents();
         setBackground(Color.white);
         serviceLocator = new ServiceLocator();
         curriculumService = serviceLocator.lookup(CURRICULUM_SERVICE, CurriculumService.class);
         
     }
-    
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Enterview> list, Enterview value, int index, boolean isSelected, boolean cellHasFocus) { 
         enterview = value;
         
+        boolean hasFinalScore = false;
         if (enterview.getScore() != null) {
             setBackground(new Color(173, 216, 230));
-            scoreLabel.setText(enterview.getScore().toString());
-        } else {
+            
+            systemEvaluationService = serviceLocator
+                    .lookup(SYSTEM_EVALUATION_RESOURCE, 
+                            SystemEvaluationService.class);
+            
+            evaluation = systemEvaluationService
+                    .getByOfferAndCandidate(enterview.getCandidate(), 
+                            enterview.getOffer());
+            
+            if(evaluation.getScore() != null){
+                double fs = ((evaluation.getScore() * 100) / 2) + ((enterview.getScore() * 100) / 2);
+                scoreLabel.setText(decimalFormat.format(fs) + "%");
+                hasFinalScore = true;
+            }
+            
+        } 
+        
+        if(!hasFinalScore){
             setBackground(new Color(240, 248, 255));
-            scoreLabel.setText("NO SCORE");
+            scoreLabel.setText("NO EVALUE");   
         }
         
         if (isSelected) {
@@ -125,7 +149,7 @@ public class EnterviewPanel extends javax.swing.JPanel implements ListCellRender
 
         emailLabel.setText("pedrinhu@gmail.com");
 
-        jLabel17.setText("Score:");
+        jLabel17.setText("Final Score:");
 
         scoreLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         scoreLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

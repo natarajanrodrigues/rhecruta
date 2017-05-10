@@ -12,11 +12,11 @@ import javax.swing.event.ListDataListener;
  * @author Wensttay de Sousa Alencar <yattsnew@gmail.com>
  * @date 07/05/2017, 14:59:06
  */
-public class EnterviewModal implements ListModel<Enterview>{
+public class InterviewModal implements ListModel<Enterview>{
     
     private List<Enterview> enterviews;
 
-    public EnterviewModal(List<Enterview> enterviews) {
+    public InterviewModal(List<Enterview> enterviews) {
         this.enterviews = enterviews;
     }
 

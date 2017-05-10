@@ -211,7 +211,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel17">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Score:"/>
+        <Property name="text" type="java.lang.String" value="Final Score:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="scoreLabel">
