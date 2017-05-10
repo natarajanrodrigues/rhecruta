@@ -20,6 +20,7 @@ services:
     ports:
      - "8082:8080"
      - "4951:4848"
+     - "3700:3700"
     links:
      - "postgres-rhecruta:banco-rhecruta"
   

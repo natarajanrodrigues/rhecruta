@@ -21,9 +21,7 @@ public class ServiceLocator {
     
     public <T> T lookup(String resource, Class<T> type) {
         try {
-
             InitialContext context = new InitialContext(createProperties());
-            
             return (T) context.lookup(resource);
             
         } catch (NamingException ne) {
@@ -35,10 +33,15 @@ public class ServiceLocator {
     }  
     
     private Properties createProperties() {
+        
         Properties props = new Properties();
         props.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.enterprise.naming.SerialInitContextFactory");
-        props.setProperty("org.omg.CORBA.ORBInitialHost", "rhecruta-core-server");
-//        props.put("org.omg.CORBA.ORBInitialHost", "localhost");
+        //docker configs
+//        props.put("org.omg.CORBA.ORBInitialHost", "rhecruta-core-server");
+//        props.put("org.omg.CORBA.ORBInitialPort", "3700");
+
+        //localhost configs
+        props.put("org.omg.CORBA.ORBInitialHost", "localhost");
         props.put("org.omg.CORBA.ORBInitialPort", "3700");
 
         return props;

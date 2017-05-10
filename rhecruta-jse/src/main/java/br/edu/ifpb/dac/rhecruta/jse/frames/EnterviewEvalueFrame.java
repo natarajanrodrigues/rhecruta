@@ -7,14 +7,15 @@ package br.edu.ifpb.dac.rhecruta.jse.frames;
 
 import br.edu.ifpb.dac.rhecruta.jse.ServiceLocator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
+import br.edu.ifpb.dac.rhecruta.shared.domain.entities.SystemEvaluation;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService;
-import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
+import br.edu.ifpb.dac.rhecruta.shared.interfaces.SystemEvaluationService;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
-import javax.ejb.EJBException;
 import javax.swing.JOptionPane;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -24,11 +25,11 @@ public class EnterviewEvalueFrame extends javax.swing.JFrame {
     
     private static final String ENTERVIEW_RESOURCE = "java:global/rhecruta-core/EnterviewServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService";
     private static final String CURRICULUM_RESOURCE = "java:global/rhecruta-core/CurriculumServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.CurriculumService";
-    private static final String EVALUATION_RESOURCE = "java:global/rhecruta-core/EvaluationServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService";
+    private static final String SYSTEM_EVALUATION_RESOURCE = "java:global/rhecruta-core/SystemEvaluationServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.SystemEvaluationService";
     
     private ServiceLocator serviceLocator = new ServiceLocator();
     private CurriculumService curriculumService;
-    private EvaluationService evaluationService;
+    private SystemEvaluationService systemEvaluationService;
     private EnterviewService enterviewService;
     private Enterview enterview;
 
@@ -74,18 +75,19 @@ public class EnterviewEvalueFrame extends javax.swing.JFrame {
             appraiseTextField.setFocusable(false);
             evalueButton.setEnabled(false);
         }
+        
+        systemEvaluationService = serviceLocator
+                .lookup(SYSTEM_EVALUATION_RESOURCE, SystemEvaluationService.class);
+        
+        SystemEvaluation evaluation = systemEvaluationService.getByOfferAndCandidate(enterview.getCandidate(), enterview.getOffer());
+        Double rank = evaluation.getScore() * 100;
+        DecimalFormat decimalFormat = new DecimalFormat("##.00");
+//        NumberFormatter numberFormatter = new NumberFormatter(decimalFormat);
 
-//        evaluationService = serviceLocator.lookup(EVALUATION_RESOURCE, EvaluationService.class);
-//        Double rank = evaluationService.getRank(enterview.getCandidate());
-//        
-//        if (rank != null) {
-//            rankingLabel.setText("" + rank);
-//        }
-//        Set<String> skills = evaluationService.getSkills(enterview.getCandidate());
-//        if (skills != null) {
-//            skillsTextArea.setText(skills.toString());
-//        }
-
+        if (rank != null) {
+            rankingLabel.setText(decimalFormat.format(rank) +"%");
+        }
+        
         curriculumService = serviceLocator.lookup(CURRICULUM_RESOURCE, CurriculumService.class);
         if (!curriculumService.hasCurriculum(enterview.getCandidate().getId())) {
             downloadCurriculumButton.setEnabled(false);
@@ -330,9 +332,9 @@ public class EnterviewEvalueFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel20)
                                     .addComponent(cityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel21)
-                                    .addComponent(stateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stateLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel21))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)
