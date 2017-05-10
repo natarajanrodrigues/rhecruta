@@ -5,8 +5,8 @@
  */
 package br.edu.ifpb.dac.rhecruta.jse.frames;
 
-import br.edu.ifpb.dac.rhecruta.jse.modals.EnterviewModal;
-import br.edu.ifpb.dac.rhecruta.jse.panels.EnterviewPanel;
+import br.edu.ifpb.dac.rhecruta.jse.modals.InterviewModal;
+import br.edu.ifpb.dac.rhecruta.jse.panels.InterviewPanel;
 import br.edu.ifpb.dac.rhecruta.jse.ServiceLocator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Administrator;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Enterview;
@@ -22,7 +22,7 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Wensttay de Sousa Alencar <yattsnew@gmail.com>
  */
-public class EnterviewsFrame extends javax.swing.JFrame implements ListSelectionListener {
+public class InterviewsFrame extends javax.swing.JFrame implements ListSelectionListener {
 
     private final String ENTERVIEW_RESOURCE = "java:global/rhecruta-core/EnterviewServiceImpl!br.edu.ifpb.dac.rhecruta.shared.interfaces.EnterviewService";
     private EnterviewService enterviewService;
@@ -30,27 +30,38 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
     private ServiceLocator serviceLocator = new ServiceLocator();
     private List<Enterview> enterviews = new ArrayList<>();
 
-    public EnterviewsFrame() {
+    public InterviewsFrame() {
     }
 
     /**
      * Creates new form InterviewsFrame
      */
-    public EnterviewsFrame(Administrator administrator) {
+    public InterviewsFrame(Administrator administrator) {
+        initComponents();
+        setLocationRelativeTo(null);
         this.administrator = administrator;
         this.enterviewService = serviceLocator.lookup(ENTERVIEW_RESOURCE, EnterviewService.class);
         enterviews = enterviewService.listByAppraiser(administrator);
+        checkShowMensageError();
 
         this.setResizable(false);
         this.setTitle("Rhecruta | " + administrator.getFirstname() + " Interviews");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        initComponents();
-        jList1.setCellRenderer(new EnterviewPanel());
-        jList1.setModel(new EnterviewModal(enterviews));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        jList1.setCellRenderer(new InterviewPanel());
+        jList1.setModel(new InterviewModal(enterviews));
         jScrollPane2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         jScrollPane2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         jList1.addListSelectionListener(this);
+    }
+
+    private void checkShowMensageError() {
+        if(enterviews.isEmpty()){
+            erroText.setVisible(true);
+        }else{
+            erroText.setVisible(false);
+        }
     }
 
     /**
@@ -66,6 +77,7 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
         jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        erroText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +92,10 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
             }
         });
 
+        erroText.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        erroText.setForeground(new java.awt.Color(204, 0, 0));
+        erroText.setText("There are no Evalues for you.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,10 +104,12 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(erroText)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addGap(14, 14, 14))))
@@ -102,7 +120,8 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(erroText))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -118,7 +137,8 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
         }
         
         enterviews = enterviewService.listByAppraiser(administrator);
-        jList1.setModel(new EnterviewModal(enterviews));
+        checkShowMensageError();
+        jList1.setModel(new InterviewModal(enterviews));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -138,14 +158,18 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EnterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EnterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EnterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EnterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterviewsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -154,12 +178,13 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EnterviewsFrame().setVisible(true);
+                new InterviewsFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel erroText;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<Enterview> jList1;
@@ -177,7 +202,7 @@ public class EnterviewsFrame extends javax.swing.JFrame implements ListSelection
             List selectionValues = list.getSelectedValuesList();
             for (int i = 0, n = selections.length; i < n; i++) {
                 Enterview enterview = (Enterview) selectionValues.get(i);
-                EnterviewEvalueFrame eef = new EnterviewEvalueFrame(enterview);
+                InterviewEvalueFrame eef = new InterviewEvalueFrame(enterview);
                 eef.setVisible(true);
             }
         }

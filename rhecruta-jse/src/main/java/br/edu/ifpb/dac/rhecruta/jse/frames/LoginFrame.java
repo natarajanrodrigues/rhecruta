@@ -29,12 +29,14 @@ public class LoginFrame extends javax.swing.JFrame implements ActionListener{
     private LoginService loginService;
     private AdministratorService administratorService;
     private ServiceLocator serviceLocator;
-    private EnterviewsFrame interviewsFrame;
+    private InterviewsFrame interviewsFrame;
     
     
     public LoginFrame() {
         initComponents();
         this.setTitle("Rhecruta | Sign In");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         serviceLocator = new ServiceLocator();
         loginService = serviceLocator.lookup(LOGIN_RESOURCE, LoginService.class);
         administratorService = serviceLocator.lookup(ADMINISTRATOR_RESOURCE, AdministratorService.class);
@@ -161,7 +163,7 @@ public class LoginFrame extends javax.swing.JFrame implements ActionListener{
             switch(user.getRole()){
                 case APPRAISER:
                     Administrator appraiser = administratorService.getByUser(user);
-                    interviewsFrame = new EnterviewsFrame(appraiser);                    
+                    interviewsFrame = new InterviewsFrame(appraiser);                    
                     interviewsFrame.setVisible(true);
                     this.setVisible(false);
                     break;

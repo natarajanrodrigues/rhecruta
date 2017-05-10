@@ -167,26 +167,15 @@ public class CurriculumDAODbxImpl implements CurriculumDAO {
 
     @Override
     public boolean hasCurriculum(Long candidateId) {
-        System.out.println("[CurriculumDAODbxImpl] Searching by candidateId: "+candidateId);
+        String result = "";
+
         try {
-            String candidateFolder = getCandidateFolderPath(candidateId);
-            System.out.println("[CurriculumDAODbxImpl] candidateFolderPath: "+candidateFolder);
-            SearchResult searchResult = files.search(candidateFolder, candidateId.toString());
-            List<SearchMatch> matches = searchResult.getMatches();
-            
-            if(matches.isEmpty()) {
-                System.out.println("[CurriculumDAODbxImpl] No matches.");
-              return false;
-            } 
-            
+            result = exists(candidateId);
         } catch (DbxException ex) {
-            System.out.println("[CurriculumDAODbxImpl] Exception. :/");
-            Logger.getLogger(CurriculumDAODbxImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } 
+            ex.printStackTrace();
+        }
         
-        System.out.println("[CurriculumDAODbxImpl] Returning false...");
-        return false;
+        return !result.equals("");
     }
     
     
