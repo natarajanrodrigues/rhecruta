@@ -30,19 +30,17 @@ documentação preliminar, acesse o seguinte [gitbook](https://natarajanrodrigue
 
 2. Banco de dados
 
-  2.a.  Crie um banco de dados Postgres com as seguintes informações para uso da solução:
+    2.a.  Crie um banco de dados Postgres com as seguintes informações para uso da solução:
 
 
-| propriedade | valor |
-|-----|-----|
-| nome do banco | rhecruta |
-| usuário | postgres |
-| senha | 12345 |
-| porta | 5432 |
-|-----|-----|
+    | propriedade | valor |
+    |-----|-----|
+    | nome do banco | rhecruta |
+    | usuário | postgres |
+    | senha | 12345 |
+    | porta | 5432 |
 
-
-  2.b. Utilize o arquivo presente no caminho `rhecruta-core/postgres/rhecruta-sql.sql` para construir as tabelas no banco de dados criado.
+    2.b. Utilize o arquivo presente no caminho `rhecruta-core/postgres/rhecruta-sql.sql` para construir as tabelas no banco de dados criado.
 
 
 3. No terminal de linha de comando, estando na pasta raiz do projeto, execute `mvn clean install`.
@@ -53,9 +51,9 @@ documentação preliminar, acesse o seguinte [gitbook](https://natarajanrodrigue
 
 6. Despois de iniciados os módulos acima já será possível a solução web proposta já estará disponível em  [http://localhost:8080/rhecruta-web/](http://localhost:8080/rhecruta-web/).
 
-  Foi inserido um usuário `admin` para início de uso do sistema, com as seguinte credenciais:
-    - email: admin@admin.com
-    - senha: admin
+    Foi inserido um usuário `admin` para início de uso do sistema, com as seguinte credenciais:
+      - email: admin@admin.com
+      - senha: admin
 
 7. O módulo `rhecruta-jse` pode ser inicilizado da seguintes formas:
   - abri o referido módulo e executar a classe `br.edu.ifpb.dac.rhecruta.jse.frames.LoginFrame`, ou
