@@ -21,7 +21,7 @@ import javax.jms.MessageListener;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Natarajan
  */
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")

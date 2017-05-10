@@ -10,16 +10,12 @@ import br.edu.ifpb.dac.rhecruta.core.dao.interfaces.OfferDAO;
 import br.edu.ifpb.dac.rhecruta.core.services.mail.EmailRequester;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Candidate;
 import br.edu.ifpb.dac.rhecruta.shared.domain.entities.Offer;
-import br.edu.ifpb.dac.rhecruta.shared.domain.entities.evaluation.GithubRepository;
 import br.edu.ifpb.dac.rhecruta.shared.domain.vo.Email;
 import br.edu.ifpb.dac.rhecruta.shared.interfaces.EvaluationService;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
@@ -29,7 +25,7 @@ import javax.jms.MessageListener;
 
 /**
  *
- * @author Pedro Arthur
+ * @author Pedro Arthur e Natarajan
  */
 
 @MessageDriven(activationConfig = {
@@ -62,8 +58,11 @@ public class NewOfferListener implements MessageListener {
             List<Candidate> candidates = candidateDAO.listApprovedCandidates();
             for(Candidate candidate : candidates) {
                 if(evaluationService.getMatch(offer, candidate) > 0) {
+                    System.out.println("MATCH deu-------->>>>>>>>>>: " + evaluationService.getMatch(offer, candidate));
+                            
                     Email email = createEmail(candidate, offer);
                     emailRequester.send(email);
+                    System.out.println("enviado o email para fila");
                 }
             }
             

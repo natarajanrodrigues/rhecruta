@@ -40,6 +40,7 @@ public class EmailRequesterBean implements EmailRequester {
         // modificar dados do email
         email.setRequestedDate(LocalDateTime.now()); 
         //
+        System.out.println("CHEGOU MENSAGEM PARA ENVIAR");
         JMSProducer producer = context.createProducer();
         ObjectMessage message = context.createObjectMessage(email);
         producer.send(queue, message);

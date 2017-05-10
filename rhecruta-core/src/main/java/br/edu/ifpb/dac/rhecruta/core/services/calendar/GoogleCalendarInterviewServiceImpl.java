@@ -23,7 +23,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author natarajan
+ * @author Natarajan
  */
 @Remote(GoogleCalendarInterviewService.class)
 @Stateless
