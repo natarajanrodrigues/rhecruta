@@ -39,8 +39,8 @@ import javax.ws.rs.core.Response.Status;
 @Stateless
 public class EvaluationServiceImpl implements EvaluationService{
     
-//    private static String URL = "http://suggestions-web:8080/suggestions-web/api/";
-    private static String URL = "http://localhost:8090/suggestions-web/api/";
+    private static String URL = "http://suggestions-web:8080/suggestions-web/api/";
+//    private static String URL = "http://localhost:8090/suggestions-web/api/";
     private Client client = ClientBuilder.newClient();
     private WebTarget target = client.target(URL);
     

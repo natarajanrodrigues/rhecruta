@@ -23,5 +23,8 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <finalName>rhecruta-jse</finalName>
+    </build>
     
 </project>

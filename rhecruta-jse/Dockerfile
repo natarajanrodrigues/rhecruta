@@ -1,8 +1,17 @@
-FROM payara/server-full
-MAINTAINER natarajan <natarajanrodrigues@gmail.com>
-ENV DOMAIN domain1
-ENV LIB /opt/payara41/glassfish/domains/${DOMAIN}/lib/
-ENV DEPLOY ${PAYARA_PATH}/glassfish/domains/${DOMAIN}/autodeploy/
-ADD target/rhecruta-shared/WEB-INF/lib/ ${LIB}
-ENTRYPOINT $PAYARA_PATH/bin/asadmin start-domain --verbose ${DOMAIN}
-ADD target/rhecruta-shared.war  ${DEPLOY}
+FROM ubuntu:14.04
+
+MAINTAINER javacodegeeks
+
+RUN apt-get update && apt-get install -y python-software-properties software-properties-common
+
+RUN add-apt-repository ppa:webupd8team/java
+
+RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 boolean true" | debconf-set-selections
+
+RUN apt-get update && apt-get install -y oracle-java8-installer maven
+
+ADD . /usr/local/helloworld
+
+RUN cd /usr/local/helloworld && mvn install
+
+CMD ["java", "-cp", "/usr/local/helloworld/target/rhecruta-jse.jar", "br.edu.ifpb.dac.rhecruta.jse.frames.LoginFrame"]
